@@ -755,7 +755,8 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('getHNTPrice', 'frontend\ToursController@getHNTPrice');
     Route::get('bookingTourPackage', 'frontend\ToursController@bookingTourPackage');
     Route::get('bookingPageTNT', 'frontend\ToursController@bookingPageTNT');
-    Route::get('getAnimalSearchByValue', 'frontend\FrontController@getAnimalSearchByValue');
+    Route::get('getProductSearchByName', 'frontend\FrontController@getProductSearchByName');
+    Route::get('getProductSearchDesktopByName', 'frontend\FrontController@getProductSearchDesktopByName');
     Route::post('searchAnimal', 'frontend\FrontController@searchAnimal');
 
     //New Layout Fronend

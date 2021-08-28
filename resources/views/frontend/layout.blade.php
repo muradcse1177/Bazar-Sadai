@@ -135,7 +135,7 @@
                     <a href="#" class="mobile-menu-toggle  w-icon-hamburger">
                     </a> &nbsp;
                     <form method="get" action="#">
-                        <input type="text" class="form-control ms-sear" name="search" id="" placeholder="এখানে খুঁজুন..." required />
+                        <input type="text" class="form-control ms-sear" name="mbSearch" id="mbSearch" placeholder="এখানে খুঁজুন..." required />
                     </form>
                     <a href="{{url('homepage')}}" class="logo ml-lg-0">
                         <img  src="{{url('public/bs.png')}}" alt="logo" width="60" height="45" style="background-color:white; border: 2px solid darkgreen;"/>
@@ -192,6 +192,8 @@
                         <!-- End of Dropdown Box -->
                     </div>
                 </div>
+            </div>
+            <div id="mbSearchForm" style="margin-top: 50px; margin-left: 30px;margin-right: 30px; width:100%; height: auto; display: none; z-index: 999;">
             </div>
         </div>
         <!-- End of Header Middle -->
@@ -291,6 +293,7 @@
             </div>
         </div>
     </header>
+
     @yield('content')
     <footer class="footer appear-animate" data-animation-options="{
             'name': 'fadeIn'
@@ -786,7 +789,45 @@
         });
 
     });
+    $('#search').on('input', function() {
+        var val = $('#search').val();
+        $.ajax({
+            type: 'GET',
+            url: '{{url('/')}}/getProductSearchDesktopByName',
+            data: {val:val},
+            dataType: 'json',
+            success: function(response){
+                var data = response.data;
 
+                $( "#search" ).autocomplete({
+                    source: data
+                });
+            }
+        });
+    });
+    $('#mbSearch').on('input', function() {
+        var val = $('#mbSearch').val();
+        $.ajax({
+            type: 'GET',
+            url: '{{url('/')}}/getProductSearchByName',
+            data: {val:val},
+            dataType: 'json',
+            success: function(response){
+                var data = response.data;
+                if(data == ''){
+                    $('#mbSearchForm').fadeOut();
+                }
+                else{
+                    $('#mbSearchForm').fadeIn();
+                    $('#mbSearchForm').html(data);
+                }
+            }
+        });
+        $(document).on('click', 'li', function(){
+            $('#mbSearch').val($(this).text());
+            $('#mbSearchForm').fadeOut();
+        });
+    });
 </script>
 @yield('js')
 </html>

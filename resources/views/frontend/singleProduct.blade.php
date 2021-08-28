@@ -52,10 +52,15 @@
                                 <div class="product-gallery product-gallery-sticky">
                                     <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1 gutter-no">
                                         @php
-                                            $slider = json_decode($products->slider);
-                                            $photos = explode(",",$slider);
-                                            array_pop($photos);
-                                            $i =0;
+                                            if(@$products->slider){
+                                                $slider = json_decode($products->slider);
+                                                $photos = explode(",",$slider);
+                                                array_pop($photos);
+                                                $i =0;
+                                            }
+                                            else{
+                                                $photos = array();
+                                            }
                                         @endphp
                                         @foreach($photos as $photo)
                                             <figure class="product-image">

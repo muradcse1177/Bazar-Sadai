@@ -2992,26 +2992,56 @@ class FrontController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function getAnimalSearchByValue(Request $request){
+    public function getProductSearchByName(Request $request){
         try{
-            $rows = DB::table('seller_product')
-                ->where('name', 'like', '%'.$request->val.'%')
-                ->where('type', 'Animal')
-                ->get();
-            $rows1 = DB::table('seller_product')
-                ->where('address', 'like', '%'.$request->val.'%')
-                ->where('type', 'Animal')
-                ->get();
-            $name = array();
-            foreach ($rows as $row){
-                $name [] = $row->name;
+            if($request->val){
+                $products = DB::table('products')
+                    ->where('name', 'like', '%' . $request->val . '%')
+                    ->where('status', 1)
+                    ->get();
+                if($products->count() > 0){
+                    $output = '<ul class="menu" style="display:block; margin-top: -30px;>';
+                    foreach ($products as $row) {
+                        $output .= '
+                   <li><a href="#">' . $row->name . '</a></li>
+                   ';
+                    }
+                    $output .= '</ul>';
+                }
+                else{
+                    $output = '';
+                }
             }
-            $address = array();
-            foreach ($rows1 as $row1){
-                $address [] = $row1->address;
+            else{
+                $output = '';
             }
-            $total = array_merge($name,$address);
-            return response()->json(array('data'=>$total));
+            return response()->json(array('data'=>$output));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function getProductSearchDesktopByName(Request $request){
+        try{
+            $output = array();
+            if($request->val){
+                $products = DB::table('products')
+                    ->where('name', 'like', '%' . $request->val . '%')
+                    ->where('status', 1)
+                    ->get();
+                if($products->count() > 0){
+                    foreach ($products as $row) {
+                        $output[] = $row->name;
+                    }
+                }
+                else{
+                    $output[] = "No item found!";
+                }
+            }
+            else{
+                $output[] = "No item found!";
+            }
+            return response()->json(array('data'=>$output));
         }
         catch(\Illuminate\Database\QueryException $ex){
             return response()->json(array('data'=>$ex->getMessage()));
@@ -3034,7 +3064,6 @@ class FrontController extends Controller
             else{
                 return view('frontend.buysale', ['products' => $products,'val'=>$request->search]);
             }
-
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage', $ex->getMessage());
