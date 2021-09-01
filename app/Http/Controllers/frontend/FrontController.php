@@ -2486,6 +2486,18 @@ class FrontController extends Controller
     }
     public function searchProduct(Request $request){
         try{
+            if($request->search)
+                $search = $request->search;
+            if($request->mbSearch)
+                $search = $request->mbSearch;
+            $service_cat = DB::table('categories')
+                ->where('type', 2)
+                ->where('status', 1)
+                ->orderBy('id', 'DESC')->get();
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
             if(Cookie::get('user_id') != null) {
                 $customer = DB::table('users')
                     ->where('id',Cookie::get('user_id'))
@@ -2501,48 +2513,48 @@ class FrontController extends Controller
                     $dealer_product = DB::table('products')
                         ->select('*', 'product_assign.id as p_a_id', 'products.id as id')
                         ->join('product_assign', 'product_assign.product_id', '=', 'products.id')
-                        ->where('products.name', 'LIKE','%'.$request->key.'%')
-                        ->orWhere('products.genre', 'LIKE','%'.$request->key.'%')
+                        ->where('products.name', 'LIKE','%'.$search.'%')
+                        ->orWhere('products.genre', 'LIKE','%'.$search.'%')
                         ->where('products.status', 1)
                         ->where('product_assign.dealer_id', $dealer->id)
                         ->orderBy('products.id', 'ASC')->paginate(100);
                     if($dealer_product->count()>0){
                         $dealer_status['status'] = 1;
-                        return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
+                        return view('frontend.shop', ['products' => $dealer_product,'status' =>$dealer_status,'pro_categories' => $product_cat, 'ser_categories' => $service_cat]);
                     }
                     else{
-                        return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
+                        return redirect()->to('shop')->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
                     }
 
                 }
                 else{
                     $dealer_product = DB::table('products')
-                        ->where('name', 'LIKE','%'.$request->key.'%')
-                        ->orWhere('genre', 'LIKE','%'.$request->key.'%')
+                        ->where('name', 'LIKE','%'.$search.'%')
+                        ->orWhere('genre', 'LIKE','%'.$search.'%')
                         ->where('status', 1)
                         ->orderBy('id', 'ASC')->paginate(100);
                     if($dealer_product->count()>0){
                         $dealer_status['status'] = 0;
-                        return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
+                        return view('frontend.shop', ['products' => $dealer_product,'status' =>$dealer_status,'pro_categories' => $product_cat, 'ser_categories' => $service_cat]);
                     }
                     else{
-                        return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
+                        return redirect()->to('shop')->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
                     }
                 }
 
             }
             else {
                 $dealer_product = DB::table('products')
-                    ->where('name', 'LIKE','%'.$request->key.'%')
-                    ->orWhere('genre', 'LIKE','%'.$request->key.'%')
+                    ->where('name', 'LIKE','%'.$search.'%')
+                    ->orWhere('genre', 'LIKE','%'.$search.'%')
                     ->where('status', 1)
                     ->orderBy('id', 'ASC')->paginate(100);
                 if($dealer_product->count()>0){
                     $dealer_status['status'] = 0;
-                    return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
+                    return view('frontend.shop', ['products' => $dealer_product,'status' =>$dealer_status,'pro_categories' => $product_cat, 'ser_categories' => $service_cat]);
                 }
                 else{
-                    return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
+                    return redirect()->to('shop')->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
                 }
             }
 

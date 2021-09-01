@@ -1,112 +1,120 @@
-@extends('frontend.frontLayout')
-@section('title', 'ট্যুর ও ট্রাভেল')
-@section('content')
-    @if ($message = Session::get('successMessage'))
-        <div class="alert alert-success alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-check"></i> ধন্যবাদ</h4>
-            {{ $message }}</b>
-        </div>
-    @endif
-    @if ($message = Session::get('errorMessage'))
+@extends('frontend.layout')
+@section('title', 'Tours & Travels  || Bazar-Sadai.com Best online Shop in Bangladesh')
+@section('myOrder', 'active')
+@section('css')
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{url('public/asset/woolmart/css/style.min.css')}}">
+    <style>
+        form, input, label, p {
+            color: black !important;
+        }
+        .form-group > select > option{
+            color: black !important;
+        }
+        @media screen and (max-width: 600px) {
+            .main{
+                margin-top: -30px;
+            }
+        }
+        .intro-slide {
+            min-height: 30rem;
+        }
 
-        <div class="alert alert-warning alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-            <h4><i class="icon fa fa-warning"></i> দুঃখিত!</h4>
-            {{ $message }}
+    </style>
+
+@endsection
+@section('content')
+    <main class="main">
+        <!-- Start of Page Header -->
+        <div class="page-header" style="">
+            <div class="container">
+                <h1 class="page-title mb-0"> হট্যুরস  এন্ড ট্রাভেলস</h1>
+            </div>
         </div>
-    @endif
-    <?php
-    $j=0;
-    ?>
-    <div class="row">
-        @foreach($results as $result)
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body cardBody pCard" >
-                        <div class="col-sm-12">
-                            <div id="myCarousel<?php echo $j; ?>" class="carousel slide" data-ride="carousel">
-                                <?php
-                                $photo = json_decode($result->photo);
-                                $photos = explode(",",$photo);
-                                array_pop($photos);
-                                //dd($photos);
-                                $i=0;
-                                ?>
-                                <ol class="carousel-indicators">
-                                @foreach($photos as $ph)
-                                    <!-- Indicators -->
-                                        @if($i==0)
-                                            <li data-target="#myCarousel<?php echo $j; ?>" data-slide-to="<?php echo rand()?>" class="active"></li>
-                                        @else
-                                            <li data-target="#myCarousel<?php echo $j; ?>" data-slide-to="<?php echo rand()?>"></li>
-                                        @endif
-                                        <?php $i++; ?>
-                                    @endforeach
-                                </ol>
-                            <?php
-                            $i=0;
-                            ?>
-                            <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-                                    @foreach($photos as $ph)
-                                        @if($i==0)
-                                            <div class="item active">
-                                                <img src="{{$ph}}"  style="width:100%;" height="170">
-                                            </div>
-                                        @else
-                                            <div class="item">
-                                                <img src="{{$ph}}"  style="width:100%; height: 170px;">
-                                            </div>
-                                        @endif
-                                        <?php $i++; ?>
-                                    @endforeach
-                                </div>
-                                <a class="left carousel-control" href="#myCarousel<?php echo $j; ?>" data-slide="prev">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <a class="right carousel-control" href="#myCarousel<?php echo $j; ?>" data-slide="next">
-                                    <span class="glyphicon glyphicon-chevron-right"></span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </div>
-                            <h4>{{$result->name}}</h4>
-                            <p class="card-text">পুরা ঠিকানাঃ {{$result->address}} </p>
-                            <p class="card-text">ধরণঃ  {{$result->t_type}} </p>
-                            <p class="card-text">খরচঃ {{$result->price}} </p>
-                            <div style="text-align: justify;">বিবরনঃ {!! nl2br($result->description) !!} </div>
-                            <div style="text-align: justify;">সুযোগ সুবিধাঃ {!! nl2br($result->facilities) !!} </div>
-                            {{ Form::open(array('url' => 'insertTourPackagePayment',  'method' => 'post')) }}
-                            {{ csrf_field() }}
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="1" name="cod">
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Cash on Presence
-                                </label>
-                            </div>
-                            @if(Cookie::get('user_id'))
-                                <div class="form-group">
-                                    <input type="hidden" name="main_id" value="{{$result->t_id}}">
-                                    <input type="hidden" name="name_id" value="{{$_GET['id']}}">
-                                    <input type="hidden" name="price" id="price" value="{{$result->price}}">
-                                    <button type="submit" class="btn allButton">বুকিং করুন</button>
-                                </div>
-                            @endif
-                            @if(Cookie::get('user_id') == null )
-                                <div class="form-group">
-                                    <a href='{{url('login')}}'  class="btn allButton">লগ ইন করুন</a>
-                                </div>
-                            @endif
-                            {{ Form::close() }}
+        <br>
+        <div class="page-content">
+            <div class="container">
+                @if ($message = Session::get('successMessage'))
+                    <div class="col-md-12 mb-4">
+                        <div class="alert alert-success alert-button">
+                            <a href="#" class="btn btn-success btn-rounded">Well Done</a>
+                            {{ $message }}
                         </div>
                     </div>
+                @endif
+                @if ($message = Session::get('errorMessage'))
+                    <div class="col-md-12 mb-4">
+                        <div class="alert alert-warning alert-button">
+                            <a href="#" class="btn btn-warning btn-rounded">Sorry</a>
+                            {{ $message }}
+                        </div>
+                    </div>
+                @endif
+                <?php
+                $j=0;
+                ?>
+                <div class="row">
+                    @foreach($results as $result)
+                        <div class="col-sm-4">
+                            <div class="card">
+                                <div class="card-body cardBody pCard" >
+                                    <div class="owl-carousel owl-theme owl-nav-inner owl-nav-md row cols-1 gutter-no animation-slider"
+                                         data-owl-options="{
+                                                'nav': true,
+                                                'dots': false
+                                         }">
+                                        <?php
+                                        $photo = json_decode($result->photo);
+                                        $photos = explode(",",$photo);
+                                        array_pop($photos);
+                                        $i=0;
+                                        ?>
+                                        @foreach($photos as $ph)
+                                            <div class="banner banner-fixed intro-slide intro-slide{{$i}} br-sm" style="background-image: url({{$ph}}); height: 250px; background-color: #262729;"></div>
+                                        @endforeach
+                                        <?php
+                                        $i++;
+                                        ?>
+                                    </div>
+                                    <h4>{{$result->name}}</h4>
+                                    <p class="card-text">পুরা ঠিকানাঃ {{$result->address}} </p>
+                                    <p style="margin-top: -15px;">ধরণঃ  {{$result->t_type}} </p>
+                                    <p style="margin-top: -15px;">খরচঃ {{$result->price}} </p>
+                                    <div style="text-align: justify; margin-top: -15px;">বিবরনঃ {!! nl2br($result->description) !!} </div>
+                                    <div style="text-align: justify; margin-bottom: 15px;">সুযোগ সুবিধাঃ {!! nl2br($result->facilities) !!} </div>
+                                    {{ Form::open(array('url' => 'insertTourPackagePayment',  'method' => 'post')) }}
+                                    {{ csrf_field() }}
+                                        <div class="form-check" style="margin-bottom: 15px;">
+                                            <input class="form-check-input" type="checkbox" value="1" name="cod">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                Cash on Presence
+                                            </label>
+                                        </div>
+                                        @if(Cookie::get('user_id'))
+                                            <div class="form-group">
+                                                <input type="hidden" name="main_id" value="{{$result->t_id}}">
+                                                <input type="hidden" name="name_id" value="{{$_GET['id']}}">
+                                                <input type="hidden" name="price" id="price" value="{{$result->price}}">
+                                                <button type="submit" class="btn btn-success">বুকিং করুন</button>
+                                            </div>
+                                        @endif
+                                        @if(Cookie::get('user_id') == null )
+                                            <div class="form-group">
+                                                <a href='{{url('login')}}'  class="btn btn-success">লগ ইন করুন</a>
+                                            </div>
+                                        @endif
+                                    {{ Form::close() }}
+                                </div>
+                            </div>
+                        </div>
+                        <?php  $j++; ?>
+                    @endforeach
+                    {{ $results->links() }}
                 </div>
             </div>
-            <?php  $j++; ?>
-        @endforeach
-        {{ $results->links() }}
-    </div>
+        </div>
+    </main>
+    <br>
 @endsection
 @section('js')
     <script>

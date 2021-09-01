@@ -255,7 +255,7 @@ class TransportController extends Controller
                     'add_part4' => $add_part4,
                 ]);
             if ($result) {
-                return redirect('transportService')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return redirect('transportService/1')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -602,7 +602,7 @@ class TransportController extends Controller
                     'add_part5' => $add_part5,
                 ]);
             if ($result) {
-                return redirect('courier')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return redirect('courier/1')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }

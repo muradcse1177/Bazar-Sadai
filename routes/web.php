@@ -615,7 +615,6 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('verifyUser' , 'frontend\AuthController@verifyUsers');
 
     //FrontRoute
-    Route::get('n' , 'frontend\FrontController@n_homepageManager');
     Route::get('homepage' , 'frontend\FrontController@homepageManager');
     Route::get('logout' , 'frontend\AuthController@logout');
     Route::get('shop-by-cat/{id}', 'frontend\FrontController@getProductByCatId');
@@ -645,7 +644,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('deliveryAddress', 'frontend\FrontController@deliveryAddress');
     Route::get('serviceCategory', 'frontend\FrontController@serviceCategory');
     Route::get('service_sub_category/{id}', 'frontend\FrontController@service_sub_category');
-    Route::get('transportService', 'frontend\TransportController@transportService');
+    Route::get('transportService/{id}', 'frontend\TransportController@transportService');
     Route::get('getAllFromAddressById', 'frontend\TransportController@getAllFromAddressById');
     Route::get('getAllToAddress', 'frontend\TransportController@getAllToAddress');
     Route::get('getAllTransport', 'frontend\TransportController@getAllTransport');
@@ -732,7 +731,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('getNaming4ListAllFront', 'backend\AddressController@getNaming4ListAll');
     Route::get('getNaming5ListAllFront', 'backend\AddressController@getNaming5ListFront');
 
-    Route::get('courier', 'frontend\TransportController@courier');
+    Route::get('courier/{id}', 'frontend\TransportController@courier');
     Route::get('serviceAreaCourier', 'frontend\TransportController@serviceAreaCourier');
     Route::post('insertServiceAreaCourier', 'frontend\TransportController@insertServiceAreaCourier');
     Route::get('getAllCourierTypeFront', 'backend\TransportController@getAllCourierType');

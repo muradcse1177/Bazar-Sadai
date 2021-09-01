@@ -148,6 +148,22 @@
                                 </div>
                             </div>
                         </nav>
+                        @if ($message = Session::get('successMessage'))
+                            <div class="col-md-12 mb-4">
+                                <div class="alert alert-success alert-button">
+                                    <a href="#" class="btn btn-success btn-rounded">Well Done</a>
+                                    {{ $message }}
+                                </div>
+                            </div>
+                        @endif
+                        @if ($message = Session::get('errorMessage'))
+                            <div class="col-md-12 mb-4">
+                                <div class="alert alert-warning alert-button">
+                                    <a href="#" class="btn btn-warning btn-rounded">Sorry</a>
+                                    {{ $message }}
+                                </div>
+                            </div>
+                        @endif
                         <div class="product-wrapper row cols-md-4 cols-sm-2 cols-2">
                             @foreach($products as $product)
                                 @php

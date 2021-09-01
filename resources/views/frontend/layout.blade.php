@@ -22,7 +22,7 @@
             s.parentNode.insertBefore(wf, s);
         })(document);
     </script>
-
+    <!-- Latest compiled and minified CSS -->
     <link rel="preload" href="{{url('public/asset/woolmart/vendor/fontawesome-free/webfonts/fa-regular-400.woff2')}}" as="font" type="font/woff2"
           crossorigin="anonymous">
     <link rel="preload" href="{{url('public/asset/woolmart/vendor/fontawesome-free/webfonts/fa-solid-900.woff2')}}" as="font" type="font/woff2"
@@ -123,6 +123,9 @@
                                 class="w-icon-account"></i>লগ ইন</a>
                         <span class="delimiter d-lg-show">/</span>
                         <a href="{{url('signup')}}" class="ml-0 d-lg-show">সাইন আপ</a>
+                    @else
+                        <span class="delimiter d-lg-show">/</span>
+                        <a href="{{url('logout')}}" class="ml-0 d-lg-show">লগ আউট</a>
                     @endif
                 </div>
             </div>
@@ -134,13 +137,14 @@
                 <div class="header-left mr-md-4">
                     <a href="#" class="mobile-menu-toggle  w-icon-hamburger">
                     </a> &nbsp;
-                    <form method="get" action="#">
+                    {{ Form::open(array('url' => 'searchProduct',  'method' => 'get')) }}
                         <input type="text" class="form-control ms-sear" name="mbSearch" id="mbSearch" placeholder="এখানে খুঁজুন..." required />
-                    </form>
+                    {{ Form::close() }}
                     <a href="{{url('homepage')}}" class="logo ml-lg-0">
                         <img  src="{{url('public/bs.png')}}" alt="logo" width="60" height="45" style="background-color:white; border: 2px solid darkgreen;"/>
                     </a>
-                    <form method="get" action="#" class="header-search hs-expanded hs-round d-none d-md-flex input-wrapper ms-sear">
+                    {{ Form::open(array('url' => 'searchProduct',  'method' => 'get','class' => 'header-search hs-expanded hs-round d-none d-md-flex input-wrapper ms-sear')) }}
+                    {{ csrf_field() }}
                         <div class="select-box">
                             <select id="category" name="category">
                                 <option value="">সকল ধরণ</option>
@@ -149,11 +153,9 @@
                                 @endforeach
                             </select>
                         </div>
-                        <input type="text" class="form-control" name="search" id="search"
-                               placeholder="এখানে লিখুন..." required />
-                        <button class="btn btn-search" type="submit"><i class="w-icon-search"></i>
-                        </button>
-                    </form>
+                            <input type="text" class="form-control" name="search" id="search" placeholder="এখানে লিখুন..." required />
+                            <button class="btn btn-search" type="submit"><i class="w-icon-search"></i></button>
+                    {{ Form::close() }}
                 </div>
                 <div class="header-right ml-4">
                     <div class="header-call d-xs-show d-lg-flex align-items-center">
@@ -257,9 +259,9 @@
                                     </li>
                                 @endif
                                 @if(Cookie::get('user_type') == 3)
-                                    <li>
+                                    <li class="@yield('myOrder')">
                                         <a href="#">আমার অর্ডার</a>
-                                        <ul class="dropdown-menu" role="menu">
+                                        <ul class="dropdown" role="menu">
                                             <li><a href="{{url('myProductOrder')}}">পণ্য ক্রয়</a></li>
                                             <li><a href="{{url('myVariousProductOrderUser')}}">হরেক রকম পণ্য/পশু ক্রয়</a></li>
                                             <li><a href="{{url('myTicketOrder')}}">টিকেট ক্রয়</a></li>
@@ -286,6 +288,11 @@
                                 <li class="@yield('about')">
                                     <a href="{{url('about')}}">আমাদের সম্পর্কে</a>
                                 </li>
+                                @if (!Cookie::get('user_id') == null)
+                                    <li class="">
+                                        <a href="{{url('logout')}}">লগ আউট</a>
+                                    </li>
+                                @endif
                             </ul>
                         </nav>
                     </div>
@@ -445,13 +452,6 @@
     <!-- End of .mobile-menu-close -->
 
     <div class="mobile-menu-container scrollable">
-        <form action="#" method="get" class="input-wrapper">
-            <input type="text" class="form-control" name="search" autocomplete="off" placeholder="Search"
-                   required />
-            <button class="btn btn-search" type="submit">
-                <i class="w-icon-search"></i>
-            </button>
-        </form>
         <!-- End of Search Form -->
         <div class="tab">
             <ul class="nav nav-tabs" role="tablist">
@@ -481,7 +481,7 @@
                     @if(Cookie::get('user_type') == 3)
                         <li>
                             <a href="#">আমার অর্ডার</a>
-                            <ul class="dropdown-menu" role="menu">
+                            <ul class="mobile-menu" role="menu">
                                 <li><a href="{{url('myProductOrder')}}">পণ্য ক্রয়</a></li>
                                 <li><a href="{{url('myVariousProductOrderUser')}}">হরেক রকম পণ্য/পশু ক্রয়</a></li>
                                 <li><a href="{{url('myTicketOrder')}}">টিকেট ক্রয়</a></li>

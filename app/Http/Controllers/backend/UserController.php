@@ -1361,20 +1361,20 @@ class UserController extends Controller
                     ->first();
                 $add_part3C = DB::table('city_corporations')
                     ->where('div_id',$couriers->add_part1)
-                    ->where('dis_id',$couriers->add_part2)
+                    ->where('city_id',$couriers->add_part2)
                     ->where('id',$couriers->add_part3)
                     ->first();
                 $add_part4C = DB::table('thanas')
                     ->where('div_id',$couriers->add_part1)
-                    ->where('dis_id',$couriers->add_part2)
-                    ->where('upz_id',$couriers->add_part3)
+                    ->where('city_id',$couriers->add_part2)
+                    ->where('city_co_id',$couriers->add_part3)
                     ->where('id',$couriers->add_part4)
                     ->first();
                 $add_part5C = DB::table('c_wards')
                     ->where('div_id',$couriers->add_part1)
-                    ->where('dis_id',$couriers->add_part2)
-                    ->where('upz_id',$couriers->add_part3)
-                    ->where('uni_id',$couriers->add_part4)
+                    ->where('city_id',$couriers->add_part2)
+                    ->where('city_co_id',$couriers->add_part3)
+                    ->where('thana_id',$couriers->add_part4)
                     ->where('id',$couriers->add_part5)
                     ->first();
             }
