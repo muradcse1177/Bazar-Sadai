@@ -75,6 +75,9 @@
             .services{
                 margin-top: -30px;
             }
+            .aaaaaaaa{
+                display: none;
+            }
         }
         @media screen and (min-width: 768px) {
             .ms-sear{
@@ -131,7 +134,11 @@
             </div>
         </div>
         <!-- End of Header Top -->
-
+        <div class="container">
+            <div class='aaaaaaaa'>
+                <img  src="{{url('public/bb.png')}}" style="width: 1920px; height:80px;" />
+            </div>
+        </div>
         <div class="header-middle">
             <div class="container onSticky">
                 <div class="header-left mr-md-4">
@@ -141,7 +148,9 @@
                         <input type="text" class="form-control ms-sear" name="mbSearch" id="mbSearch" placeholder="এখানে খুঁজুন..." required />
                     {{ Form::close() }}
                     <a href="{{url('homepage')}}" class="logo ml-lg-0">
-                        <img  src="{{url('public/bs.png')}}" alt="logo" width="60" height="45" style="background-color:white; border: 2px solid darkgreen;"/>
+                        <div class='aaaaaaaa'>
+                            <img  src="{{url('public/bs.png')}}" alt="logo" width="60" height="45" style="background-color:white; border: 2px solid darkgreen;"/>
+                        </div>
                     </a>
                     {{ Form::open(array('url' => 'searchProduct',  'method' => 'get','class' => 'header-search hs-expanded hs-round d-none d-md-flex input-wrapper ms-sear')) }}
                     {{ csrf_field() }}

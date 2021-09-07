@@ -724,6 +724,8 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('searchLocalDoctorListFront', 'frontend\MedicalServiceController@searchLocalDoctorListFront');
     Route::get('localDoctorProfileFront/{id}', 'frontend\MedicalServiceController@localDoctorProfileFront');
     Route::get('insertLocalAppointment', 'frontend\MedicalServiceController@insertLocalAppointment');
+    Route::get('serviceAreaParlor', 'frontend\HomeAssistantController@serviceAreaParlor');
+    Route::post('insertServiceAreaParlor', 'frontend\HomeAssistantController@insertServiceAreaParlor');
 
     Route::get('getAllNaming1Front', 'backend\AddressController@getAllNaming1');
     Route::get('getNaming2ListAllFront', 'backend\AddressController@getNaming2ListAll');

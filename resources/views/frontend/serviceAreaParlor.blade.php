@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         @endif
-                        {{ Form::open(array('url' => 'insertServiceAreaCourier',  'method' => 'post')) }}
+                        {{ Form::open(array('url' => 'insertServiceAreaParlor',  'method' => 'post')) }}
                         {{ csrf_field() }}
                         <div class="row">
                             <div class="card">

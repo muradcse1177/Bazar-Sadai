@@ -1406,10 +1406,16 @@ class HomeAssistantController extends Controller
                     ->where('service', $request->service)
                     ->first();
                 //common
-                $user_info = DB::table('users')
+                $user_info = DB::table('service_area')
                     ->select('*')
-                    ->where('id', Cookie::get('user_id'))
+                    ->where('user_id', Cookie::get('user_id'))
                     ->first();
+                if($user_info){
+
+                }
+                else{
+                    return redirect()->to('parlorServicingPage')->with('errorMessage', 'আপনার সার্ভিস এরিয়া সেট করা নাই।');
+                }
                 $working_status = 1;
                 if($user_info->address_type == 1) {
                     $ward_info = DB::table('wards')
@@ -1823,5 +1829,68 @@ class HomeAssistantController extends Controller
         session()->forget('d_name');
         session()->forget('d_phone');
         return redirect()->to('myLaundryOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
+    }
+    public function serviceAreaParlor(){
+        return view('frontend.serviceAreaParlor');
+    }
+    public function insertServiceAreaParlor(Request $request){
+        $addressGroup = $request->addressGroup;
+        if ($addressGroup == 1) {
+            $add_part1 = $request->div_id;
+            $add_part2 = $request->disid;
+            $add_part3 = $request->upzid;
+            $add_part4 = $request->uniid;
+            $add_part5 = $request->wardid;
+        }
+        if ($addressGroup == 2) {
+            $add_part1 = $request->div_id;
+            $add_part2 = $request->c_disid;
+            $add_part3 = $request->c_upzid;
+            $add_part4 = $request->c_uniid;
+            $add_part5 = $request->c_wardid;
+        }
+        if ($addressGroup == 3) {
+            $add_part1 = $request->naming1;
+            $add_part2 = $request->naming2;
+            $add_part3 = $request->naming3;
+            $add_part4 = $request->naming4;
+            $add_part5 = "";
+        }
+        $rows = DB::table('service_area')
+            ->where('user_id', Cookie::get('user_id'))
+            ->distinct()->get()->count();
+        if ($rows > 0) {
+            $result = DB::table('service_area')
+                ->where('user_id', Cookie::get('user_id'))
+                ->update([
+                    'address_type' => $addressGroup,
+                    'add_part1' => $add_part1,
+                    'add_part2' => $add_part2,
+                    'add_part3' => $add_part3,
+                    'add_part4' => $add_part4,
+                    'add_part5' => $add_part5,
+                ]);
+            if ($result) {
+                return redirect('parlorServicingPage')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            } else {
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        else{
+            $result = DB::table('service_area')->insert([
+                'user_id' => Cookie::get('user_id'),
+                'address_type' => $addressGroup,
+                'add_part1' => $add_part1,
+                'add_part2' => $add_part2,
+                'add_part3' => $add_part3,
+                'add_part4' => $add_part4,
+                'add_part5' => $add_part5,
+            ]);
+            if ($result) {
+                return redirect('parlorServicingPage')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            } else {
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
     }
 }

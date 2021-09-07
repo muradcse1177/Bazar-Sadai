@@ -56,6 +56,19 @@
                     <div class="card">
                         <div class="card-body cardBody">
                             <h5 style="text-align: center;"><b>আপনার পছন্দের পার্লার খুজে নিন।</b></h5>
+                            <h5 style="text-align: center;">সার্ভিস গ্রহন করার আগে আপনার সার্ভিস এরিয়া ঠিক করে নিন। অন্যথায় সঠিক এরিয়া সার্ভিস পাবেন না।</h5>
+                            <div class="serviceArea" style="text-align: center;">
+                                @if(Cookie::get('user_id'))
+                                    <div class="form-group">
+                                        <a href="{{url('serviceAreaParlor')}}" type="submit" class="btn btn-success">সার্ভিস এরিয়া</a>
+                                    </div>
+                                @endif
+                                @if(Cookie::get('user_id') == null )
+                                    <div class="form-group">
+                                        <a href='{{url('login')}}'  class="btn allButton">লগ ইন করুন</a>
+                                    </div>
+                                @endif
+                            </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <select class="form-control select2 type" id="type" name="type" style="width: 100%;" required>
