@@ -143,11 +143,6 @@
                                         '<input type="checkbox" class="form-check-input medCheckbox" name="med_id[]"  value="'+ data[i].id  +'"' +
                                         '</div>' +
                                     '</td>' +
-                                        '<td>' +
-                                        '<div class="form-check">' +
-                                        '<input type="text" class="form-check-input quantity" name="quantity[]" size="4" id="q'+data[i].id+'" ' +
-                                        '</div>' +
-                                    '</td>' +
                                     '<td>' + data[i].name +
                                     '</td>' +
                                     '</td>' +
@@ -193,11 +188,6 @@
                                     '<td>' +
                                     '<div class="form-check">' +
                                     '<input type="checkbox" class="form-check-input medCheckbox" name="med_id[]"  value="'+ data[i].id  +'"' +
-                                    '</div>' +
-                                    '</td>' +
-                                    '<td>' +
-                                    '<div class="form-check">' +
-                                    '<input type="text" class="form-check-input quantity" name="quantity[]" size="4" id="q'+data[i].id+'" ' +
                                     '</div>' +
                                     '</td>' +
                                     '<td>' + data[i].name +

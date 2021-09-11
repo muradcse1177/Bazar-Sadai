@@ -11,10 +11,8 @@ use Illuminate\Support\Facades\Session;
 class SellerController extends Controller
 {
     public function sellerForm(){
-        $rows = DB::table('seller_product')
-            ->where('status', 'Active')
-            ->where('amount','>', '0')
-            ->where('seller_id', Cookie::get('user_id'))
+        $rows = DB::table('products')
+            ->where('upload_by', Cookie::get('user_id'))
             ->orderBy('id', 'desc')
             ->paginate(20);
         return view('backend.sellerForm',['products' => $rows]);
@@ -22,144 +20,140 @@ class SellerController extends Controller
     public function insertSellerProduct(Request $request){
         try{
             if($request) {
-                if(Cookie::get('user_id')) {
-                    if($request->id) {
-                        $PhotoPath ='';
-                        if(empty($request->deleteCheck)){
-                            $row =DB::table('seller_product')
-                                ->where('id', $request->id)
-                                ->first();
-                            if ($request->hasFile('photo')) {
-                                $files = $request->file('photo');
-
-                                foreach ($files as $file) {
-                                    $targetFolder = 'public/asset/images/';
-                                    $pname = time() . '.' . $file->getClientOriginalName();
-                                    $image['filePath'] = $pname;
-                                    $file->move($targetFolder, $pname);
-                                    $PhotoPath .= $targetFolder . $pname.',';
-                                }
-                            }
-                            $PhotoPath .= json_decode($row->photo);
-                        }
-                        else{
-                            if ($request->hasFile('photo')) {
-                                $files = $request->file('photo');
-
-                                foreach ($files as $file) {
-                                    $targetFolder = 'public/asset/images/';
-                                    $pname = time() . '.' . $file->getClientOriginalName();
-                                    $image['filePath'] = $pname;
-                                    $file->move($targetFolder, $pname);
-                                    $PhotoPath .= $targetFolder . $pname.',';
-                                }
-                            }
-                        }
-                        $video = '';
-                        if ($request->hasFile('video')) {
+                if($request->id) {
+                    $photo = '';
+                    $slider = '';
+                    $row =DB::table('products')
+                        ->where('id', $request->id)
+                        ->first();
+                    if ($request->hasFile('product_photo')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('product_photo');
+                        $pname = time(). '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $photo = $targetFolder . $pname;
+                    }
+                    else{
+                        $photo =  $row->photo;
+                    }
+                    if ($request->hasFile('slider')) {
+                        $files = $request->file('slider');
+                        foreach ($files as $file) {
                             $targetFolder = 'public/asset/images/';
-                            $file = $request->file('video');
+                            $pname = time(). '.' . $file->getClientOriginalName();
+                            $image['filePath'] = $pname;
+                            $file->move($targetFolder, $pname);
+                            $slider .= $targetFolder . $pname.',';
+                        }
+                        $slider = json_encode($slider);
+                    }
+                    else{
+                        $slider =  $row->slider;
+                    }
+                    $video = '';
+                    if ($request->hasFile('video')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('video');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $video = $targetFolder . $pname;
+                    }
+                    else{
+                        $video =  $row->video;
+                    }
+                    $result =DB::table('products')
+                        ->where('id', $request->id)
+                        ->update([
+                            'name' =>  $request->name,
+                            'cat_id' => $request->catId,
+                            'sub_cat_id' => $request->subcat_name,
+                            'company' => $request->company,
+                            'genre' => $request->genre,
+                            'type' => $request->type,
+                            'description' => $request->description,
+                            'specification' => $request->specification,
+                            'price' => $request->price,
+                            'unit' => $request->unit,
+                            'minqty' => $request->minqty,
+                            'photo' => $photo,
+                            'slider' => $slider,
+                            'video' => $video,
+                            'w_phone' => $request->w_phone,
+                            'status' => $request->status,
+                        ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+                else{
+                    $slider = '';
+                    if ($request->hasFile('product_photo')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('product_photo');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $photo = $targetFolder . $pname;
+                    }
+                    else{
+                        $photo ="";
+                    }
+                    if ($request->hasFile('slider')) {
+                        $files = $request->file('slider');
+
+                        foreach ($files as $file) {
+                            $targetFolder = 'public/asset/images/';
                             $pname = time() . '.' . $file->getClientOriginalName();
                             $image['filePath'] = $pname;
                             $file->move($targetFolder, $pname);
-                            $video = $targetFolder . $pname;
-                        }
-                        $address = $request->address1.','.$request->address2.','.$request->address3;
-                        $result =DB::table('seller_product')
-                            ->where('id', $request->id)
-                            ->update([
-                                'type' => $request->type,
-                                'name' => $request->name,
-                                'amount' => $request->amount,
-                                'price' => $request->price,
-                                'address' => $address,
-                                'photo' => json_encode($PhotoPath),
-                                'video' => $video,
-                                'w_phone' => $request->w_phone,
-                                'description' => $request->description,
-                                'status' => $request->status,
-                            ]);
-                        if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                        } else {
-                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                            $slider .= $targetFolder . $pname.',';
                         }
                     }
-                    else{
-                        $PhotoPath ='';
-                        if ($request->hasFile('photo')) {
-                            $files = $request->file('photo');
-
-                            foreach ($files as $file) {
-                                $targetFolder = 'public/asset/images/';
-                                $pname = time() . '.' . $file->getClientOriginalName();
-                                $image['filePath'] = $pname;
-                                $file->move($targetFolder, $pname);
-                                $PhotoPath .= $targetFolder . $pname.',';
-                            }
-                        };
-                        $video = '';
-                        if ($request->hasFile('video')) {
-                            $size = $request->file('video')->getSize();
-                            $mb = number_format($size / 1048576, 11);
-                            if($mb>11){
-                                return back()->with('errorMessage', '10MB এর কম ফাইল আপলোড করুন।');
-                            }
-                            else{
-                                $targetFolder = 'public/asset/images/';
-                                $file = $request->file('video');
-                                $pname = time() . '.' . $file->getClientOriginalName();
-                                $image['filePath'] = $pname;
-                                $file->move($targetFolder, $pname);
-                                $video = $targetFolder . $pname;
-                            }
-                        }
-                        $address = $request->address1.','.$request->address2.','.$request->address3;
-                        $result = DB::table('seller_product')->insert([
-                            'seller_id' => Cookie::get('user_id'),
-                            'type' => $request->type,
-                            'name' => $request->name,
-                            'amount' => $request->amount,
-                            'price' => $request->price,
-                            'address' => $address,
-                            'photo' => json_encode($PhotoPath),
-                            'video' => $video,
-                            'w_phone' => $request->w_phone,
-                            'description' => $request->description,
-                            'status' => $request->status,
-                        ]);
-                        if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                        } else {
-                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                        }
+                    $video = '';
+                    if ($request->hasFile('video')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('video');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $video = $targetFolder . $pname;
                     }
-
+                    $result = DB::table('products')->insert([
+                        'upload_by' =>  Cookie::get('user_id'),
+                        'name' =>  $request->name,
+                        'cat_id' => $request->catId,
+                        'sub_cat_id' => $request->subcat_name,
+                        'company' => $request->company,
+                        'genre' => $request->genre,
+                        'type' => $request->type,
+                        'description' => $request->description,
+                        'specification' => $request->specification,
+                        'price' => $request->price,
+                        'unit' => $request->unit,
+                        'minqty' => $request->minqty,
+                        'photo' => $photo,
+                        'video' => $video,
+                        'slider' => json_encode($slider),
+                        'w_phone' => $request->w_phone,
+                        'status' => $request->status,
+                    ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
                 }
-                else{
-                    return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
-                }
-            }
-            else{
-                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
             }
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function getSellerProductsById(Request $request){
-        try{
-            $rows = DB::table('seller_product')
-                ->where('id', $request->id)
-                ->where('seller_id', Cookie::get('user_id'))
-                ->first();
-            return response()->json(array('data'=>$rows));
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return response()->json(array('data'=>$ex->getMessage()));
-        }
-    }
+
     public function getSellerProductsByIdAdmin(Request $request){
         try{
             $rows = DB::table('seller_product')
@@ -169,30 +163,6 @@ class SellerController extends Controller
         }
         catch(\Illuminate\Database\QueryException $ex){
             return response()->json(array('data'=>$ex->getMessage()));
-        }
-    }
-    public function deleteSellerProduct(Request $request){
-        try{
-            if($request->id) {
-                $result =DB::table('seller_product')
-                    ->where('id', $request->id)
-                    ->where('seller_id', Cookie::get('user_id'))
-                    ->update([
-                        'status' =>  0,
-                    ]);
-                if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                } else {
-                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                }
-            }
-            else{
-                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-            }
-
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
         }
     }
     public function changeSellerProductSituation(Request $request){
@@ -210,27 +180,6 @@ class SellerController extends Controller
                 } else {
                     Session::flash('errorMessage', 'আবার চেষ্টা করুন।');
                     return response()->json(array('data'=>$result));
-                }
-            }
-            else{
-                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-            }
-
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function deleteSellerUploadProduct(Request $request){
-        try{
-            if($request->id) {
-                $result =DB::table('seller_product')
-                    ->where('id', $request->id)
-                    ->delete();
-                if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                } else {
-                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
             }
             else{
@@ -369,28 +318,32 @@ class SellerController extends Controller
             else{
                 return back()->with('errorMessage', 'আপনি কোন মেডিসিন সিলেক্ট করেন নি।');
             }
-            $quantity = array_filter($request->quantity, function($value) { return !is_null($value) && $value !== ''; });
-            if(empty($quantity)){
-                return back()->with('errorMessage', 'আপনি কোন পরিমান দেন নি।');
-            }
-            $i =0;
-            foreach ($quantity as $q){
-                $quantity_arr[$i] =$q;
+            $data = array();
+            $i = 0;
+            foreach ($medicine_id as $med) {
+                $rows = DB::table('products')
+                    ->where('id', $med)
+                    ->first();
+                $data[$i]['upload_by'] = Cookie::get('user_id');
+                $data[$i]['name'] =$rows->name;
+                $data[$i]['cat_id'] =$rows->cat_id;
+                $data[$i]['sub_cat_id'] =$rows->sub_cat_id;
+                $data[$i]['company'] =$rows->company;
+                $data[$i]['genre'] =$rows->genre;
+                $data[$i]['type'] =$rows->type;
+                $data[$i]['description'] =$rows->description;
+                $data[$i]['price'] =$rows->price;
+                $data[$i]['unit'] =$rows->unit;
+                $data[$i]['minqty'] =$rows->minqty;
+                $data[$i]['photo'] =$rows->photo;
+                $data[$i]['video'] =$rows->video;
+                $data[$i]['slider'] =$rows->slider;
+                $data[$i]['w_phone'] =$rows->w_phone;
+                $data[$i]['status'] =$rows->status;
+                $data[$i]['approval'] =$rows->approval;
                 $i++;
             }
-            foreach ($medicine_id as $med){
-                $product= DB::table('products')->where('id', $med)->first();
-                dd($product);
-            }
-            $result = DB::table('medicine_order')->insert([
-                'user_id' => Cookie::get('user_id'),
-                'med_id' => json_encode($medicine_id),
-                'quantity' => json_encode($quantity),
-                'price' =>  json_encode($price_arr),
-                'date' => date("Y-m-d"),
-                'company' => $request->company,
-                'email' => $request->email,
-            ]);
+            $result = DB::table('products')->insert($data);
             if ($result) {
                 return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
             } else {

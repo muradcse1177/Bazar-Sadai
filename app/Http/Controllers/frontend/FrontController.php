@@ -1835,8 +1835,7 @@ class FrontController extends Controller
             $w_donate = @$order_details['w_donate'];
             $total = 0;
             $donate_total = 0;
-            if(Session::get(''))
-            dd($order_details);
+            $status = $request->status;
             if(($request->status == 'cash') || ($request->status == 'bank')|| ($request->status == 'temp_user')){
                 $status = $request->status;
                 $date = date('Y-m-d');
@@ -1894,7 +1893,6 @@ class FrontController extends Controller
                         $add_part5 = $user_info->add_part5;
                         $address = $user_info->address;
                     }
-
                     $delear = DB::table('users')
                         ->where('user_type',  7)
                         ->where('add_part1',  $user_info->add_part1)
@@ -2195,8 +2193,14 @@ class FrontController extends Controller
                     }
                 }
                 else {
-                    $count = count(Session::get('cart_item'));
-                    $data_p = Session::get('cart_item');
+                    $result = DB::table('v_assign')->insert([
+                        'user_id' => 0,
+                        'dealer_id' => 0,
+                        'pay_id' => $tx_id,
+                        'sales_date' => $date
+                    ]);
+                    $salesid = DB::getPdo()->lastInsertId();
+
                     $total = 0;
                     foreach (Session::get('cart_item') as $row) {
                         $product = DB::table('products')
@@ -2206,7 +2210,12 @@ class FrontController extends Controller
                         $price = $product->price;
                         $subtotal = $price * $quantity;
                         $total += $subtotal;
-
+                        $result = DB::table('details')->insert([
+                            'sales_id' => $salesid,
+                            'product_id' => $product->id,
+                            'quantity' => $quantity,
+                            'price' => $product->price
+                        ]);
                     }
                     $total = $total + $delivery_charge->charge;
                     $data = [

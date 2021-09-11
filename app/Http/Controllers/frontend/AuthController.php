@@ -395,10 +395,9 @@ class AuthController extends Controller
         try{
             $id= $request->id;
             $output = array('list'=>'');
-            $stmt = DB::table('delivery_charges')
-                ->where('purpose_id', 1)
+            $order_details = DB::table('order_details')
+                ->where('tx_id',$id)
                 ->first();
-            $delivery_charge = $stmt->charge;
             $customer = DB::table('users')
                 ->where('id',Cookie::get('user_id'))
                 ->first();
@@ -409,17 +408,29 @@ class AuthController extends Controller
                 ->where('address_type',$customer->address_type)
                 ->where('user_type',7)
                 ->first();
-            $stmt2= DB::table('details')
-                ->join('products', 'products.id', '=', 'details.product_id')
-                ->join('v_assign', 'v_assign.id', '=', 'details.sales_id')
-                ->join('product_assign','product_assign.product_id', '=','products.id')
-                ->where('product_assign.dealer_id',$dealer->id)
-                ->where('details.sales_id', $id)
-                ->orderBy('products.id','Asc')
-                ->get();
-
+            $stmt= DB::table('v_assign')
+                ->where('v_assign.pay_id', $id)
+                ->first();
+            if($stmt->user_id == 0){
+                $stmt2= DB::table('details')
+                    ->join('products', 'products.id', '=', 'details.product_id')
+                    ->join('v_assign', 'v_assign.id', '=', 'details.sales_id')
+                    ->where('details.sales_id', $stmt->id)
+                    ->orderBy('products.id','Asc')
+                    ->get();
+            }
+            else{
+                $stmt2= DB::table('details')
+                    ->join('products', 'products.id', '=', 'details.product_id')
+                    ->join('v_assign', 'v_assign.id', '=', 'details.sales_id')
+                    ->join('product_assign','product_assign.product_id', '=','products.id')
+                    ->where('product_assign.dealer_id',$dealer->id)
+                    ->where('details.sales_id', $stmt->id)
+                    ->orderBy('products.id','Asc')
+                    ->get();
+            }
+            //dd($stmt2);
             $data = json_decode($stmt2, true);
-
             $total = 0;
             foreach($data as $row){
 
@@ -431,20 +442,28 @@ class AuthController extends Controller
                 else{
                     $quantity = $row['quantity'];
                 }
-                $subtotal = $row['edit_price']*$quantity;
+                if($stmt->user_id == 0){
+                    $price =  $row['price'];
+                    $subtotal = $row['price']*$quantity;
+                }
+                else{
+                    $price  = $row['edit_price'];
+                    $subtotal = $row['edit_price']*$quantity;
+                }
                 $total += $subtotal;
                 $output['list'] .= "
                     <tr class='prepend_items'>
                         <td>".$row['name']."</td>
-                        <td> ".$this->en2bn(number_format($row['edit_price'], 2))."</td>
+                        <td> ".$this->en2bn(number_format($price, 2))."</td>
                         <td>".$this->en2bn($row['quantity'])."</td>
                         <td> ".$this->en2bn(number_format($subtotal, 2))."</td>
                     </tr>
                 ";
             }
 
-            $output['delivery_charge'] = '<b> '.$this->en2bn(number_format($delivery_charge, 2)).'<b>';
-            $output['total'] = '<b> '.$this->en2bn(number_format($delivery_charge+$total, 2)).'<b>';
+            $output['delivery_charge'] = '<b> '.$this->en2bn(number_format($order_details->delivery_charge, 2)).'<b>';
+            $output['discount'] = '<b> '.$this->en2bn(number_format($order_details->discount, 2)).'<b>';
+            $output['total'] = '<b> '.$this->en2bn(number_format($order_details->total, 2)).'<b>';
             return response()->json(array('data'=>$output));
         }
         catch(\Illuminate\Database\QueryException $ex){

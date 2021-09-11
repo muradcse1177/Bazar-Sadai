@@ -76,8 +76,8 @@
                           </tr>
                         @endforeach
                         <tr>
-                            <td colspan="4" style="text-align: right"><b>মোটঃ</b></td>
-                            <td><b>{{$sum}}</b></td>
+                            <td colspan="4" align="right">Total</td>
+                            <td colspan="5"> {{$sum.'/-'}}</td>
                         </tr>
                     </table>
                     {{ $orders->links() }}
@@ -110,6 +110,9 @@
                         <tr>
                             <td colspan="3" align="right"><b> ডেলিভারি চার্জ </b></td>
                             <td><span id="delivery"></span></td>
+                        </tr> <tr>
+                            <td colspan="3" align="right"><b> ছাড় </b></td>
+                            <td><span id="discount"></span></td>
                         </tr>
                         <tr>
                             <td colspan="3" align="right"><b>সর্বমোট </b></td>
@@ -159,6 +162,7 @@
                         $('#detail').prepend(response.data.list);
                         $('#total').html(response.data.total);
                         $('#delivery').html(response.data.delivery_charge);
+                        $('#discount').html(response.data.discount);
                     }
                 });
             });

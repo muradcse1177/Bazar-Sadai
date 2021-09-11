@@ -35,48 +35,87 @@
                     {{ Form::open(array('url' => 'insertSellerProduct',  'method' => 'post' ,'enctype'=>'multipart/form-data')) }}
                     {{ csrf_field() }}
                     <div class="box-body">
-                        <div class="form-group">
-                            <label>ধরন</label>
-                            <select class="form-control  type" name="type" style="width: 100%;" required>
-                                <option value="" selected>ধরন  নির্বাচন করুন</option>
-                                <option value="Animal">পশু</option>
-                                <option value="Others">অন্যান্য</option>
-                            </select>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label> ক্যাটেগরি নাম</label>
+                                <select class="form-control select2 cat_name" name="catId" style="width: 100%;" required>
+                                    <option value="" selected> ক্যাটেগরি  নির্বাচন করুন</option>
+                                </select>
+                            </div>
                         </div>
-
-                        <div class="form-group">
-                            <label for="name" >নাম</label>
-                            <input type="text" class="form-control name" name="name" placeholder="নাম"  required>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label> সাব ক্যাটেগরি নাম</label>
+                                <select class="form-control select2 subcat_name" name="subcat_name" style="width: 100%;">
+                                    <option value="" selected> সাব  ক্যাটেগরি  নির্বাচন করুন</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">পন্য নাম</label>
+                                <input type="text" class="form-control name" id="name"  name="name" placeholder="পন্য নাম লিখুন" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">কোম্পানি নাম</label>
+                                <input type="text" class="form-control company" id="company"  name="company" placeholder="কোম্পানি নাম লিখুন">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">জেনেরিক নাম</label>
+                                <input type="text" class="form-control genre" id="genre"  name="genre" placeholder="জেনেরিক নাম লিখুন">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">ধরণ</label>
+                                <input type="text" class="form-control type" id="type"  name="type" placeholder="ধরণ লিখুন">
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">দাম</label>
+                                <input type="number" class="form-control price" id="price"  name="price" min="1" placeholder="দাম" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">ইউনিট</label>
+                                <input type="text" class="form-control unit" id="unit"  name="unit" placeholder="ইউনিট" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="">নুন্যতম পরিমান</label>
+                                <input type="number" class="form-control minqty" id="minqty"  min="1" name="minqty" placeholder="নুন্যতম পরিমান" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="type" >পণ্য মালিকের ফোন</label>
+                                <input type="tel" class="form-control w_phoneq" name="w_phone" placeholder="পণ্য মালিকের ফোন">
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label>স্ট্যাটাস</label>
+                                <select class="form-control status" name="status" style="width: 100%;" required>
+                                    <option value="" selected> স্ট্যাটাস  নির্বাচন করুন</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">In Active</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="name" >দাম</label>
-                            <input type="number" class="form-control price" name="price" placeholder="দাম"  required>
+                            <label for="">কভার ফটো (Must be w-300px * h-338px)</label>
+                            <input type="file" class="form-control product_photo" accept="image/*" name="product_photo" placeholder="ছবি" required>
                         </div>
                         <div class="form-group">
-                            <label for="name" >পরিমান</label>
-                            <input type="number" class="form-control amount" name="amount" placeholder="পরিমান"  required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" >জেলা / সিটি-করপোরেশন</label>
-                            <input type="text" class="form-control address1" name="address1" placeholder="জেলা/সিটি-করপোরেশন"  required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" >উপজেলা / থানা</label>
-                            <input type="text" class="form-control address2" name="address2" placeholder="উপজেলা/থানা"  required>
-                        </div>
-                        <div class="form-group">
-                            <label for="name" >ইউনিয়ন /ওয়ার্ড </label>
-                            <input type="text" class="form-control address3" name="address3" placeholder="ইউনিয়ন /ওয়ার্ড"  required>
-                        </div>
-                        <div class="form-check deleteCheck" style="display: none;">
-                            <input class="form-check-input" type="checkbox" name="deleteCheck" value="1">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                আপনার আগের ছবিগুলা কি ডিলিট করতে চান?
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <label for="type" >ছবি</label>
-                            <input class="form-control" type="file" accept="image/*"name="photo[]" required>
+                            <label for="">স্লাইড ফটো(Must be w-800px * h-990px)</label>
+                            <input type="file" class="form-control slider" accept="image/*" name="slider[]" placeholder="ছবি" required>
                         </div>
                         <div id="newRow">
 
@@ -89,23 +128,15 @@
                             <input type="file" class="form-control video" accept="video/mp4,video/x-m4v,video/*" name="video" placeholder="ভিডিও">
                         </div>
                         <div class="form-group">
-                            <label for="type" >পণ্য মালিকের ফোন</label>
-                            <input type="tel" class="form-control w_phone" name="w_phone" placeholder="পণ্য মালিকের ফোন">
-                        </div>
-                        <div class="form-group">
-                            <label>স্ট্যাটাস</label>
-                            <select class="form-control select2 status" name="status" style="width: 100%;" required>
-                                <option value="" selected>স্ট্যাটাস  নির্বাচন করুন</option>
-                                <option value="Active">একটিভ</option>
-                                <option value="Inactive">ইন একটিভ</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="">বিবরন</label>
                             <textarea class="textarea description" id="description" placeholder="বিবরন লিখুন" name="description"
-                                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;" required></textarea>
+                                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
                         </div>
-
+                        <div class="form-group">
+                            <label for="">স্পেছিফিকেশন</label>
+                            <textarea class="textarea specification" id="specification" placeholder="স্পেছিফিকেশন লিখুন" name="specification"
+                                      style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <input type="hidden" name="id" id="id" class="id">
@@ -125,26 +156,36 @@
                 <div class="box-body table-responsive">
                     <table class="table table-bordered">
                         <tr>
-                            <th>নাম</th>
-                            <th>দাম</th>
-                            <th>পরিমান</th>
-                            <th>পণ্য মালিক</th>
-                            <th>স্ট্যাটাস</th>
+                            <th> #  </th>
+                            <th> ছবি  </th>
+                            <th> নাম  </th>
+                            <th> দাম  </th>
+                            <th> ইউনিট  </th>
+                            <th> কোম্পানি </th>
+                            <th> ধরণ </th>
                             <th>টুল</th>
                         </tr>
+                        <?php $i=1?>
                         @foreach($products as $product)
-                            <?php
-                            $photo = json_decode($product->photo);
-                            $photos = explode(",",$photo);
-                            array_pop($photos);
-                            $i=0;
-                            ?>
+                            <?php $noImage ="public/asset/no_image.jpg"; ?>
                             <tr>
+                                <td> {{$i}} </td>
+                                <td>
+                                    @if($product->photo)
+                                        <div class="text-left">
+                                            <img src="{{ $product->photo }}" class="rounded" height="50px" width="50px">
+                                        </div>
+                                    @else
+                                        <div class="text-left">
+                                            <img src="{{$noImage}}" class="rounded" height="50px" width="50px">
+                                        </div>
+                                    @endif
+                                </td>
                                 <td> {{$product->name}} </td>
                                 <td> {{$product->price}} </td>
-                                <td> {{$product->amount}} </td>
-                                <td> {{$product->w_phone}} </td>
-                                <td> {{$product->status}} </td>
+                                <td> {{$product->unit}} </td>
+                                <td> {{$product->company}} </td>
+                                <td> {{$product->type}} </td>
                                 <td class="td-actions text-center">
                                     <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$product->id}}">
                                         <i class="fa fa-edit"></i>
@@ -152,11 +193,9 @@
                                     <button type="button" rel="tooltip"  class="btn btn-danger delete" data-id="{{$product->id}}">
                                         <i class="fa fa-close"></i>
                                     </button>
-                                    <button type="button" rel="tooltip" class="btn btn-success search" data-id="{{$product->id}}">
-                                        <i class="fa fa-search"></i>
-                                    </button>
                                 </td>
                             </tr>
+                            <?php $i++ ?>
                         @endforeach
                     </table>
                     {{ $products->links() }}
@@ -172,7 +211,7 @@
                                     <center><p>মুছে ফেলতে চান?</p></center>
                                 </div>
                                 <div class="modal-footer">
-                                    {{ Form::open(array('url' => 'deleteSellerProduct',  'method' => 'post')) }}
+                                    {{ Form::open(array('url' => 'deleteProduct',  'method' => 'post')) }}
                                     {{ csrf_field() }}
                                     <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">না</button>
                                     <button type="submit" class="btn btn-outline">হ্যা</button>
@@ -183,24 +222,6 @@
                             <!-- /.modal-content -->
                         </div>
                         <!-- /.modal-dialog -->
-                    </div>
-                    <div class="modal fade"  tabindex="-1"   id="contactModal"  role="dialog">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">বিস্তারিত</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <div id="modalRes">
-
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -215,7 +236,7 @@
             var html = '';
             html += '<div class="form-group" id="inputFormRow">';
             html += '<div class="input-group">';
-            html += '<input class="form-control" type="file" accept="image/*"name="photo[]" required>';
+            html += '<input class="form-control" type="file" accept="image/*"name="slider[]" required>';
             html += '<span class="input-group-btn">';
             html += '<a class="btn btn-danger" id="remove">বাদ দিন</a>';
             html += '</span>';
@@ -241,6 +262,46 @@
             });
 
         });
+        $(document).ready(function(){
+            $.ajax({
+                url: 'getAllCategory',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".cat_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+
+                },
+                failure: function (msg) {
+                    alert('an error occured');
+                }
+            });
+            $(".cat_name").change(function(){
+                var id =$(this).val();
+                $('.subcat_name').find('option:not(:first)').remove();
+                $.ajax({
+                    type: 'GET',
+                    url: 'getSubCategoryListAll',
+                    data: {id:id},
+                    dataType: 'json',
+                    success: function(response){
+                        var data = response.data;
+                        var len = data.length;
+                        for( var i = 0; i<len; i++){
+                            var id = data[i]['id'];
+                            var name = data[i]['name'];
+                            $(".subcat_name").append("<option value='"+id+"'>"+name+"</option>");
+                        }
+                    }
+                });
+            });
+        });
         $(function(){
             $(document).on('click', '.edit', function(e){
                 e.preventDefault();
@@ -264,7 +325,7 @@
         function getRow(id){
             $.ajax({
                 type: 'POST',
-                url: 'getSellerProductsById',
+                url: 'getProductList',
                 data: {
                     "_token": "{{ csrf_token() }}",
                     "id": id
@@ -272,21 +333,22 @@
                 dataType: 'json',
                 success: function(response){
                     var data = response.data;
-                    var address = data.address.split(',');
+                    console.log(data);
                     $('.name').val(data.name);
-                    $('.status').val(data.status);
+                    $('.company').val(data.company);
+                    $('.genre').val(data.genre);
                     $('.type').val(data.type);
-                    $('.price').val(data.price);
-                    $('.w_phone').val(data.w_phone);
-                    $('.amount').val(data.amount);
-                    $('.address1').val(address[0]);
-                    $('.address2').val(address[1]);
-                    $('.address3').val(address[2]);
-                    $('#modalRes').html(data.description);
-                    $('#description ~ iframe').contents().find('.wysihtml5-editor').html(data.description);
                     $('.id').val(data.id);
-                    $(".deleteCheck").show();
-                    $('.select2').select2()
+                    $('.price').val(data.price);
+                    $('.unit').val(data.unit);
+                    $('.minqty').val(data.minqty);
+                    $('.w_phoneq').val(data.w_phone);
+                    $('.status').val(data.status);
+                    $(".product_photo").prop('required',false);
+                    $(".slider").prop('required',false);
+                    $('#description ~ iframe').contents().find('.wysihtml5-editor').html(data.description);
+                    $('#specification ~ iframe').contents().find('.wysihtml5-editor').html(data.specification);
+                    //Also works $('.wysihtml5-sandbox').contents().find('.wysihtml5-editor').html(data.description);
                 }
             });
         }

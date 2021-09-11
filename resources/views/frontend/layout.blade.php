@@ -272,7 +272,6 @@
                                         <a href="#">আমার অর্ডার</a>
                                         <ul class="dropdown" role="menu">
                                             <li><a href="{{url('myProductOrder')}}">পণ্য ক্রয়</a></li>
-                                            <li><a href="{{url('myVariousProductOrderUser')}}">হরেক রকম পণ্য/পশু ক্রয়</a></li>
                                             <li><a href="{{url('myTicketOrder')}}">টিকেট ক্রয়</a></li>
                                             <li><a href="{{url('myDrAppointment')}}">ডাক্তার এপয়েনমেনট</a></li>
                                             <li><a href="{{url('myTherapyAppointment')}}">থেরাপি এপয়েনমেনট</a></li>
@@ -492,7 +491,6 @@
                             <a href="#">আমার অর্ডার</a>
                             <ul class="mobile-menu" role="menu">
                                 <li><a href="{{url('myProductOrder')}}">পণ্য ক্রয়</a></li>
-                                <li><a href="{{url('myVariousProductOrderUser')}}">হরেক রকম পণ্য/পশু ক্রয়</a></li>
                                 <li><a href="{{url('myTicketOrder')}}">টিকেট ক্রয়</a></li>
                                 <li><a href="{{url('myDrAppointment')}}">ডাক্তার এপয়েনমেনট</a></li>
                                 <li><a href="{{url('myTherapyAppointment')}}">থেরাপি এপয়েনমেনট</a></li>
@@ -517,6 +515,11 @@
                     <li>
                         <a href="{{url('about')}}">আমাদের সম্পর্কে</a>
                     </li>
+                    @if (!Cookie::get('user_id') == null)
+                        <li class="">
+                            <a href="{{url('logout')}}">লগ আউট</a>
+                        </li>
+                    @endif
                 </ul>
             </div>
             <div class="tab-pane" id="categories">

@@ -154,11 +154,7 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::get('product', 'backend\ProductController@selectProduct');
     Route::get('productSearchFromAdmin', 'backend\ProductController@productSearchFromAdmin');
     Route::get('medicineSearchFromAdmin', 'backend\ProductController@medicineSearchFromAdmin');
-    Route::get('getAllCategory', 'backend\ProductController@getAllCategory');
-    Route::get('getSubCategoryListAll', 'backend\ProductController@getSubCategoryListAll');
     Route::post('insertProducts', 'backend\ProductController@insertProducts');
-    Route::post('getProductList', 'backend\ProductController@getProductList');
-    Route::post('deleteProduct', 'backend\ProductController@deleteProduct');
     Route::get('delivery_charge', 'backend\ProductController@delivery_charge');
     Route::post('getDeliveryCharge', 'backend\ProductController@getDeliveryCharge');
     Route::post('insertDeliveryCharge', 'backend\ProductController@insertDeliveryCharge');
@@ -592,7 +588,10 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('verifyEmail', 'frontend\AuthController@verifyEmail');
     Route::post('verifyForgetCode', 'frontend\AuthController@verifyForgetCode');
     Route::post('passwordUpdate', 'frontend\AuthController@passwordUpdate');
-
+    Route::get('getAllCategory', 'backend\ProductController@getAllCategory');
+    Route::get('getSubCategoryListAll', 'backend\ProductController@getSubCategoryListAll');
+    Route::post('getProductList', 'backend\ProductController@getProductList');
+    Route::post('deleteProduct', 'backend\ProductController@deleteProduct');
 
     Route::post('getUserList', 'backend\UserController@getUserList');
     Route::post('insertUser', 'backend\UserController@insertUser');

@@ -72,38 +72,12 @@
                                     <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$product->id}}">
                                         <i class="fa fa-edit"></i>
                                     </button>
-                                    <button type="button" rel="tooltip"  class="btn btn-danger delete" data-id="{{$product->id}}">
-                                        <i class="fa fa-close"></i>
-                                    </button>
                                 </td>
                             </tr>
                         @endforeach
                     </table>
                     {{ $products->links() }}
-                    <div class="modal modal-danger fade" id="modal-danger">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">মুছে ফেলতে চান</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <center><p>মুছে ফেলতে চান?</p></center>
-                                </div>
-                                <div class="modal-footer">
-                                    {{ Form::open(array('url' => 'deleteSellerShop',  'method' => 'post')) }}
-                                    {{ csrf_field() }}
-                                    <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">না</button>
-                                    <button type="submit" class="btn btn-outline">হ্যা</button>
-                                    <input type="hidden" name="id" id="id" class="id">
-                                    {{ Form::close() }}
-                                </div>
-                            </div>
-                            <!-- /.modal-content -->
-                        </div>
-                        <!-- /.modal-dialog -->
-                    </div>
+
                     <div class="modal fade"  tabindex="-1"   id="contactModal"  role="dialog">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">

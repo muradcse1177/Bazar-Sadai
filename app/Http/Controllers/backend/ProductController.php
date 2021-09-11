@@ -191,9 +191,7 @@ class ProductController extends Controller
             if($request->id) {
                 $result =DB::table('categories')
                     ->where('id', $request->id)
-                    ->update([
-                        'status' =>  0,
-                    ]);
+                    ->delete();
                 if ($result) {
                     return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
                 } else {
@@ -297,9 +295,7 @@ class ProductController extends Controller
             if($request->id) {
                 $result =DB::table('subcategories')
                     ->where('id', $request->id)
-                    ->update([
-                        'status' =>  0,
-                    ]);
+                    ->delete();
                 if ($result) {
                     return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
                 } else {
@@ -467,12 +463,24 @@ class ProductController extends Controller
                     else{
                         $slider =  $row->slider;
                     }
+                    $video = '';
+                    if ($request->hasFile('video')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('video');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $video = $targetFolder . $pname;
+                    }
+                    else{
+                        $video =  $row->video;
+                    }
                     $result =DB::table('products')
                         ->where('id', $request->id)
                         ->update([
                             'name' =>  $request->name,
                             'cat_id' => $request->catId,
-                            'sub_cat_id' => $request->subcatId,
+                            'sub_cat_id' => $request->subcat_name,
                             'company' => $request->company,
                             'genre' => $request->genre,
                             'type' => $request->type,
@@ -483,6 +491,9 @@ class ProductController extends Controller
                             'minqty' => $request->minqty,
                             'photo' => $photo,
                             'slider' => $slider,
+                            'video' => $video,
+                            'w_phone' => $request->w_phone,
+                            'status' => $request->status,
                         ]);
                     if ($result) {
                         return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -491,63 +502,63 @@ class ProductController extends Controller
                     }
                 }
                 else{
-                    $rows = DB::table('products')->select('name')->where([
-                        ['name', '=', $request->name]
-                        ])->where('status', 1)
-                        ->distinct()->get()->count();
-                    if ($rows > 0) {
-                        return back()->with('errorMessage', ' নতুন পন্য লিখুন।');
+                    $slider = '';
+                    if ($request->hasFile('product_photo')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('product_photo');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $photo = $targetFolder . $pname;
                     }
-                    else {
+                    else{
                         $photo ="";
-                        $slider ='';
-                        if ($request->hasFile('product_photo')) {
+                    }
+                    if ($request->hasFile('slider')) {
+                        $files = $request->file('slider');
+
+                        foreach ($files as $file) {
                             $targetFolder = 'public/asset/images/';
-                            $file = $request->file('product_photo');
                             $pname = time() . '.' . $file->getClientOriginalName();
                             $image['filePath'] = $pname;
                             $file->move($targetFolder, $pname);
-                            $photo = $targetFolder . $pname;
-                        }
-                        else{
-                            $photo ="";
-                        }
-                        if ($request->hasFile('slider')) {
-                            $files = $request->file('slider');
-
-                            foreach ($files as $file) {
-                                $targetFolder = 'public/asset/images/';
-                                $pname = time() . '.' . $file->getClientOriginalName();
-                                $image['filePath'] = $pname;
-                                $file->move($targetFolder, $pname);
-                                $slider .= $targetFolder . $pname.',';
-                            }
-                        }
-                        $result = DB::table('products')->insert([
-                            'name' =>  $request->name,
-                            'cat_id' => $request->catId,
-                            'sub_cat_id' => $request->subcatId,
-                            'company' => $request->company,
-                            'genre' => $request->genre,
-                            'type' => $request->type,
-                            'description' => $request->description,
-                            'specification' => $request->specification,
-                            'price' => $request->price,
-                            'unit' => $request->unit,
-                            'minqty' => $request->minqty,
-                            'photo' => $photo,
-                            'slider' => json_decode($slider),
-                        ]);
-                        if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                        } else {
-                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                            $slider .= $targetFolder . $pname.',';
                         }
                     }
+                    $video = '';
+                    if ($request->hasFile('video')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('video');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $video = $targetFolder . $pname;
+                    }
+                    $result = DB::table('products')->insert([
+                        'upload_by' =>  Cookie::get('user_id'),
+                        'name' =>  $request->name,
+                        'cat_id' => $request->catId,
+                        'sub_cat_id' => $request->subcat_name,
+                        'company' => $request->company,
+                        'genre' => $request->genre,
+                        'type' => $request->type,
+                        'description' => $request->description,
+                        'specification' => $request->specification,
+                        'price' => $request->price,
+                        'unit' => $request->unit,
+                        'minqty' => $request->minqty,
+                        'photo' => $photo,
+                        'video' => $video,
+                        'slider' => json_encode($slider),
+                        'w_phone' => $request->w_phone,
+                        'status' => $request->status,
+                    ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
                 }
-            }
-            else{
-                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
             }
         }
         catch(\Illuminate\Database\QueryException $ex){
@@ -557,13 +568,10 @@ class ProductController extends Controller
 
     public function deleteProduct(Request $request){
         try{
-
             if($request->id) {
                 $result =DB::table('products')
                     ->where('id', $request->id)
-                    ->update([
-                        'status' =>  0,
-                    ]);
+                    ->delete();
                 if ($result) {
                     return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
                 } else {

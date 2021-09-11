@@ -92,6 +92,16 @@
                                 <input type="number" class="form-control minqty" id="minqty"  min="1" name="minqty" placeholder="নুন্যতম পরিমান" required>
                             </div>
                         </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>স্ট্যাটাস</label>
+                                <select class="form-control status" name="status" style="width: 100%;" required>
+                                    <option value="" selected> স্ট্যাটাস  নির্বাচন করুন</option>
+                                    <option value="1">Active</option>
+                                    <option value="2">In Active</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="">কভার ফটো (Must be w-300px * h-338px)</label>
                             <input type="file" class="form-control product_photo" accept="image/*" name="product_photo" placeholder="ছবি" required>

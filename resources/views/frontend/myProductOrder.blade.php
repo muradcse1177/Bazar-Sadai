@@ -57,12 +57,12 @@
                                                     <td><a href='{{$order['v_id']}}'><button type='button' class='btn btn-success btn-sm btn-flat'>{{$order['v_name']}} </button></a></td>
                                                     <td><a href="tel:{{$order['deliver_phone']}}"><button type='button' class='btn btn-dark-light btn-sm btn-flat'>{{$order['deliver_phone']}} </button></a></td>
                                                     <td><button type='button' class='btn btn-primary btn-sm btn-flat u_search' data-id='{{$order['user_id']}}'>{{$order['status']}} </button></td>
-                                                    <td> {{$order['amount']}}</td>
+                                                    <td> {{$order['amount'].'/-'}}</td>
                                                 </tr>
                                             @endforeach
                                             <tr>
                                                 <td colspan="6" style="text-align: right"><b>মোটঃ</b></td>
-                                                <td><b>{{$sum}}</b></td>
+                                                <td><b>{{$sum.'/-'}}</b></td>
                                             </tr>
                                         </table>
                                         {{ $orders->links() }}
