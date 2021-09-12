@@ -60,6 +60,8 @@
                                     <tr>
                                         <th></th>
                                         <th>নাম</th>
+                                        <th>ধৌত</th>
+                                        <th>ইস্ত্রি</th>
                                         <th>পরিমান</th>
                                         <th>দাম</th>
                                     </tr>
@@ -67,8 +69,10 @@
                                         <tr>
                                             <td><input type="checkbox" class="form-check-input" name="cloth_id[]" value="{{$cloth->id}}"></td>
                                             <td>{{$cloth->name}}</td>
+                                            <td><input type="checkbox" class="form-check-input wa" id="wa{{$cloth->id}}" name="cloth_idwa[]" value="{{$cloth->id}}" data-id="{{$cloth->id}}"></td>
+                                            <td><input type="checkbox" class="form-check-input is" id="is{{$cloth->id}}" name="cloth_idis[]" value="{{$cloth->id}}" data-id="{{$cloth->id}}"></td>
                                             <td><input type="number" class="quantity" name="quantity[]" style="width: 50px; text-align: center;" min="1" value="1"  id="{{$cloth->id}}" data-id="{{$cloth->id}}"></td>
-                                            <td id="td{{$cloth->id}}">{{$cloth->price}}</td>
+                                            <td id="td{{$cloth->id}}">0</td>
                                         </tr>
                                     @endforeach
                                 </table><br>
@@ -100,14 +104,103 @@
         $(".quantity").change(function(){
             var id = $(this).data('id');
             var value = $(this).val();
+            if($("#is"+id).prop('checked') == true){
+                var is = 1;
+            }
+            else{
+                var is = 0;
+            }
+            if($("#wa"+id).prop('checked') == true){
+                var wa = 1;
+            }
+            else{
+                var wa = 0;
+            }
             $.ajax({
                 type: 'GET',
                 url: 'getLaundryPriceByIdFront',
-                data: {id:id},
+                data: {
+                    id:id,
+                },
                 dataType: 'json',
                 success: function(response){
                     var data = response.data;
-                    $("#td"+id).html(data.price*value);
+                    if( is == 1 && wa == 1 )
+                        $("#td"+id).html((data.price)*value);
+                    if( is == 1 && wa == 0 )
+                        $("#td"+id).html((data.priceis)*value);
+                    if( is == 0 && wa ==1 )
+                        $("#td"+id).html((data.pricewa)*value);
+                }
+            });
+        });
+        $(".wa").change(function(){
+            var id = $(this).data('id');
+            var value = $('#'+id).val();
+            if($("#is"+id).prop('checked') == true){
+                var is = 1;
+            }
+            else{
+                var is = 0;
+            }
+            if($("#wa"+id).prop('checked') == true){
+                var wa = 1;
+            }
+            else{
+                var wa = 0;
+            }
+            $.ajax({
+                type: 'GET',
+                url: 'getLaundryPriceByIdFront',
+                data: {
+                    id:id,
+                },
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    if( is == 1 && wa == 1 )
+                        $("#td"+id).html((data.price)*value);
+                    if( is == 0 && wa == 1 )
+                        $("#td"+id).html((data.pricewa)*value);
+                    if( is == 1 && wa == 0 )
+                        $("#td"+id).html((data.priceis)*value);
+                    if( is == 0 && wa == 0 )
+                        $("#td"+id).html(0);
+                }
+            });
+        });
+        $(".is").change(function(){
+            var id = $(this).data('id');
+            var value = $('#'+id).val();
+            if($("#wa"+id).prop('checked') == true){
+                var wa = 1;
+            }
+            else{
+                var wa = 0;
+            }
+            if($("#is"+id).prop('checked') == true){
+                var is = 1;
+            }
+            else{
+                var is = 0;
+            }
+            $.ajax({
+                type: 'GET',
+                url: 'getLaundryPriceByIdFront',
+                data: {
+                    id:id,
+                },
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    if( is == 1 && wa == 1 )
+                        $("#td"+id).html((data.price)*value);
+                    if( is == 1 && wa == 0 )
+                        $("#td"+id).html((data.priceis)*value);
+                    if( is == 0 && wa == 1 )
+                        $("#td"+id).html((data.pricewa)*value);
+                    if( is == 0 && wa == 0 )
+                        $("#td"+id).html(0);
                 }
             });
         });

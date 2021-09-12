@@ -658,6 +658,8 @@ class HomeAssistantController extends Controller
                         ->update([
                             'name' => $request->name,
                             'price' => $request->price,
+                            'priceis' => $request->priceis,
+                            'pricewa' => $request->pricewa,
                         ]);
                     if ($result) {
                         return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -668,13 +670,15 @@ class HomeAssistantController extends Controller
                 else{
                     $rows = DB::table('laundry')->select('id')->where([
                         ['name', '=', $request->name],
-                    ])->where('status', 1)->distinct()->get()->count();
+                    ])->distinct()->get()->count();
                     if ($rows > 0) {
                         return back()->with('errorMessage', ' নতুন আইটেম লিখুন।');
                     } else {
                         $result = DB::table('laundry')->insert([
                             'name' => $request->name,
                             'price' => $request->price,
+                            'priceis' => $request->priceis,
+                            'pricewa' => $request->pricewa,
                         ]);
                         if ($result) {
                             return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -696,7 +700,6 @@ class HomeAssistantController extends Controller
         try{
             $rows = DB::table('laundry')
                 ->where('id', $request->id)
-                ->where('status', 1)
                 ->first();
             return response()->json(array('data'=>$rows));
         }
@@ -706,13 +709,10 @@ class HomeAssistantController extends Controller
     }
     public function deleteLaundry(Request $request){
         try{
-
             if($request->id) {
                 $result =DB::table('laundry')
                     ->where('id', $request->id)
-                    ->update([
-                        'status' =>  0,
-                    ]);
+                    ->delete();
                 if ($result) {
                     return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
                 } else {

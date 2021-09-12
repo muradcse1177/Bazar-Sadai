@@ -1412,7 +1412,7 @@ class ReportController extends Controller
     public function laundryReport (Request  $request){
         try{
             $washing = DB::table('laundry_order')
-                ->select('*','a.name as u_name','a.phone as  u_phone','laundry_order.id as c_id')
+                ->select('*','a.name as u_name','a.phone as  u_phone','a.address as  u_address','laundry_order.id as c_id','laundry_order.status as situation')
                 ->join('users as a', 'a.id', '=', 'laundry_order.user_id')
                 ->join('users as b', 'b.id', '=', 'laundry_order.cleaner_id')
                 ->where('a.status', 1)
@@ -1428,7 +1428,7 @@ class ReportController extends Controller
     public function laundryReportListByDate (Request  $request){
         try{
             $washing = DB::table('laundry_order')
-                ->select('*','a.name as u_name','a.phone as  u_phone','laundry_order.id as c_id')
+                ->select('*','a.name as u_name','a.phone as  u_phone','a.address as  u_address','laundry_order.id as c_id')
                 ->join('users as a', 'a.id', '=', 'laundry_order.user_id')
                 ->join('users as b', 'b.id', '=', 'laundry_order.cleaner_id')
                 ->where('a.status', 1)
@@ -1449,6 +1449,8 @@ class ReportController extends Controller
             ->first();
         $cloth_id = json_decode($orders->cloth_id);
         $quantity = json_decode($orders->quantity);
+        $wash = json_decode($orders->wa_id);
+        $iron = json_decode($orders->is_id);
         $i =0;
         foreach ($quantity as $q){
             $quantity_arr[$i] =$q;
@@ -1459,9 +1461,17 @@ class ReportController extends Controller
                 ->select('*')
                 ->where('id',  $cloth_id[$i])
                 ->first();
+            $wa_price = 'No';
+            $is_price = 'No';
+            if(in_array($cloth_id[$i],$wash))
+                $wa_price = "Yes";
+            if(in_array($cloth_id[$i],$iron))
+                $is_price = "Yes";
             $output['list'] .= "
                     <tr class='prepend_items'>
                         <td>".$cloth->name."</td>
+                        <td>".$wa_price."</td>
+                        <td>".$is_price."</td>
                         <td>".$quantity_arr[$i]."</td>
                     </tr>
                 ";

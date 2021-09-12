@@ -37,8 +37,16 @@
                             <input type="text" class="form-control name" id="name"  name="name" placeholder="নাম লিখুন" required>
                         </div>
                         <div class="form-group">
-                            <label for="">দাম </label>
-                            <input type="number" class="form-control price" id="price"  name="price" placeholder="দাম লিখুন" required>
+                            <label for="">দাম(ইস্ত্রি) </label>
+                            <input type="number" class="form-control priceis" id="priceis"  name="priceis" placeholder="দাম (ইস্ত্রি) লিখুন" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">দাম(ধৌত) </label>
+                            <input type="number" class="form-control pricewa" id="pricewa"  name="pricewa" placeholder="দাম (ধৌত) লিখুন" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="">দাম (ইস্ত্রি + ধৌত ) </label>
+                            <input type="number" class="form-control price" id="price"  name="price" placeholder="দাম (ইস্ত্রি + ধৌত ) লিখুন" required>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -59,12 +67,16 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>কাপড়</th>
-                            <th>দাম  </th>
+                            <th>দাম (ইস্ত্রি) </th>
+                            <th>দাম (ধৌত)  </th>
+                            <th>দাম (ইস্ত্রি + ধৌত ) </th>
                             <th>টুল</th>
                         </tr>
                         @foreach($cloths as $cloth)
                             <tr>
                                 <td> {{$cloth-> name}} </td>
+                                <td> {{$cloth->priceis}} </td>
+                                <td> {{$cloth->pricewa}} </td>
                                 <td> {{$cloth->price}} </td>
                                 <td class="td-actions text-center">
                                     <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$cloth->id}}">

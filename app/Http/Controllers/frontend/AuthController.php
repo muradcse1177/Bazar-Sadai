@@ -40,7 +40,7 @@ class AuthController extends Controller
                         }
                         elseif($role==3){
                             Cookie::queue('buyer', $rows->id, time()+31556926 ,'/');
-                            return redirect()->to('cart');
+                            return redirect()->to('homepage');
                         }
                         elseif($role==4){
                             Cookie::queue('seller', $rows->id, time()+31556926 ,'/');

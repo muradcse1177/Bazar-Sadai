@@ -56,10 +56,11 @@
                             <tr>
                                 <th>তারিখ</th>
                                 <th>বিস্তারিত</th>
+                                <th>অর্ডার নং</th>
+                                <th>স্ট্যাটাস</th>
                                 <th>নাম</th>
                                 <th>ফোন</th>
-                                <th>ক্লিনার নাম</th>
-                                <th>ক্লিনার ফোন</th>
+                                <th>ঠিকানা</th>
                                 <th>দাম</th>
                             </tr>
                             @foreach($washings as $washing)
@@ -70,10 +71,20 @@
                                             বিস্তারিত
                                         </button>
                                     </td>
+                                    <td>{{$washing->tx_id}}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <select class="form-control  status" name="status" style="width: 100%;" required>
+                                                <option value="Ordered&{{$washing->c_id}}" @if($washing->situation == 'Ordered'){{'Selected'}} @endif>Ordered</option>
+                                                <option value="Bring from Customer&{{$washing->c_id}}" @if($washing->situation == 'Bring from Customer'){{'Selected'}} @endif>Bring from Customer</option>
+                                                <option value="Working&{{$washing->c_id}}" @if($washing->situation == 'Working'){{'Selected'}} @endif>Working</option>
+                                                <option value="Delivered&{{$washing->c_id}}" @if($washing->situation == 'Delivered'){{'Selected'}} @endif>Delivered</option>
+                                            </select>
+                                        </div>
+                                    </td>
                                     <td>{{$washing->u_name}}</td>
                                     <td>{{$washing->u_phone}}</td>
-                                    <td>{{$washing->name}}</td>
-                                    <td>{{$washing->phone}}</td>
+                                    <td>{{$washing->u_address}}</td>
                                     <td>{{$washing->price.'/-'}}</td>
                                 </tr>
                             @endforeach
@@ -92,6 +103,8 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <th>নাম</th>
+                                        <th>ধৌত</th>
+                                        <th>ইস্ত্রি</th>
                                         <th>পরিমান</th>
                                         </thead>
                                         <tbody id="detail">
@@ -123,6 +136,18 @@
                 dateFormat: "yy-m-dd",
             })
         } );
+        $(".status").change(function(){
+            var id =$(this).val();
+            $.ajax({
+                type: 'GET',
+                url: 'changeLaundryProductSituation',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    location.reload();
+                }
+            });
+        });
         $(function(){
             $(document).on('click', '.details', function(e){
                 e.preventDefault();

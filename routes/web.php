@@ -479,6 +479,7 @@ Route::group(['middleware' => ['laundry']], function () {
     Route::get('laundryProfile', 'backend\LaundryController@laundryProfile');
     Route::post('getLaundryWashingByIdOwn', 'backend\LaundryController@getLaundryWashingByIdOwn');
 });
+Route::get('changeLaundryProductSituation', 'backend\LaundryController@changeLaundryProductSituation');
 Route::group(['middleware' => ['courier']], function () {
     Route::get('courierProfile', 'backend\CourierController@courierProfile');
     Route::post('changeCourierStatus', 'backend\CourierController@changeCourierStatus');

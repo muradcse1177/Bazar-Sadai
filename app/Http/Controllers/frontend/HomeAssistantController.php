@@ -1616,6 +1616,7 @@ class HomeAssistantController extends Controller
         $rows = DB::table('laundry')
             ->where('id', $request->id)
             ->first();
+
         return response()->json(array('data'=>$rows));
     }
     public function laundryBookingFront(Request $request){
@@ -1624,6 +1625,9 @@ class HomeAssistantController extends Controller
                 if(!empty($request->cloth_id)){
                     $quantity = array_filter($request->quantity, function($value) { return !is_null($value) && $value !== ''; });
                     $cloth_id = array_filter($request->cloth_id, function($value) { return !is_null($value) && $value !== ''; });
+                    $cloth_idwa = array_filter($request->cloth_idwa, function($value) { return !is_null($value) && $value !== ''; });
+                    $cloth_idis = array_filter($request->cloth_idis, function($value) { return !is_null($value) && $value !== ''; });
+
                     $i =0;
                     $j=0;
                     foreach ($quantity as $q){
@@ -1634,12 +1638,29 @@ class HomeAssistantController extends Controller
                         $cloth_id_arr[$j] =$p;
                         $j++;
                     }
+                    $j=0;
+                    foreach ($cloth_idwa as $w){
+                        $cloth_idwa_arr[$j] =$w;
+                        $j++;
+                    }
+                    $j=0;
+                    foreach ($cloth_idis as $s){
+                        $cloth_idis_arr[$j] =$s;
+                        $j++;
+                    }
                     $price = 0;
                     for ($k=0; $k<count($cloth_id_arr); $k++){
                         $rows = DB::table('laundry')
                             ->where('id', $cloth_id_arr[$k])
                             ->first();
-                        $q_price = $rows->price* $quantity_arr[$k];
+                        $is_price = 0;
+                        $wa_price = 0;
+                        if(in_array($cloth_id_arr[$k],$cloth_idwa_arr))
+                            $wa_price = $rows->pricewa;
+                        if(in_array($cloth_id_arr[$k],$cloth_idis_arr))
+                            $is_price = $rows->priceis;
+
+                        $q_price = ($is_price + $wa_price)*$quantity_arr[$k];
                         $price = ($price + $q_price) ;
                     }
                     //common
@@ -1762,26 +1783,18 @@ class HomeAssistantController extends Controller
                         }
                     }
                     if(!empty($delivery_man)){
+                        Session::put('d_id', $delivery_man->id);
                         Session::put('d_name', $delivery_man->name);
                         Session::put('d_phone', $delivery_man->phone);
+                        Session::put('d_price', $price);
+                        Session::put('cloth_id', $cloth_id);
+                        Session::put('cloth_idwa', $cloth_idwa);
+                        Session::put('cloth_idis', $cloth_idis);
+                        Session::put('quantity', $quantity);
                         $shurjopay_service = new ShurjopayService();
                         $tx_id = $shurjopay_service->generateTxId();
-                        $result =DB::table('users')
-                            ->where('id', $delivery_man->id)
-                            ->update([
-                                'working_status' => 2,
-                            ]);
-                        $result = DB::table('laundry_order')->insert([
-                            'user_id' => Cookie::get('user_id'),
-                            'cleaner_id' => $delivery_man->id,
-                            'tx_id' => $tx_id,
-                            'date' => date("Y-m-d"),
-                            'cloth_id' => json_encode($cloth_id),
-                            'quantity' => json_encode($quantity),
-                            'price' => $price,
-                        ]);
                         $success_route = url('insertLaundryPaymentInfo');
-                        $shurjopay_service->sendPayment($price, $success_route);
+                        $shurjopay_service->sendPayment(2, $success_route);
                     }
                     else{
                         return redirect()->to('laundryServicePage')->with('errorMessage', 'আপনার এলাকাই কোন কাপড় পরিস্কারক খুজে পাওয়া যায়নি।');
@@ -1801,7 +1814,14 @@ class HomeAssistantController extends Controller
     }
     public function insertLaundryPaymentInfo(Request $request){
         $name = Session::get('d_name');
-        $phone =Session::get('d_phone');
+        $phone = Session::get('d_phone');
+        $d_id = Session::get('d_id');
+        $d_price = Session::get('d_price');
+        $cloth_id = Session::get('cloth_id');
+        $cloth_idwa = Session::get('cloth_idwa');
+        $cloth_idis = Session::get('cloth_idis');
+        $quantity = Session::get('quantity');
+
         $status = $request->status;
         $type = 'Laundry';
         $msg = $request->msg;
@@ -1813,25 +1833,51 @@ class HomeAssistantController extends Controller
         $sp_code_des = $request->sp_code_des;
         $sp_payment_option = $request->sp_payment_option;
         $date = date('Y-m-d');
-        $result = DB::table('payment_info')->insert([
-            'user_id' => Cookie::get('user_id'),
-            'status' => $status,
-            'type' => $type,
-            'msg' => $msg,
-            'tx_id' => $tx_id,
-            'bank_tx_id' => $bank_tx_id,
-            'amount' => $amount,
-            'bank_status' => $bank_status,
-            'sp_code' => $sp_code,
-            'sp_code_des' => $sp_code_des,
-            'sp_payment_option' => $sp_payment_option,
-        ]);
-        session()->forget('d_name');
-        session()->forget('d_phone');
-        return redirect()->to('myLaundryOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
+        if($status == 'Failed'){
+            return redirect('homepage')->with('errorMessage', 'আবার চেষ্টা করুন।');
+        }
+        else {
+            $result = DB::table('payment_info')->insert([
+                'user_id' => Cookie::get('user_id'),
+                'status' => $status,
+                'type' => $type,
+                'msg' => $msg,
+                'tx_id' => $tx_id,
+                'bank_tx_id' => $bank_tx_id,
+                'amount' => $amount,
+                'bank_status' => $bank_status,
+                'sp_code' => $sp_code,
+                'sp_code_des' => $sp_code_des,
+                'sp_payment_option' => $sp_payment_option,
+            ]);
+            $result = DB::table('laundry_order')->insert([
+                'user_id' => Cookie::get('user_id'),
+                'cleaner_id' => $d_id,
+                'tx_id' => $tx_id,
+                'date' => date("Y-m-d"),
+                'cloth_id' => json_encode($cloth_id),
+                'quantity' => json_encode($quantity),
+                'price' => $d_price,
+                'wa_id' => json_encode($cloth_idwa),
+                'is_id' => json_encode($cloth_idis),
+            ]);
+            session()->forget('d_name');
+            session()->forget('d_phone');
+            session()->forget('d-id');
+            session()->forget('d_price');
+            session()->forget('cloth_id');
+            session()->forget('cloth_idwa');
+            session()->forget('cloth_idis');
+            session()->forget('quantity');
+            Session::save();
+            return redirect()->to('myLaundryOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। ' . $name . ' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে ' . $phone . ' কল করুন।');
+        }
     }
     public function serviceAreaParlor(){
-        return view('frontend.serviceAreaParlor');
+        if(Cookie::get('user_id'))
+            return view('frontend.serviceAreaParlor');
+        else
+            return redirect('login');
     }
     public function insertServiceAreaParlor(Request $request){
         $addressGroup = $request->addressGroup;

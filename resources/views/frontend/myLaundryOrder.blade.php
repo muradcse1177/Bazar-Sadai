@@ -43,6 +43,7 @@
                                             <tr>
                                                 <th>তারিখ</th>
                                                 <th>বিস্তারিত</th>
+                                                <th>অর্ডার নম্বর</th>
                                                 <th>নাম</th>
                                                 <th>ফোন</th>
                                                 <th>ক্লিনার নাম</th>
@@ -57,6 +58,7 @@
                                                             বিস্তারিত
                                                         </button>
                                                     </td>
+                                                    <td>{{$washing->tx_id}}</td>
                                                     <td>{{$washing->u_name}}</td>
                                                     <td>{{$washing->u_phone}}</td>
                                                     <td>{{$washing->name}}</td>
@@ -79,6 +81,8 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                         <th>নাম</th>
+                                                        <th>ধৌত</th>
+                                                        <th>ইস্ত্রি</th>
                                                         <th>পরিমান</th>
                                                         </thead>
                                                         <tbody id="detail">

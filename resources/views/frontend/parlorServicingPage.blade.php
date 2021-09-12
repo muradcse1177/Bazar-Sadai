@@ -58,16 +58,10 @@
                             <h5 style="text-align: center;"><b>আপনার পছন্দের পার্লার খুজে নিন।</b></h5>
                             <h5 style="text-align: center;">সার্ভিস গ্রহন করার আগে আপনার সার্ভিস এরিয়া ঠিক করে নিন। অন্যথায় সঠিক এরিয়া সার্ভিস পাবেন না।</h5>
                             <div class="serviceArea" style="text-align: center;">
-                                @if(Cookie::get('user_id'))
-                                    <div class="form-group">
-                                        <a href="{{url('serviceAreaParlor')}}" type="submit" class="btn btn-success">সার্ভিস এরিয়া</a>
-                                    </div>
-                                @endif
-                                @if(Cookie::get('user_id') == null )
-                                    <div class="form-group">
-                                        <a href='{{url('login')}}'  class="btn allButton">লগ ইন করুন</a>
-                                    </div>
-                                @endif
+                            <div class="form-group">
+                                <a href="{{url('serviceAreaParlor')}}" type="submit" class="btn btn-success">সার্ভিস এরিয়া</a>
+                            </div>
+
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -84,22 +78,24 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div class="form-group">
-                                    <h4 style="display: none;" class="price"> </h4>
+                            <div class="priceDiv" style="display: none;">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <h4 style="display: none;" class="price"> </h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12">
-                                @if(Cookie::get('user_id'))
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-success">বুকিং করুন</button>
-                                    </div>
-                                @endif
-                                @if(Cookie::get('user_id') == null )
-                                    <div class="form-group">
-                                        <a href='{{url('login')}}'  class="btn btn-success">লগ ইন করুন</a>
-                                    </div>
-                                @endif
+                                <div class="col-sm-12">
+                                    @if(Cookie::get('user_id'))
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success">বুকিং করুন</button>
+                                        </div>
+                                    @endif
+                                    @if(Cookie::get('user_id') == null )
+                                        <div class="form-group">
+                                            <a href='{{url('login')}}'  class="btn btn-success">লগ ইন করুন</a>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -127,7 +123,6 @@
                         var name = data[i]['p_type'];
                         $(".type").append("<option value='"+id+"'>"+name+"</option>");
                     }
-
                 },
                 failure: function (msg) {
                     alert('an error occured');
@@ -165,6 +160,7 @@
                     var data = response.data;
                     $(".price").html('Price: '+ data.price +' tk');
                     $(".price").show();
+                    $(".priceDiv").show();
                 }
             });
         });
