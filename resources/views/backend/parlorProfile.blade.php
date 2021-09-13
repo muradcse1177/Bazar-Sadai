@@ -81,10 +81,11 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>তারিখ</th>
+                            <th>অর্ডার নং</th>
+                            <th>সার্ভিস তারিখ</th>
+                            <th>সার্ভিস সময়</th>
                             <th>নাম</th>
                             <th>ফোন</th>
-                            <th>পার্লার নাম</th>
-                            <th>পার্লার ফোন</th>
                             <th>ধরণ</th>
                             <th>সার্ভিস নাম</th>
                             <th>দাম</th>
@@ -92,10 +93,11 @@
                         @foreach($washings as $washing)
                             <tr>
                                 <td>{{$washing->date}}</td>
+                                <td>{{$washing->tx_id}}</td>
+                                <td>{{$washing->order_date}}</td>
+                                <td>{{$washing->time}}</td>
                                 <td>{{$washing->u_name}}</td>
                                 <td>{{$washing->u_phone}}</td>
-                                <td>{{$washing->name}}</td>
-                                <td>{{$washing->phone}}</td>
                                 <td>{{$washing->type}}</td>
                                 <td>{{$washing->v_name}}</td>
                                 <td>{{$washing->price.'/-'}}</td>

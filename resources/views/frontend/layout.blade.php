@@ -172,7 +172,7 @@
                         <div class="call-info d-lg-show">
                             <h4 class="chat font-weight-normal font-size-md text-normal ls-normal text-light mb-0">
                                 <a href="mailto:#" class="text-capitalize">Live Chat</a> or :</h4>
-                            <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{'+8801707-158097'}}</a>
+                            <a href="tel:#" class="phone-number font-weight-bolder ls-50">{{'+8801880-198606'}}</a>
                         </div>
                     </div>
                     <a class="wishlist label-down link d-xs-show" href="{{url('wishlist')}}">
@@ -352,7 +352,7 @@
                             </a>
                             <div class="widget-body">
                                 <p class="widget-about-title">Got Question? Call us 24/7</p>
-                                <a href="tel:18005707777" class="widget-about-call">+8801707-158097</a>
+                                <a href="tel:18005707777" class="widget-about-call">+8801880-198606</a>
                                 <p class="widget-about-desc">Register now to get updates on coupons now.
                                 </p>
                             </div>

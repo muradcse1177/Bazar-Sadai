@@ -56,12 +56,67 @@
                     <div class="card">
                         <div class="card-body cardBody">
                             <h5 style="text-align: center;"><b>আপনার পছন্দের পার্লার খুজে নিন।</b></h5>
-                            <h5 style="text-align: center;">সার্ভিস গ্রহন করার আগে আপনার সার্ভিস এরিয়া ঠিক করে নিন। অন্যথায় সঠিক এরিয়া সার্ভিস পাবেন না।</h5>
-                            <div class="serviceArea" style="text-align: center;">
-                            <div class="form-group">
-                                <a href="{{url('serviceAreaParlor')}}" type="submit" class="btn btn-success">সার্ভিস এরিয়া</a>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <label for="div_name" >এরিয়া</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="addressGroup"  id="zillaGroup" value="1" required> জেলা
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="addressGroup" id="cityGroup" value="2">সিটি
+                                    </label>
+                                </div>
                             </div>
-
+                            <div class="col-sm-12" id="divDiv" style="display: none;">
+                                <div class="form-group">
+                                    <select id="div_name" name ="div_id"  class="form-control select2 div_name" style="width: 100%;" required>
+                                        <option value="" selected>বিভাগ নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" id= "zillaGroupId" style="display: none;">
+                                <div class="form-group">
+                                    <select id="dis_name" name ="disid" class="form-control select2 dis_name" style="width: 100%;" required="required">
+                                        <option  value="" selected>জেলা  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="upz_name" name ="upzid" class="form-control select2 upz_name" style="width: 100%;" required="required">
+                                        <option value="" selected>উপজেলা  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="uni_name" name ="uniid" class="form-control select2 uni_name" style="width: 100%;" required="required">
+                                        <option value="" selected>ইউনিয়ন  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="ward_name" name ="wardid" class="form-control select2 ward_name"  style="width: 100%;" required="required">
+                                        <option value="" selected>ওয়ার্ড  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12" id= "cityGroupId" style="display: none;" >
+                                <div class="form-group">
+                                    <select id="c_dis_name" name ="c_disid" class="form-control select2 city_name" style="width: 100%;" required="required">
+                                        <option  value="" selected>সিটি  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="c_upz_name" name ="c_upzid" class="form-control select2 co_name"  style="width: 100%;" required="required">
+                                        <option value="" selected>সিটি - কর্পোরেশন  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="c_uni_name" name ="c_uniid" class="form-control select2 thana_name" style="width: 100%;" required="required">
+                                        <option value="" selected>থানা  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select id="c_ward_name" name ="c_wardid" class="form-control select2 c_ward_name"   style=" width: 100%;" required="required">
+                                        <option value="" selected>ওয়ার্ড  নির্বাচন করুন</option>
+                                    </select>
+                                </div>
                             </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
@@ -70,12 +125,28 @@
                                     </select>
                                 </div>
                             </div>
-
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <select class="form-control select2 gender" id="gender" name="gender" style="width: 100%;" required>
+                                        <option value="" selected>জেন্ডার নির্বাচন করুন</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <select class="form-control select2 service" id="service" name="service" style="width: 100%;" required>
                                         <option value="" selected>সার্ভিস নির্বাচন করুন</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control pickup_date" name="pickup_date" id="pickup_date"  readonly value="{{date("Y-m-d")}}">
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <input type="text" class="form-control time" name="time" id="time" placeholder="সময়" required>
                                 </div>
                             </div>
                             <div class="priceDiv" style="display: none;">
@@ -108,14 +179,56 @@
 @endsection
 @section('js')
     <script>
+        $( function() {
+            $('#pickup_date').datepicker({
+                autoclose: true,
+                minDate:0,
+                dateFormat: "yy-m-dd",
+            })
+        } );
         //$('.select2').select2();
-        $(document).ready(function(){
+        $("#zillaGroup").click(function(){
+            $("#zillaGroupId").show();
+            $("#cityGroupId").hide();
+            $("#divDiv").show();
+            $('.city_name').prop('required',false);
+            $('.co_name').prop('required',false);
+            $('.thana_name').prop('required',false);
+            $('.c_ward_name').prop('required',false);
+        });
+        $("#cityGroup").click(function(){
+            $("#zillaGroupId").hide();
+            $("#cityGroupId").show();
+            $("#divDiv").show();
+            $('.dis_name').prop('required',false);
+            $('.upz_name').prop('required',false);
+            $('.uni_name').prop('required',false);
+            $('.ward_name').prop('required',false);
+        });
+        $(".ward_name,.c_ward_name").change(function(){
+            if ($("input[name='addressGroup'][value='1']").prop("checked")){
+                var main = $("#zillaGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".dis_name").val();
+                var a3 = $(".upz_name").val();
+                var a4 = $(".uni_name").val();
+                var a5 = $(".ward_name").val();
+            }
+            if ($("input[name='addressGroup'][value='2']").prop("checked")){
+                var main = $("#cityGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".city_name").val();
+                var a3 = $(".co_name").val();
+                var a4 = $(".thana_name").val();
+                var a5 = $(".c_ward_name").val();
+            }
+            $('.type').find('option:not(:first)').remove();
             $.ajax({
+                type: 'GET',
                 url: 'getAllParlorTypeFront',
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
+                data: {a1:a1,a2:a2,a3:a3,a4:a4,a5:a5,main:main},
+                dataType: 'json',
+                success: function(response){
                     var data = response.data;
                     var len = data.length;
                     for( var i = 0; i<len; i++){
@@ -123,19 +236,68 @@
                         var name = data[i]['p_type'];
                         $(".type").append("<option value='"+id+"'>"+name+"</option>");
                     }
-                },
-                failure: function (msg) {
-                    alert('an error occured');
                 }
             });
         });
         $(".type").change(function(){
+            if ($("input[name='addressGroup'][value='1']").prop("checked")){
+                var main = $("#zillaGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".dis_name").val();
+                var a3 = $(".upz_name").val();
+                var a4 = $(".uni_name").val();
+                var a5 = $(".ward_name").val();
+            }
+            if ($("input[name='addressGroup'][value='2']").prop("checked")){
+                var main = $("#cityGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".city_name").val();
+                var a3 = $(".co_name").val();
+                var a4 = $(".thana_name").val();
+                var a5 = $(".c_ward_name").val();
+            }
             var type =$(this).val();
+            $('.gender').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getGenderServiceNameFront',
+                data: {type:type,a1:a1,a2:a2,a3:a3,a4:a4,a5:a5,main:main},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['gender_type'];
+                        var name = data[i]['gender_type'];
+                        $(".gender").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".gender").change(function(){
+            var gender =$(this).val();
+            var type =$('.type').val();
+            if ($("input[name='addressGroup'][value='1']").prop("checked")){
+                var main = $("#zillaGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".dis_name").val();
+                var a3 = $(".upz_name").val();
+                var a4 = $(".uni_name").val();
+                var a5 = $(".ward_name").val();
+            }
+            if ($("input[name='addressGroup'][value='2']").prop("checked")){
+                var main = $("#cityGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".city_name").val();
+                var a3 = $(".co_name").val();
+                var a4 = $(".thana_name").val();
+                var a5 = $(".c_ward_name").val();
+            }
             $('.service').find('option:not(:first)').remove();
             $.ajax({
                 type: 'GET',
                 url: 'getParlorServiceNameFront',
-                data: {type:type},
+                data: {type:type,gender:gender,a1:a1,a2:a2,a3:a3,a4:a4,a5:a5,main:main},
                 dataType: 'json',
                 success: function(response){
                     var data = response.data;
@@ -149,18 +311,209 @@
             });
         });
         $(".service").change(function(){
+            if ($("input[name='addressGroup'][value='1']").prop("checked")){
+                var main = $("#zillaGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".dis_name").val();
+                var a3 = $(".upz_name").val();
+                var a4 = $(".uni_name").val();
+                var a5 = $(".ward_name").val();
+            }
+            if ($("input[name='addressGroup'][value='2']").prop("checked")){
+                var main = $("#cityGroup").val();
+                var a1 = $(".div_name").val();
+                var a2 = $(".city_name").val();
+                var a3 = $(".co_name").val();
+                var a4 = $(".thana_name").val();
+                var a5 = $(".c_ward_name").val();
+            }
             var service = $(this).val();
             var type = $("#type").val();
+            var gender = $("#gender").val();
             $.ajax({
                 type: 'GET',
                 url: 'getParlorServicePriceFront',
-                data: {service:service,type:type},
+                data: {service:service,type:type,gender:gender,a1:a1,a2:a2,a3:a3,a4:a4,a5:a5,main:main},
                 dataType: 'json',
                 success: function(response){
                     var data = response.data;
                     $(".price").html('Price: '+ data.price +' tk');
                     $(".price").show();
                     $(".priceDiv").show();
+                }
+            });
+        });
+        $(document).ready(function(){
+            $.ajax({
+                url: 'getAllDivision',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".div_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+
+                },
+                failure: function (msg) {
+                    alert('an error occured');
+                }
+            });
+
+        });
+        $(".div_name").change(function(){
+            var id =$(this).val();
+            $('.dis_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getDistrictListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".dis_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".dis_name").change(function(){
+            var id =$(this).val();
+            $('.upz_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getUpazillaListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".upz_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".upz_name").change(function(){
+            var id =$(this).val();
+            $('.uni_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getUnionListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".uni_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".uni_name").change(function(){
+            var id =$(this).val();
+            $('.ward_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getWardListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".ward_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".div_name").change(function(){
+            var id =$(this).val();
+            $('.city_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getCityListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".city_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".city_name").change(function(){
+            var id =$(this).val();
+            $('.co_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getCityCorporationListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".co_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".co_name").change(function(){
+            var id =$(this).val();
+            $('.thana_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getThanaListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".thana_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
+        $(".thana_name").change(function(){
+            var id =$(this).val();
+            $('.c_ward_name').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: 'getC_wardListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".c_ward_name").append("<option value='"+id+"'>"+name+"</option>");
+                    }
                 }
             });
         });

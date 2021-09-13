@@ -711,6 +711,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('parlorServicingPage', 'frontend\HomeAssistantController@parlorServicingPage');
     Route::get('getAllParlorTypeFront', 'frontend\HomeAssistantController@getAllParlorTypeFront');
     Route::get('getParlorServiceNameFront', 'frontend\HomeAssistantController@getParlorServiceNameFront');
+    Route::get('getGenderServiceNameFront', 'frontend\HomeAssistantController@getGenderServiceNameFront');
     Route::get('getParlorServicePriceFront', 'frontend\HomeAssistantController@getParlorServicePriceFront');
     Route::post('parlorServiceBookingFront', 'frontend\HomeAssistantController@parlorServiceBookingFront');
     Route::get('serviceArea', 'frontend\TransportController@serviceArea');

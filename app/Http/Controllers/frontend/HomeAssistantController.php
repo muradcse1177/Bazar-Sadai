@@ -1381,6 +1381,12 @@ class HomeAssistantController extends Controller
     }
     public function getAllParlorTypeFront(Request $request){
         $rows = DB::table('parlor_service')
+            ->where('address_type', $request->main)
+            ->where('add_part1', $request->a1)
+            ->where('add_part2', $request->a2)
+            ->where('add_part3', $request->a3)
+            ->where('add_part4', $request->a4)
+            ->where('add_part5', $request->a5)
             ->distinct()
             ->get('p_type');
         return response()->json(array('data'=>$rows));
@@ -1391,49 +1397,98 @@ class HomeAssistantController extends Controller
             ->get();
         return response()->json(array('data'=>$rows));
     }
+    public function getGenderServiceNameFront(Request $request){
+        $rows = DB::table('parlor_service')
+            ->where('address_type', $request->main)
+            ->where('add_part1', $request->a1)
+            ->where('add_part2', $request->a2)
+            ->where('add_part3', $request->a3)
+            ->where('add_part4', $request->a4)
+            ->where('add_part5', $request->a5)
+            ->where('p_type', $request->type)
+            ->distinct()
+            ->get('gender_type');
+        return response()->json(array('data'=>$rows));
+    }
     public function getParlorServicePriceFront(Request $request){
         $rows = DB::table('parlor_service')
+            ->where('address_type', $request->main)
+            ->where('add_part1', $request->a1)
+            ->where('add_part2', $request->a2)
+            ->where('add_part3', $request->a3)
+            ->where('add_part4', $request->a4)
+            ->where('add_part5', $request->a5)
             ->where('p_type', $request->type)
             ->where('service', $request->service)
+            ->where('gender_type', $request->gender)
             ->first();
         return response()->json(array('data'=>$rows));
     }
     public function parlorServiceBookingFront(Request $request){
         try{
             if($request) {
+                $re_Arr = array();
+                $add_part1 = $request->div_id;
+                $addressGroup = $request->addressGroup;
+                $g_type = $request->gender;
+                $type = $request->type;
+                $name = $request->service;
+                $date = $request->pickup_date;
+                $time = $request->time;
+                if ($addressGroup == 1) {
+                    $add_part2 = $request->disid;
+                    $add_part3 = $request->upzid;
+                    $add_part4 = $request->uniid;
+                    $add_part5 = $request->wardid;
+                }
+                if ($addressGroup == 2) {
+                    $add_part2 = $request->c_disid;
+                    $add_part3 = $request->c_upzid;
+                    $add_part4 = $request->c_uniid;
+                    $add_part5 = $request->c_wardid;
+                }
                 $rows = DB::table('parlor_service')
-                    ->where('p_type', $request->type)
-                    ->where('service', $request->service)
-                    ->first();
-                //common
-                $user_info = DB::table('service_area')
                     ->select('*')
-                    ->where('user_id', Cookie::get('user_id'))
+                    ->where('address_type', $addressGroup)
+                    ->where('add_part1', $add_part1)
+                    ->where('add_part2', $add_part2)
+                    ->where('add_part3', $add_part3)
+                    ->where('add_part4', $add_part4)
+                    ->where('add_part5', $add_part5)
+                    ->where('gender_type', $g_type)
+                    ->where('p_type', $type)
+                    ->where('service', $name)
                     ->first();
-                if($user_info){
-
-                }
-                else{
-                    return redirect()->to('parlorServicingPage')->with('errorMessage', 'আপনার সার্ভিস এরিয়া সেট করা নাই।');
-                }
+                $re_Arr[0] = $add_part1;
+                $re_Arr[1] = $add_part2;
+                $re_Arr[2] = $add_part3;
+                $re_Arr[3] = $add_part4;
+                $re_Arr[4] = $add_part5;
+                $re_Arr[5] = $addressGroup;
+                $re_Arr[6] = $g_type;
+                $re_Arr[7] = $type;
+                $re_Arr[8] = $date;
+                $re_Arr[9] = $time;
+                $re_Arr[10] = $name;
+                $re_Arr[11] = $rows->price;
                 $working_status = 1;
-                if($user_info->address_type == 1) {
+                if($addressGroup == 1) {
                     $ward_info = DB::table('wards')
                         ->select('*')
-                        ->where('div_id', $user_info->add_part1)
-                        ->where('dis_id', $user_info->add_part2)
-                        ->where('upz_id', $user_info->add_part3)
-                        ->where('uni_id', $user_info->add_part4)
-                        ->where('id', $user_info->add_part5)
+                        ->where('div_id', $add_part1)
+                        ->where('dis_id', $add_part2)
+                        ->where('upz_id', $add_part3)
+                        ->where('uni_id', $add_part4)
+                        ->where('id', $add_part5)
                         ->first();
                     $ward_plus = $ward_info->position + 1;
                     $ward_minus = $ward_info->position - 1;
                     $ward_plus_id_info = DB::table('wards')
                         ->select('*')
-                        ->where('div_id', $user_info->add_part1)
-                        ->where('dis_id', $user_info->add_part2)
-                        ->where('upz_id', $user_info->add_part3)
-                        ->where('uni_id', $user_info->add_part4)
+                        ->where('div_id', $add_part1)
+                        ->where('dis_id', $add_part2)
+                        ->where('upz_id', $add_part3)
+                        ->where('uni_id', $add_part4)
                         ->where('position', $ward_plus)
                         ->first();
                     $ward_plus_id = $ward_plus_id_info->id;
@@ -1441,32 +1496,32 @@ class HomeAssistantController extends Controller
                     else{
                         $ward_minus_id_info = DB::table('wards')
                             ->select('*')
-                            ->where('div_id', $user_info->add_part1)
-                            ->where('dis_id', $user_info->add_part2)
-                            ->where('upz_id', $user_info->add_part3)
-                            ->where('uni_id', $user_info->add_part4)
+                            ->where('div_id', $add_part1)
+                            ->where('dis_id', $add_part2)
+                            ->where('upz_id', $add_part3)
+                            ->where('uni_id', $add_part4)
                             ->where('position', $ward_minus)
                             ->first();
                         $ward_minus_id = $ward_minus_id_info->id;
                     }
                 }
-                if($user_info->address_type == 2) {
+                if($addressGroup == 2) {
                     $c_ward_info = DB::table('c_wards')
                         ->select('*')
-                        ->where('div_id', $user_info->add_part1)
-                        ->where('city_id', $user_info->add_part2)
-                        ->where('city_co_id', $user_info->add_part3)
-                        ->where('thana_id', $user_info->add_part4)
-                        ->where('id', $user_info->add_part5)
+                        ->where('div_id', $add_part1)
+                        ->where('city_id', $add_part2)
+                        ->where('city_co_id', $add_part3)
+                        ->where('thana_id', $add_part4)
+                        ->where('id', $add_part5)
                         ->first();
                     $ward_plus = $c_ward_info->position + 1;
                     $ward_minus = $c_ward_info->position - 1;
                     $c_ward_plus_id_info = DB::table('c_wards')
                         ->select('*')
-                        ->where('div_id', $user_info->add_part1)
-                        ->where('city_id', $user_info->add_part2)
-                        ->where('city_co_id', $user_info->add_part3)
-                        ->where('thana_id', $user_info->add_part4)
+                        ->where('div_id', $add_part1)
+                        ->where('city_id', $add_part2)
+                        ->where('city_co_id', $add_part3)
+                        ->where('thana_id', $add_part4)
                         ->where('position', $ward_plus)
                         ->first();
                     $ward_plus_id = $c_ward_plus_id_info->id;
@@ -1474,10 +1529,10 @@ class HomeAssistantController extends Controller
                     else{
                         $c_ward_minus_id_info = DB::table('wards')
                             ->select('*')
-                            ->where('div_id', $user_info->add_part1)
-                            ->where('dis_id', $user_info->add_part2)
-                            ->where('upz_id', $user_info->add_part3)
-                            ->where('uni_id', $user_info->add_part4)
+                            ->where('div_id', $add_part1)
+                            ->where('dis_id', $add_part2)
+                            ->where('upz_id', $add_part3)
+                            ->where('uni_id', $add_part4)
                             ->where('position', $ward_minus)
                             ->first();
                         $ward_minus_id = $c_ward_minus_id_info->id;
@@ -1486,13 +1541,13 @@ class HomeAssistantController extends Controller
                 $user_type = 31;
                 $delivery_man = DB::table('users')
                     ->where('user_type',  $user_type)
-                    ->where('add_part1',  $user_info->add_part1)
-                    ->where('add_part2',  $user_info->add_part2)
-                    ->where('add_part3',  $user_info->add_part3)
-                    ->where('add_part4',  $user_info->add_part4)
-                    ->where('add_part5',  $user_info->add_part5)
+                    ->where('add_part1',  $add_part1)
+                    ->where('add_part2',  $add_part2)
+                    ->where('add_part3',  $add_part3)
+                    ->where('add_part4',  $add_part4)
+                    ->where('add_part5',  $add_part5)
                     ->where('working_status',  $working_status)
-                    ->where('address_type',  $user_info->address_type)
+                    ->where('address_type',  $addressGroup)
                     ->where('status',  1)
                     ->first();
                 if(!empty($delivery_man)){
@@ -1501,13 +1556,13 @@ class HomeAssistantController extends Controller
                 else{
                     $delivery_man = DB::table('users')
                         ->where('user_type',  $user_type)
-                        ->where('add_part1',  $user_info->add_part1)
-                        ->where('add_part2',  $user_info->add_part2)
-                        ->where('add_part3',  $user_info->add_part3)
-                        ->where('add_part4',  $user_info->add_part4)
+                        ->where('add_part1',  $add_part1)
+                        ->where('add_part2',  $add_part2)
+                        ->where('add_part3',  $add_part3)
+                        ->where('add_part4',  $add_part4)
                         ->where('add_part5',  $ward_plus_id)
                         ->where('working_status',  $working_status)
-                        ->where('address_type',  $user_info->address_type)
+                        ->where('address_type',  $addressGroup)
                         ->where('status',  1)
                         ->first();
                     if(!empty($delivery_man)){
@@ -1516,51 +1571,27 @@ class HomeAssistantController extends Controller
                     else{
                         $delivery_man = DB::table('users')
                             ->where('user_type',  $user_type)
-                            ->where('add_part1',  $user_info->add_part1)
-                            ->where('add_part2',  $user_info->add_part2)
-                            ->where('add_part3',  $user_info->add_part3)
-                            ->where('add_part4',  $user_info->add_part4)
+                            ->where('add_part1',  $add_part1)
+                            ->where('add_part2',  $add_part2)
+                            ->where('add_part3',  $add_part3)
+                            ->where('add_part4',  $add_part4)
                             ->where('add_part5',  $ward_minus_id)
                             ->where('working_status',  $working_status)
-                            ->where('address_type',  $user_info->address_type)
+                            ->where('address_type',  $addressGroup)
                             ->where('status',  1)
                             ->first();
                         if(!empty($delivery_man)){
-                            $result =DB::table('users')
-                                ->where('id', $delivery_man->id)
-                                ->update([
-                                    'working_status' => 2,
-                                ]);
-                            $result = DB::table('parlor_order')->insert([
-                                'user_id' => Cookie::get('user_id'),
-                                'type' => $request->type,
-                                'parlor_id' => $delivery_man->id,
-                                'name' => $request->service,
-                                'price' => $rows->price,
-                                'date' => date("Y-m-d"),
-                            ]);
+
                         }
                     }
                 }
                 if(!empty($delivery_man)){
                     Session::put('d_name', $delivery_man->name);
                     Session::put('d_phone', $delivery_man->phone);
+                    Session::put('d_id', $delivery_man->id);
+                    Session::put('d_array', $re_Arr);
                     $shurjopay_service = new ShurjopayService();
                     $tx_id = $shurjopay_service->generateTxId();
-                    $result =DB::table('users')
-                        ->where('id', $delivery_man->id)
-                        ->update([
-                            'working_status' => 2,
-                        ]);
-                    $result = DB::table('parlor_order')->insert([
-                        'user_id' => Cookie::get('user_id'),
-                        'tx_id' => $tx_id,
-                        'type' => $request->type,
-                        'parlor_id' => $delivery_man->id,
-                        'name' => $request->service,
-                        'price' => $rows->price,
-                        'date' => date("Y-m-d"),
-                    ]);
                     $success_route = url('insertParlorPaymentInfo');
                     $shurjopay_service->sendPayment($rows->price, $success_route);
                 }
@@ -1579,6 +1610,8 @@ class HomeAssistantController extends Controller
     public function insertParlorPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $delivery_man =Session::get('d_id');
+        $re_Arr = Session::get('d_array');
         $status = $request->status;
         $type = 'Parlour';
         $msg = $request->msg;
@@ -1590,22 +1623,49 @@ class HomeAssistantController extends Controller
         $sp_code_des = $request->sp_code_des;
         $sp_payment_option = $request->sp_payment_option;
         $date = date('Y-m-d');
-        $result = DB::table('payment_info')->insert([
-            'user_id' => Cookie::get('user_id'),
-            'status' => $status,
-            'type' => $type,
-            'msg' => $msg,
-            'tx_id' => $tx_id,
-            'bank_tx_id' => $bank_tx_id,
-            'amount' => $amount,
-            'bank_status' => $bank_status,
-            'sp_code' => $sp_code,
-            'sp_code_des' => $sp_code_des,
-            'sp_payment_option' => $sp_payment_option,
-        ]);
-        session()->forget('d_name');
-        session()->forget('d_phone');
-        return redirect()->to('myParlorOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
+        if($status == 'Failed'){
+            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+        }
+        else{
+            $result = DB::table('payment_info')->insert([
+                'user_id' => Cookie::get('user_id'),
+                'status' => $status,
+                'type' => $type,
+                'msg' => $msg,
+                'tx_id' => $tx_id,
+                'bank_tx_id' => $bank_tx_id,
+                'amount' => $amount,
+                'bank_status' => $bank_status,
+                'sp_code' => $sp_code,
+                'sp_code_des' => $sp_code_des,
+                'sp_payment_option' => $sp_payment_option,
+            ]);
+            $result = DB::table('parlor_order')->insert([
+                'user_id' => Cookie::get('user_id'),
+                'tx_id' => $tx_id,
+                'parlor_id' => $delivery_man,
+                'add_part1' => $re_Arr[0],
+                'add_part2' => $re_Arr[1],
+                'add_part3' => $re_Arr[2],
+                'add_part4' => $re_Arr[3],
+                'add_part5' => $re_Arr[4],
+                'address_type' => $re_Arr[5],
+                'g_type' => $re_Arr[6],
+                'type' => $re_Arr[7],
+                'date' => $re_Arr[8],
+                'time' => $re_Arr[9],
+                'name' => $re_Arr[10],
+                'price' => $re_Arr[11],
+                'order_date' => date("Y-m-d"),
+            ]);
+            session()->forget('d_name');
+            session()->forget('d_phone');
+            session()->forget('d_id');
+            session()->forget('d_array');
+            Session::save();
+            return redirect()->to('myParlorOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
+
+        }
     }
     public function laundryServicePage(){
         $rows = DB::table('laundry')
@@ -1616,7 +1676,6 @@ class HomeAssistantController extends Controller
         $rows = DB::table('laundry')
             ->where('id', $request->id)
             ->first();
-
         return response()->json(array('data'=>$rows));
     }
     public function laundryBookingFront(Request $request){
@@ -1625,9 +1684,12 @@ class HomeAssistantController extends Controller
                 if(!empty($request->cloth_id)){
                     $quantity = array_filter($request->quantity, function($value) { return !is_null($value) && $value !== ''; });
                     $cloth_id = array_filter($request->cloth_id, function($value) { return !is_null($value) && $value !== ''; });
+                    if($request->cloth_idwa == null && $request->cloth_idis == null)
+                        return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
                     $cloth_idwa = array_filter($request->cloth_idwa, function($value) { return !is_null($value) && $value !== ''; });
                     $cloth_idis = array_filter($request->cloth_idis, function($value) { return !is_null($value) && $value !== ''; });
-
+                    $pickup_date = $request->pickup_date;
+                    $delivery_date = $request->delivery_date;
                     $i =0;
                     $j=0;
                     foreach ($quantity as $q){
@@ -1791,10 +1853,12 @@ class HomeAssistantController extends Controller
                         Session::put('cloth_idwa', $cloth_idwa);
                         Session::put('cloth_idis', $cloth_idis);
                         Session::put('quantity', $quantity);
+                        Session::put('pickup_date', $pickup_date);
+                        Session::put('delivery_date', $delivery_date);
                         $shurjopay_service = new ShurjopayService();
                         $tx_id = $shurjopay_service->generateTxId();
                         $success_route = url('insertLaundryPaymentInfo');
-                        $shurjopay_service->sendPayment(2, $success_route);
+                        $shurjopay_service->sendPayment($price, $success_route);
                     }
                     else{
                         return redirect()->to('laundryServicePage')->with('errorMessage', 'আপনার এলাকাই কোন কাপড় পরিস্কারক খুজে পাওয়া যায়নি।');
@@ -1821,6 +1885,8 @@ class HomeAssistantController extends Controller
         $cloth_idwa = Session::get('cloth_idwa');
         $cloth_idis = Session::get('cloth_idis');
         $quantity = Session::get('quantity');
+        $pickup_date = Session::get('pickup_date');
+        $delivery_date = Session::get('delivery_date');
 
         $status = $request->status;
         $type = 'Laundry';
@@ -1860,6 +1926,8 @@ class HomeAssistantController extends Controller
                 'price' => $d_price,
                 'wa_id' => json_encode($cloth_idwa),
                 'is_id' => json_encode($cloth_idis),
+                'pickup_date' => $pickup_date,
+                'delivery_date' => $delivery_date,
             ]);
             session()->forget('d_name');
             session()->forget('d_phone');
@@ -1869,6 +1937,8 @@ class HomeAssistantController extends Controller
             session()->forget('cloth_idwa');
             session()->forget('cloth_idis');
             session()->forget('quantity');
+            session()->forget('pickup_date');
+            session()->forget('delivery_date');
             Session::save();
             return redirect()->to('myLaundryOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। ' . $name . ' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে ' . $phone . ' কল করুন।');
         }

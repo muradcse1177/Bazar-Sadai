@@ -394,7 +394,8 @@
             $(".thana_name").change(function(){
                 $(".serviceArea").show();
             });
-        });$.ajax({
+        });
+        $.ajax({
             url: 'getAllNaming1Front',
             type: "GET",
             contentType: "application/json; charset=utf-8",

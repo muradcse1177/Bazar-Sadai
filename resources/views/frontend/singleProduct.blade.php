@@ -116,7 +116,15 @@
                                             <a href="#product-tab-reviews" class="rating-reviews scroll-to">(3
                                                 Reviews)</a>
                                         </div>
-
+                                        <div class="product-short-desc" style="text-align: justify;">
+                                            {{@$products->unit}}
+                                        </div>
+                                        <div class="product-short-desc" style="text-align: justify;">
+                                            {{@$products->genre}}
+                                        </div>
+                                        <div class="product-short-desc" style="text-align: justify;">
+                                            {{@$products->company}}
+                                        </div>
                                         <div class="product-short-desc" style="text-align: justify;">
                                             {!! nl2br(substr($products->description, 0, 700)).'...' !!}
                                         </div>
@@ -181,7 +189,7 @@
                                 <div class="tab-pane" id="product-tab-specification">
                                     <div class="row mb-4">
                                         <div class="col-md-12 mb-5" style="text-align: justify;">
-                                            {!! nl2br($products->description) !!}
+                                            {!! nl2br($products->specification) !!}
                                         </div>
                                     </div>
                                 </div>

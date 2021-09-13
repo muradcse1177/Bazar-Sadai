@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\backend;
+use Illuminate\Pagination\LengthAwarePaginator;
 use smasif\ShurjopayLaravelPackage\ShurjopayService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -111,11 +112,87 @@ class HomeAssistantController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function parlorService(){
+    public function parlorService(Request $request){
+
         $rows = DB::table('parlor_service')
             ->where('status', 1)
-            ->orderBy('id', 'DESC')->Paginate(10);
-        return view('backend.parlorService', ['p_services' => $rows]);
+            ->orderBy('id', 'DESC')->get();
+        $i = 0;
+        $p = array();
+        foreach ($rows as $row){
+            if($row->address_type == 1){
+                $add_part1 = DB::table('divisions')
+                    ->where('id',$row->add_part1)
+                    ->first();
+                $add_part2 = DB::table('districts')
+                    ->where('div_id',$row->add_part1)
+                    ->where('id',$row->add_part2)
+                    ->first();
+                $add_part3 = DB::table('upazillas')
+                    ->where('div_id',$row->add_part1)
+                    ->where('dis_id',$row->add_part2)
+                    ->where('id',$row->add_part3)
+                    ->first();
+                $add_part4 = DB::table('unions')
+                    ->where('div_id',$row->add_part1)
+                    ->where('dis_id',$row->add_part2)
+                    ->where('upz_id',$row->add_part3)
+                    ->where('id',$row->add_part4)
+                    ->first();
+                $add_part5 = DB::table('wards')
+                    ->where('div_id',$row->add_part1)
+                    ->where('dis_id',$row->add_part2)
+                    ->where('upz_id',$row->add_part3)
+                    ->where('uni_id',$row->add_part4)
+                    ->where('id',$row->add_part5)
+                    ->first();
+            }
+            if($row->address_type==2){
+                $add_part1 = DB::table('divisions')
+                    ->where('id',$row->add_part1)
+                    ->first();
+                $add_part2 = DB::table('cities')
+                    ->where('div_id',$row->add_part1)
+                    ->where('id',$row->add_part2)
+                    ->first();
+                $add_part3 = DB::table('city_corporations')
+                    ->where('div_id',$row->add_part1)
+                    ->where('city_id',$row->add_part2)
+                    ->where('id',$row->add_part3)
+                    ->first();
+                $add_part4 = DB::table('thanas')
+                    ->where('div_id',$row->add_part1)
+                    ->where('city_id',$row->add_part2)
+                    ->where('city_co_id',$row->add_part3)
+                    ->where('id',$row->add_part4)
+                    ->first();
+                $add_part5 = DB::table('c_wards')
+                    ->where('div_id',$row->add_part1)
+                    ->where('city_id',$row->add_part2)
+                    ->where('city_co_id',$row->add_part3)
+                    ->where('thana_id',$row->add_part4)
+                    ->where('id',$row->add_part5)
+                    ->first();
+            }
+            $p[$i]['id'] = $row->id;
+            $p[$i]['p_type'] = $row->p_type;
+            $p[$i]['gender_type'] = $row->gender_type;
+            $p[$i]['service'] = $row->service;
+            $p[$i]['price'] = $row->price;
+            $p[$i]['a1'] = $add_part1->name;
+            $p[$i]['a2'] = $add_part2->name;
+            $p[$i]['a3'] = $add_part3->name;
+            $p[$i]['a4'] = $add_part4->name;
+            $p[$i]['a5'] = $add_part5->name;
+            $i++;
+         }
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $itemCollection = collect($p);
+        $perPage = 20;
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems->setPath($request->url());
+        return view('backend.parlorService', ['p_services' => $paginatedItems]);
     }
     public function getAllParlorType(Request $request){
         try{
@@ -131,6 +208,21 @@ class HomeAssistantController extends Controller
     public function insertParlourService(Request $request){
         try{
             if($request) {
+                $add_part1 = $request->div_id;
+                $addressGroup = $request->addressGroup;
+                $gender_type = $request->g_type;
+                if ($addressGroup == 1) {
+                    $add_part2 = $request->disid;
+                    $add_part3 = $request->upzid;
+                    $add_part4 = $request->uniid;
+                    $add_part5 = $request->wardid;
+                }
+                if ($addressGroup == 2) {
+                    $add_part2 = $request->c_disid;
+                    $add_part3 = $request->c_upzid;
+                    $add_part4 = $request->c_uniid;
+                    $add_part5 = $request->c_wardid;
+                }
                 if($request->id) {
                     $result =DB::table('parlor_service')
                         ->where('id', $request->id)
@@ -138,6 +230,13 @@ class HomeAssistantController extends Controller
                             'p_type' => $request->p_type,
                             'service' => $request->service,
                             'price' => $request->price,
+                            'address_type' => $addressGroup,
+                            'add_part1' => $add_part1,
+                            'add_part2' => $add_part2,
+                            'add_part3' => $add_part3,
+                            'add_part4' => $add_part4,
+                            'add_part5' => $add_part5,
+                            'gender_type' => $gender_type,
                         ]);
                     if ($result) {
                         return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -146,25 +245,25 @@ class HomeAssistantController extends Controller
                     }
                 }
                 else{
-                    $rows = DB::table('parlor_service')->select('id')->where([
-                        ['p_type', '=', $request->p_type],
-                        ['service', '=', $request->service],
-                    ])->where('status', 1)->distinct()->get()->count();
-                    if ($rows > 0) {
-                        return back()->with('errorMessage', ' নতুন আইটেম লিখুন।');
+                    $result = DB::table('parlor_service')->insert([
+                        'p_type' => $request->p_type,
+                        'service' => $request->service,
+                        'price' => $request->price,
+                        'address_type' => $addressGroup,
+                        'add_part1' => $add_part1,
+                        'add_part2' => $add_part2,
+                        'add_part3' => $add_part3,
+                        'add_part4' => $add_part4,
+                        'add_part5' => $add_part5,
+                        'gender_type' => $gender_type,
+                    ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
                     } else {
-                        $result = DB::table('parlor_service')->insert([
-                            'p_type' => $request->p_type,
-                            'service' => $request->service,
-                            'price' => $request->price,
-                        ]);
-                        if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                        } else {
-                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                        }
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
                 }
+
             }
             else{
                 return back()->with('errorMessage', 'ফর্ম পুরন করুন।');

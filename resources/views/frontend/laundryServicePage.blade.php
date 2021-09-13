@@ -79,6 +79,18 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-12">
+                        <label>Pickup Date</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control pickup_date" name="pickup_date" id="pickup_date"  readonly value="{{date("Y-m-d")}}">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <label>Expected Delivery Date</label>
+                        <div class="form-group">
+                            <input type="text" class="form-control delivery_date" name="delivery_date" id="delivery_date" readonly value="{{date("Y-m-d")}}">
+                        </div>
+                    </div>
                     <div class="col-md-4">
                         @if(Cookie::get('user_id'))
                             <div class="form-group">
@@ -101,6 +113,18 @@
 @endsection
 @section('js')
     <script>
+        $( function() {
+            $('#pickup_date').datepicker({
+                autoclose: true,
+                minDate:0,
+                dateFormat: "yy-m-dd",
+            })
+            $('#delivery_date').datepicker({
+                autoclose: true,
+                minDate:0,
+                dateFormat: "yy-m-dd",
+            })
+        } );
         $(".quantity").change(function(){
             var id = $(this).data('id');
             var value = $(this).val();
