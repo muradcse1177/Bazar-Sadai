@@ -1538,7 +1538,10 @@ class HomeAssistantController extends Controller
                         $ward_minus_id = $c_ward_minus_id_info->id;
                     }
                 }
-                $user_type = 31;
+                if($g_type == 'লেডিস')
+                    $user_type = 31;
+                if($g_type == 'জেন্টস')
+                    $user_type = 35;
                 $delivery_man = DB::table('users')
                     ->where('user_type',  $user_type)
                     ->where('add_part1',  $add_part1)

@@ -247,7 +247,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">ইউজার লিস্ট </h3>
-                    {{ Form::open(array('url' => 'selectUserFromUserPanel',  'method' => 'post')) }}
+                    {{ Form::open(array('url' => 'selectUserFromUserPanel',  'method' => 'get')) }}
                     {{ csrf_field() }}
                     <div class="pull-right">
                         <span>

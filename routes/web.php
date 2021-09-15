@@ -122,7 +122,7 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::get('user_type', 'backend\UserController@selectUser_type');
     Route::post('insertUserType', 'backend\UserController@insertUserType');
     Route::get('user', 'backend\UserController@selectUser');
-    Route::post('selectUserFromUserPanel', 'backend\UserController@selectUserFromUserPanel');
+    Route::get('selectUserFromUserPanel', 'backend\UserController@selectUserFromUserPanel');
     Route::get('getAllUserType', 'backend\UserController@getAllUserType');
     Route::post('insertUser', 'backend\UserController@insertUser');
     Route::post('getUserListByID', 'backend\UserController@getUserListByID');

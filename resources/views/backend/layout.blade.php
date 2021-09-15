@@ -380,7 +380,7 @@
                         </a>
                     </li>
                 @endif
-                @if(Cookie::get('user_type') == 31)
+                @if(Cookie::get('user_type') == 31 || Cookie::get('user_type') == 35)
                     <li class="@yield('parlorProfile')">
                         <a href ="{{ url('parlorProfile') }}" >
                             <i class="fa fa-dashboard"></i> <span>আমার প্রোফাইল</span>
@@ -813,7 +813,7 @@
                 <?php
                     }
                     $rows =DB::table('user_type')
-                        ->where('type', Cookie::get('user_type'))->first();
+                        ->where('id', Cookie::get('user_type'))->first();
                     $type = $rows->type;
                 ?>
                 @if($type == 2)
