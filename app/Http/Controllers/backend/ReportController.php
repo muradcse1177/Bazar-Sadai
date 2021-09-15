@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class ReportController extends Controller
 {
@@ -18,9 +19,10 @@ class ReportController extends Controller
     }
     public function salesReport (Request $request){
         try {
-            $order_details = DB::table('order_details')->get();
+            $order_details = DB::table('order_details')->orderBy('id','desc')->get();
             $i=0;
             $sum = 0;
+            $orderArr = array();
             foreach($order_details as $order){
                 if($order->address_type == 1){
                     $add_part1 = DB::table('divisions')
@@ -80,13 +82,15 @@ class ReportController extends Controller
                     $date = explode(' ',$order->created_at);
                     $orderArr[$i]['sales_date'] = $date[0];
                     $orderArr[$i]['name'] = $order->name;
+                    $orderArr[$i]['phone'] = $order->phone;
                     $orderArr[$i]['address'] = $add_part1->name.' ,'.$add_part2->name.' ,'.$add_part3->name.' ,'.$add_part4->name.' ,'.$add_part5->name.' ,'.$order->address;
                     $orderArr[$i]['pay_id'] = $order->tx_id;
                     $orderArr[$i]['amount'] =  $order->total;
                     $orderArr[$i]['v_id'] = '';
                     $orderArr[$i]['v_name'] = 'Not Assigned';
+                    $orderArr[$i]['v_phone'] = '';
                     $orderArr[$i]['user_id'] = 0;
-                    $orderArr[$i]['status'] ='Processing';
+                    $orderArr[$i]['status'] =$order->status;
                     $orderArr[$i]['sales_id'] = $order->tx_id;
                 }
                 else {
@@ -103,25 +107,25 @@ class ReportController extends Controller
                             ->first();
                         if ($row1->count() > 0) {
                             $name = $volunteer->name;
+                            $v_phone = $volunteer->phone;
                             $v_id = $volunteer->id;
                         } else {
                             $name = "Not Assigned";
                             $v_id = " ";
+                            $v_phone = " ";
                         }
-                        if ($row->v_status == 0) $status = "Processing";
-                        if ($row->v_status == 2) $status = "Assigned";
-                        if ($row->v_status == 3) $status = "On the service";
-                        if ($row->v_status == 4) $status = "Delivered";
                         $date = explode(' ',$order->created_at);
                         $orderArr[$i]['sales_date'] = $date[0];
                         $orderArr[$i]['name'] = $order->name;
+                        $orderArr[$i]['phone'] = $order->phone;
                         $orderArr[$i]['address'] = $add_part1->name.' ,'.$add_part2->name.' ,'.$add_part3->name.' ,'.$add_part4->name.' ,'.$add_part5->name.' ,'.$order->address;
                         $orderArr[$i]['pay_id'] = $order->tx_id;
                         $orderArr[$i]['amount'] = $order->total;
                         $orderArr[$i]['v_id'] = $v_id;
                         $orderArr[$i]['v_name'] = $name;
+                        $orderArr[$i]['v_phone'] = $v_phone;
                         $orderArr[$i]['user_id'] = $row->user_id;
-                        $orderArr[$i]['status'] = $status;
+                        $orderArr[$i]['status'] = $order->status;
                         $orderArr[$i]['sales_id'] = $order->tx_id;
                     }
                 }
@@ -140,12 +144,38 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function changeOrderStatus(Request $request){
+        try{
+            if($request->id) {
+                $id = explode('&',$request->id);
+                $result =DB::table('order_details')
+                    ->where('tx_id', $id[1])
+                    ->update([
+                        'status' =>  $id[0],
+                    ]);
+                if ($result) {
+                    Session::flash('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return response()->json(array('data'=>$result));
+                } else {
+                    Session::flash('errorMessage', 'আবার চেষ্টা করুন।');
+                    return response()->json(array('data'=>$result));
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
 
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
     public function getProductSalesOrderListByDate (Request $request){
         try{
-            $order_details = DB::table('order_details') ->whereBetween('sales_date',array($request->from_date,$request->to_date))->get();
+            $order_details = DB::table('order_details') ->whereBetween('created_at',array($request->from_date,$request->to_date))->orderBy('id','desc')->get();
             $i=0;
             $sum = 0;
+            $orderArr = array();
             foreach($order_details as $order){
                 if($order->address_type == 1){
                     $add_part1 = DB::table('divisions')
@@ -205,13 +235,15 @@ class ReportController extends Controller
                     $date = explode(' ',$order->created_at);
                     $orderArr[$i]['sales_date'] = $date[0];
                     $orderArr[$i]['name'] = $order->name;
+                    $orderArr[$i]['phone'] = $order->phone;
                     $orderArr[$i]['address'] = $add_part1->name.' ,'.$add_part2->name.' ,'.$add_part3->name.' ,'.$add_part4->name.' ,'.$add_part5->name.' ,'.$order->address;
                     $orderArr[$i]['pay_id'] = $order->tx_id;
-                    $orderArr[$i]['amount'] =  $order->total+ $order->discount+ $order->delivery_charge; ;
+                    $orderArr[$i]['amount'] =  $order->total;
                     $orderArr[$i]['v_id'] = '';
                     $orderArr[$i]['v_name'] = 'Not Assigned';
+                    $orderArr[$i]['v_phone'] = '';
                     $orderArr[$i]['user_id'] = 0;
-                    $orderArr[$i]['status'] ='Processing';
+                    $orderArr[$i]['status'] =$order->status;
                     $orderArr[$i]['sales_id'] = $order->tx_id;
                 }
                 else {
@@ -228,25 +260,25 @@ class ReportController extends Controller
                             ->first();
                         if ($row1->count() > 0) {
                             $name = $volunteer->name;
+                            $v_phone = $volunteer->phone;
                             $v_id = $volunteer->id;
                         } else {
                             $name = "Not Assigned";
                             $v_id = " ";
+                            $v_phone = " ";
                         }
-                        if ($row->v_status == 0) $status = "Processing";
-                        if ($row->v_status == 2) $status = "Assigned";
-                        if ($row->v_status == 3) $status = "On the service";
-                        if ($row->v_status == 4) $status = "Delivered";
                         $date = explode(' ',$order->created_at);
                         $orderArr[$i]['sales_date'] = $date[0];
                         $orderArr[$i]['name'] = $order->name;
+                        $orderArr[$i]['phone'] = $order->phone;
                         $orderArr[$i]['address'] = $add_part1->name.' ,'.$add_part2->name.' ,'.$add_part3->name.' ,'.$add_part4->name.' ,'.$add_part5->name.' ,'.$order->address;
                         $orderArr[$i]['pay_id'] = $order->tx_id;
-                        $orderArr[$i]['amount'] = $order->total + $order->discount + $order->delivery_charge;;
+                        $orderArr[$i]['amount'] = $order->total;
                         $orderArr[$i]['v_id'] = $v_id;
                         $orderArr[$i]['v_name'] = $name;
+                        $orderArr[$i]['v_phone'] = $v_phone;
                         $orderArr[$i]['user_id'] = $row->user_id;
-                        $orderArr[$i]['status'] = $status;
+                        $orderArr[$i]['status'] = $order->status;
                         $orderArr[$i]['sales_id'] = $order->tx_id;
                     }
                 }
@@ -265,35 +297,14 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function animalSalesReport(){
+    public function productur(Request  $request){
         try{
-            $orders = DB::table('product_sales')
-                ->select('*','product_sales.id as ps_id','a.address as ps_address','a.photo as pp','u1.name as buyerName','u1.phone as buyerPhone','u2.phone as sellerPhone')
-                ->join('seller_product as a','product_sales.product_id','=','a.id')
-                ->join('users as u1', 'u1.id', '=', 'product_sales.buyer_id')
-                ->join('users as u2', 'u2.id', '=', 'product_sales.seller_id')
-                ->where('a.type', 'Animal')
-                ->orderBy('product_sales.id','desc')
-                ->paginate(20);
-            return view('backend.animalSalesReport', ['orders' => $orders]);
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function getAnimalSalesOrderListByDate (Request $request){
-        try{
-
-            $orders = DB::table('product_sales')
-                ->select('*','product_sales.id as ps_id','a.address as ps_address','a.photo as pp','u1.name as buyerName','u1.phone as buyerPhone','u2.phone as sellerPhone','u2.name as sellerName')
-                ->join('seller_product as a','product_sales.product_id','=','a.id')
-                ->join('users as u1', 'u1.id', '=', 'product_sales.buyer_id')
-                ->join('users as u2', 'u2.id', '=', 'product_sales.seller_id') ->where('a.type', 'Animal')
-                ->whereBetween('product_sales.date',array($request->from_date,$request->to_date))
-                ->orderBy('product_sales.id','desc')
-                ->paginate(20);
-
-            return view('backend.animalSalesReport', ['orders' => $orders,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
+            $rows = DB::table('products')
+                ->select('*','products.id as p_id','products.name as p_name','users.name as u_name')
+                ->join('users','users.id','=','products.upload_by')
+                ->where('users.user_type',4)
+                ->paginate(50);
+            return view('backend.productur',['products' => $rows]);
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage', $ex->getMessage());
@@ -1540,43 +1551,27 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function productur(Request  $request){
-        try{
-            $rows = DB::table('seller_product')
-                ->select('*', 'seller_product.id as s_id','seller_product.name as uname','seller_product.status as s_status','seller_product.address as s_address','seller_product.photo as s_photos')
-                ->join('users','users.id','=','seller_product.seller_id')
-                ->where('seller_product.status', 'Active')
-                ->where('seller_product.amount','>', '0')
-                ->orderBy('seller_product.id','desc')
-                ->paginate(20);
-            return view('backend.productur',['products' => $rows]);
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
     public function approvalChange(Request  $request){
         try{
             if($request->id) {
-                $status =DB::table('seller_product')
-                    ->where('id', $request->id)->first();
+                $status =DB::table('products')->where('id', $request->id)->first();
                 if($status->approval == 1)
                     $approval = 0;
                 else
                     $approval = 1;
-                $result =DB::table('seller_product')
+                $result =DB::table('products')
                     ->where('id', $request->id)
                     ->update([
                         'approval' =>  $approval,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return response()->json(array('data'=>'ok'));
                 } else {
-                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    return response()->json(array('data'=>'ok'));
                 }
             }
             else{
-                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                return response()->json(array('data'=>'ok'));
             }
         }
         catch(\Illuminate\Database\QueryException $ex){

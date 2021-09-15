@@ -50,7 +50,7 @@
                                 </span>
                             <div class="icon-box-content">
                                 <h4 class="icon-box-title">ফোন নম্বর</h4>
-                                <p>+88707-158097</p>
+                                <p>+8801880-198606</p>
                             </div>
                         </div>
                         <div class="icon-box text-center icon-box-primary">

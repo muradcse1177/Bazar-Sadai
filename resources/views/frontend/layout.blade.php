@@ -75,6 +75,9 @@
             .services{
                 margin-top: -30px;
             }
+            .s_shop{
+                display: none;
+            }
             .aaaaaaaa{
                 display: none;
             }
@@ -232,7 +235,7 @@
                                                             <li>
                                                                 <ul>
                                                                     @foreach($sub_categories as $s_cat)
-                                                                        <li><a href="{{url('shop-by-sub-cat/'.$s_cat->id)}}">{{$s_cat->name}}</a></li>
+                                                                        <li><a href="{{url('shop-by-sub-cat?cat_id='.$cat->id.'&sub_cat_id='.$s_cat->id)}}">{{$s_cat->name}}</a></li>
                                                                     @endforeach
                                                                 </ul>
                                                             </li>

@@ -53,9 +53,9 @@
                 @endif
                 <div class="row">
                     @foreach($results as $result)
-                        <div class="col-sm-4">
-                            <div class="card">
-                                <div class="card-body" >
+                        <div class="card">
+                            <div class="card-body" style="padding: 2.0rem 0.0rem;">
+                                <div class="col-sm-5">
                                     <div class="owl-carousel owl-theme owl-nav-inner owl-nav-md row cols-1 gutter-no animation-slider"
                                          data-owl-options="{
                                                 'nav': true,
@@ -74,13 +74,15 @@
                                             $i++;
                                         ?>
                                     </div>
+                                </div>
+                                <div class="col-sm-7">
                                     <h4 style="margin-top: 10px; ">{{$result->name}}</h4>
                                     <p style="margin-top: -10px; ">পুরা ঠিকানাঃ {{$result->address}} </p>
                                     <p style="margin-top: -15px; ">ধরণঃ  {{$result->t_type}} </p>
                                     <p style="margin-top: -15px; ">খরচঃ {{$result->price}} </p>
                                     <div style="text-align: justify; margin-top: -15px; ">বিবরনঃ {!! nl2br($result->description) !!} </div>
                                     <div style="text-align: justify;">সুযোগ সুবিধাঃ {!! nl2br($result->facilities) !!} </div><br>
-                                    <a href="{{URL::to('bookingHNT?id='.$result->t_id.'&name_id='.$result->id)}}" class="btn btn-success">বুকিং করুন</a>
+                                    <a href="{{URL::to('bookingHNT?id='.$result->t_id.'&name_id='.$result->id)}}" class="btn btn-success">বুকিং করুন</a><br><br>
                                 </div>
                             </div>
                         </div>

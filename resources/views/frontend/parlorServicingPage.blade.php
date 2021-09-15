@@ -58,12 +58,12 @@
                             <h5 style="text-align: center;"><b>আপনার পছন্দের পার্লার খুজে নিন।</b></h5>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="div_name" >এরিয়া</label>
+                                    <label for="div_name" >সার্ভিস লোকেশন(যে লোকেশনে সারভিস্টি গ্রহণ করতে চান)</label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="addressGroup"  id="zillaGroup" value="1" required> জেলা
+                                        <input type="radio" name="addressGroup"  id="zillaGroup" value="1" required> &nbsp; &nbsp; &nbsp; জেলা
                                     </label>
                                     <label class="radio-inline">
-                                        <input type="radio" name="addressGroup" id="cityGroup" value="2">সিটি
+                                        <input type="radio" name="addressGroup" id="cityGroup" value="2">&nbsp; &nbsp; &nbsp; সিটি
                                     </label>
                                 </div>
                             </div>

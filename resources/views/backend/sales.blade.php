@@ -56,10 +56,12 @@
                         <tr>
                             <th>তারিখ</th>
                             <th>ক্রেতার নাম</th>
+                            <th>ক্রেতার ফোন</th>
                             <th>ঠিকানা</th>
                             <th>অর্ডার নং</th>
                             <th>পরিমান</th>
                             <th>দায়িত্ত্ব</th>
+                            <th>ফোন</th>
                             <th>অবস্থা</th>
                             <th>বিস্তারিত</th>
                         </tr>
@@ -67,17 +69,28 @@
                           <tr>
                             <td>{{$order['sales_date']}}</td>
                             <td>{{$order['name']}}</td>
+                            <td>{{$order['phone']}}</td>
                             <td>{{$order['address']}}</td>
                             <td>{{$order['pay_id']}}</td>
                             <td> {{$order['amount']}}</td>
-                            <td><a href='{{$order['v_id']}}'><button type='button' class='btn btn-success btn-sm btn-flat'>{{$order['v_name']}} </button></a></td>
-                            <td><button type='button' class='btn btn-danger btn-sm btn-flat u_search' data-id='{{$order['user_id']}}'>{{$order['status']}} </button></td>
+                            <td>{{$order['v_name']}}</td>
+                            <td>{{$order['v_phone']}}</td>
+                            <td>
+                                <div class="form-group">
+                                    <select class="form-control  status" name="status" style="width: 100%;" required>
+                                        <option value="Received&{{$order['sales_id']}}" @if($order['status'] == 'Received'){{'Selected'}} @endif>Received</option>
+                                        <option value="Processing&{{$order['sales_id']}}" @if($order['status'] == 'Processing'){{'Selected'}} @endif>Processing</option>
+                                        <option value="Shipped&{{$order['sales_id']}}" @if($order['status'] == 'Shipped'){{'Selected'}} @endif>Shipped</option>
+                                        <option value="Delivered&{{$order['sales_id']}}" @if($order['status'] == 'Delivered'){{'Selected'}} @endif>Delivered</option>
+                                    </select>
+                                </div>
+                            </td>
                             <td><button type='button' class='btn btn-info btn-sm btn-flat transact' data-id='{{$order['sales_id']}}'><i class='fa fa-search'></i> বিস্তারিত</button></td>
                           </tr>
                         @endforeach
                         <tr>
-                            <td colspan="4" align="right">Total</td>
-                            <td colspan="5"> {{$sum.'/-'}}</td>
+                            <td colspan="5" align="right"><b>Total</b></td>
+                            <td colspan="5"><b>{{$sum.'/-'}}</b> </td>
                         </tr>
                     </table>
                     {{ $orders->links() }}
@@ -142,6 +155,18 @@
                 dateFormat: "yy-m-dd",
             })
         } );
+        $(".status").change(function(){
+            var id =$(this).val();
+            $.ajax({
+                type: 'GET',
+                url: 'changeOrderStatus',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    location.reload();
+                }
+            });
+        });
         $(function(){
             $(document).on('click', '.transact', function(e){
                 e.preventDefault();

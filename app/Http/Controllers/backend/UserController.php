@@ -563,6 +563,7 @@ class UserController extends Controller
             $order_details = DB::table('order_details')->where('user_id', $id)->get();
             $i=0;
             $sum = 0;
+            $orderArr = array();
             foreach($order_details as $order){
                 if($order->address_type == 1){
                     $add_part1 = DB::table('divisions')

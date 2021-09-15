@@ -60,7 +60,6 @@
                     <table class="table table-bordered productList">
                         <tr>
                             <th>#</th>
-                            <th>পরিমান </th>
                             <th>নাম </th>
                             <th>দাম</th>
                             <th>ইউনিট</th>

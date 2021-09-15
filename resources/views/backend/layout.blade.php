@@ -220,33 +220,7 @@
             </div>
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
-                @if(Cookie::get('user_type') != 12)
                 <li class="header">রিপোর্ট</li>
-                @endif
-                @if(Cookie::get('user_type') == 17||Cookie::get('user_type') == 18||Cookie::get('user_type') == 19||Cookie::get('user_type') == 20||Cookie::get('user_type') == 32)
-                    <li class="@yield('riderServiceArea')">
-                        <a href ="{{ url('riderServiceArea') }}" >
-                            <i class="fa fa-car"></i> <span>আমার সার্ভিস এরিয়া</span>
-                        </a>
-                    </li>
-                        <li class="@yield('myRiding')">
-                        <a href ="{{ url('myRiding') }}" >
-                            <i class="fa fa-car"></i> <span>আমার রাইডিং</span>
-                        </a>
-                    </li>
-                @endif
-                @if(Cookie::get('user_type') == 13)
-                    <li class="@yield('doctorServiceArea')">
-                        <a href ="{{ url('doctorServiceArea') }}" >
-                            <i class="fa fa-car"></i> <span>আমার সার্ভিস এরিয়া</span>
-                        </a>
-                    </li>
-                        <li class="@yield('myPatientList')">
-                        <a href ="{{ url('myPatientList') }}" >
-                            <i class="fa fa-medkit"></i> <span>আমার পেশেন্ট</span>
-                        </a>
-                    </li>
-                @endif
                 @if(Cookie::get('user_type') == 4)
                     <li class="@yield('myShop')">
                         <a href ="{{ url('myShop') }}" >
@@ -288,10 +262,51 @@
                         </a>
                     </li>
                 @endif
+                @if(Cookie::get('user_type') == 13)
+                    <li class="@yield('doctorServiceArea')">
+                        <a href ="{{ url('doctorServiceArea') }}" >
+                            <i class="fa fa-car"></i> <span>আমার সার্ভিস এরিয়া</span>
+                        </a>
+                    </li>
+                    <li class="@yield('myPatientList')">
+                        <a href ="{{ url('myPatientList') }}" >
+                            <i class="fa fa-medkit"></i> <span>আমার পেশেন্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Cookie::get('user_type') == 15)
+                    <li class="@yield('myMedicineSelf')">
+                        <a href ="{{ url('myMedicineSelf') }}" >
+                            <i class="fa fa-book"></i> <span>আমার সেলফ</span>
+                        </a>
+                    </li>
+                    <li class="@yield('myMedicineOrder')">
+                        <a href ="{{ url('myMedicineOrder') }}" >
+                            <i class="fa fa-book"></i> <span>আমার অর্ডার</span>
+                        </a>
+                    </li>
+                    <li class="@yield('myMedicineSalesReport')">
+                        <a href ="{{ url('myMedicineSalesReport') }}" >
+                            <i class="fa fa-book"></i> <span>বিক্রয় রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
                 @if(Cookie::get('user_type') == 16)
                     <li class="@yield('cookerProfile')">
                         <a href ="{{ url('cookerProfile') }}" >
                             <i class="fa fa-dashboard"></i> <span>আমার প্রোফাইল</span>
+                        </a>
+                    </li>
+                @endif
+                @if(Cookie::get('user_type') == 17||Cookie::get('user_type') == 18||Cookie::get('user_type') == 19||Cookie::get('user_type') == 20||Cookie::get('user_type') == 32)
+                    <li class="@yield('riderServiceArea')">
+                        <a href ="{{ url('riderServiceArea') }}" >
+                            <i class="fa fa-car"></i> <span>আমার সার্ভিস এরিয়া</span>
+                        </a>
+                    </li>
+                    <li class="@yield('myRiding')">
+                        <a href ="{{ url('myRiding') }}" >
+                            <i class="fa fa-car"></i> <span>আমার রাইডিং</span>
                         </a>
                     </li>
                 @endif
@@ -388,211 +403,168 @@
                     <li class ="@yield('bookingTourAll1')"><a href="{{ url('bookingTourAllAgent1') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-১</a></li>
                     <li class ="@yield('bookingTourAll2')"><a href="{{ url('bookingTourAllAgent2') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-২</a></li>
                 @endif
-                @if(Cookie::get('user_type') == 15)
-                    <li class="@yield('myMedicineSelf')">
-                        <a href ="{{ url('myMedicineSelf') }}" >
-                            <i class="fa fa-book"></i> <span>আমার সেলফ</span>
-                        </a>
-                    </li>
-                    <li class="@yield('myMedicineOrder')">
-                        <a href ="{{ url('myMedicineOrder') }}" >
-                            <i class="fa fa-book"></i> <span>আমার অর্ডার</span>
-                        </a>
-                    </li>
-                    <li class="@yield('myMedicineSalesReport')">
-                        <a href ="{{ url('myMedicineSalesReport') }}" >
-                            <i class="fa fa-book"></i> <span>বিক্রয় রিপোর্ট</span>
-                        </a>
-                    </li>
-                @endif
-                @if(Cookie::get('user_type') == 11)
+                <?php
+                    $rows =DB::table('role_assign')
+                        ->where('user_type', Cookie::get('user_type'))->first();
+                    if($rows){
+                        $roles = json_decode($rows->role);
+                ?>
+                @if(in_array(1, $roles))
                     <li class="@yield('dashLiAdd')">
                         <a href="{{ url('dashboard') }}">
                             <i class="fa fa-dashboard"></i> <span>ড্যাসবোরড</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(2, $roles))
                     <li class="@yield('accountingLiAdd')">
                         <a href="{{ url('accounting') }}">
                             <i class="fa fa-dashboard"></i> <span>হিসাব</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(3, $roles))
                     <li class="@yield('salesLiAdd')">
                         <a href="{{ url('salesReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>পণ্য বিক্রয় রিপোর্ট</span>
                         </a>
                     </li>
-                    <li class="@yield('aniSalesLiAdd')">
-                        <a href="{{ url('animalSalesReport') }}">
-                            <i class="fa fa-shopping-bag"></i> <span>পশু বিক্রয় রিপোর্ট</span>
+                @endif
+                @if(in_array(4, $roles))
+                    <li class="@yield('productUploadReport')">
+                        <a href="{{ url('productur') }}">
+                            <i class="fa fa-upload"></i> <span>সেলার পন্য</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(5, $roles))
                     <li class="@yield('ticketSalesLiAdd')">
                         <a href="{{ url('ticketSalesReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>টিকেট বিক্রয় রিপোর্ট</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(6, $roles))
                     <li class="@yield('doctorAppointmentLiAdd')">
                         <a href="{{ url('doctorAppointmentReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>ডাক্তার এপয়েনমেন্ট রিপোর্ট</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(7, $roles))
                     <li class="@yield('therapyAppointmentLiAdd')">
                         <a href="{{ url('therapyAppointmentReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>থেরাপি এপয়েনমেন্ট রিপোর্ট</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(8, $roles))
                     <li class="@yield('diagnosticAppointmentLiAdd')">
                         <a href="{{ url('diagnosticAppointmentReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>ডায়াগনস্টিক  রিপোর্ট</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(9, $roles))
                     <li class="@yield('medicineOrderReportAdmin')">
                         <a href="{{ url('medicineOrderReportAdmin') }}">
                             <i class="fa fa-shopping-bag"></i> <span>মেডিসিন অর্ডার  রিপোর্ট</span>
                         </a>
                     </li>
                 @endif
-                @if(Cookie::get('user_type') == 1 || Cookie::get('user_type') == 2 || Cookie::get('user_type') == 8)
-                <li class="@yield('dashLiAdd')">
-                    <a href="{{ url('dashboard') }}">
-                        <i class="fa fa-dashboard"></i> <span>ড্যাসবোরড</span>
-                    </a>
-                </li>
-                <li class="@yield('accountingLiAdd')">
-                    <a href="{{ url('accounting') }}">
-                        <i class="fa fa-dashboard"></i> <span>হিসাব</span>
-                    </a>
-                </li>
-                <li class="@yield('salesLiAdd')">
-                    <a href="{{ url('salesReport') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>পণ্য বিক্রয় রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('aniSalesLiAdd')">
-                    <a href="{{ url('animalSalesReport') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>পশু বিক্রয় রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('productUploadReport')">
-                    <a href="{{ url('productur') }}">
-                        <i class="fa fa-upload"></i> <span>পণ্য আপলোড রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('ticketSalesLiAdd')">
-                    <a href="{{ url('ticketSalesReport') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>টিকেট বিক্রয় রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('doctorAppointmentLiAdd')">
-                    <a href="{{ url('doctorAppointmentReport') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>ডাক্তার এপয়েনমেন্ট রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('therapyAppointmentLiAdd')">
-                    <a href="{{ url('therapyAppointmentReport') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>থেরাপি এপয়েনমেন্ট রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('diagnosticAppointmentLiAdd')">
-                    <a href="{{ url('diagnosticAppointmentReport') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>ডায়াগনস্টিক  রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('medicineOrderReportAdmin')">
-                    <a href="{{ url('medicineOrderReportAdmin') }}">
-                        <i class="fa fa-shopping-bag"></i> <span>মেডিসিন অর্ডার  রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('transportReportAdmin')">
-                    <a href="{{ url('transportReportAdmin') }}">
-                        <i class="fa fa-car"></i> <span>পরিবহন রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('courierReport')">
-                    <a href="{{ url('courierReport') }}">
-                        <i class="fa fa-car"></i> <span>কুরিয়ার রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('cookingReport')">
-                    <a href="{{ url('cookingReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>কুকিং রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('clothWashingReport')">
-                    <a href="{{ url('clothWashingReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>কাপড় পরিষ্কার রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('laundryReport')">
-                    <a href="{{ url('laundryReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>লন্ড্রি রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('roomCleaningReport')">
-                    <a href="{{ url('roomCleaningReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>রুম/ ওয়াশরুম/ ট্যাঙ্ক রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('helpingHandReport')">
-                    <a href="{{ url('helpingHandReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>বাচ্চা/ কাজে সহায়তা রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('guardReport')">
-                    <a href="{{ url('guardReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>গার্ড রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('variousServicingReport')">
-                    <a href="{{ url('variousServicingReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>বিভিন্ন সার্ভিসিং রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('parlorReport')">
-                    <a href="{{ url('parlorReport') }}">
-                        <i class="fa fa-dashboard"></i> <span>পার্লর রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('toursNTravelsReport')">
-                    <a href="{{ url('toursNTravelsReport') }}">
-                        <i class="fa fa-plane"></i> <span>ট্যুরস এন্ড ট্রাভেলস রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('donationReportBackend')">
-                    <a href="{{ url('donationReportBackend') }}">
-                        <i class="fa fa-medkit"></i> <span>ডোনেশন রিপোর্ট</span>
-                    </a>
-                </li>
-                <li class="@yield('dealerProductAdmin')">
-                    <a href="{{ url('dealerProductAdmin') }}">
-                        <i class="fa fa-user"></i> <span>ডিলার পণ্য রিপোর্ট</span>
-                    </a>
-                </li>
+                @if(in_array(10, $roles))
+                    <li class="@yield('transportReportAdmin')">
+                        <a href="{{ url('transportReportAdmin') }}">
+                            <i class="fa fa-car"></i> <span>পরিবহন রিপোর্ট</span>
+                        </a>
+                    </li>
                 @endif
-                <li class="header">ব্যবস্থাপনা</li>
-                @if(Cookie::get('user_type') == 15)
-                    <li class="@yield('medicineSelfName')">
-                        <a href ="{{ url('medicineSelfName') }}" >
-                            <i class="fa fa-book"></i> <span>সেলফ নাম</span>
+                @if(in_array(11, $roles))
+                    <li class="@yield('courierReport')">
+                        <a href="{{ url('courierReport') }}">
+                            <i class="fa fa-car"></i> <span>কুরিয়ার রিপোর্ট</span>
                         </a>
                     </li>
-                    <li class="@yield('medicineSelfManagement')">
-                        <a href ="{{ url('medicineSelfManagement') }}" >
-                            <i class="fa fa-book"></i> <span>সেলফ এন্ট্রি</span>
+                @endif
+                @if(in_array(12, $roles))
+                    <li class="@yield('cookingReport')">
+                        <a href="{{ url('cookingReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>কুকিং রিপোর্ট</span>
                         </a>
                     </li>
-                    <li class="@yield('myMedicineSale')">
-                        <a href ="{{ url('myMedicineSale') }}" >
-                            <i class="fa fa-book"></i> <span>আমার বিক্রয়</span>
+                @endif
+                @if(in_array(13, $roles))
+                    <li class="@yield('clothWashingReport')">
+                        <a href="{{ url('clothWashingReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>কাপড় পরিষ্কার রিপোর্ট</span>
                         </a>
                     </li>
-                    <li class="@yield('medicineOrderManagement')">
-                        <a href ="{{ url('medicineOrderManagement') }}" >
-                            <i class="fa fa-book"></i> <span>অর্ডার করুন</span>
+                @endif
+                @if(in_array(14, $roles))
+                    <li class="@yield('laundryReport')">
+                        <a href="{{ url('laundryReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>লন্ড্রি রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(15, $roles))
+                    <li class="@yield('roomCleaningReport')">
+                        <a href="{{ url('roomCleaningReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>রুম/ ওয়াশরুম/ ট্যাঙ্ক রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(16, $roles))
+                    <li class="@yield('helpingHandReport')">
+                        <a href="{{ url('helpingHandReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>বাচ্চা/ কাজে সহায়তা রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(17, $roles))
+                    <li class="@yield('guardReport')">
+                        <a href="{{ url('guardReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>গার্ড রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(18, $roles))
+                    <li class="@yield('variousServicingReport')">
+                        <a href="{{ url('variousServicingReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>বিভিন্ন সার্ভিসিং রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(19, $roles))
+                    <li class="@yield('parlorReport')">
+                        <a href="{{ url('parlorReport') }}">
+                            <i class="fa fa-dashboard"></i> <span>পার্লর রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(20, $roles))
+                    <li class="@yield('toursNTravelsReport')">
+                        <a href="{{ url('toursNTravelsReport') }}">
+                            <i class="fa fa-plane"></i> <span>ট্যুরস এন্ড ট্রাভেলস রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(21, $roles))
+                    <li class="@yield('donationReportBackend')">
+                        <a href="{{ url('donationReportBackend') }}">
+                            <i class="fa fa-medkit"></i> <span>ডোনেশন রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(22, $roles))
+                    <li class="@yield('dealerProductAdmin')">
+                        <a href="{{ url('dealerProductAdmin') }}">
+                            <i class="fa fa-user"></i> <span>ডিলার পণ্য রিপোর্ট</span>
                         </a>
                     </li>
                 @endif
-                @if(Cookie::get('user_type') == 12)
+                <li class="header">ব্যবস্থাপনা</li>
+                @if(in_array(23, $roles))
                     <li class="treeview  @yield('mainLiAdd')">
                         <a href="#">
                             <i class="fa fa-address-book"></i>
@@ -629,8 +601,24 @@
                                     <li class ="@yield('cWardLiAdd')" ><a href="{{ url('c_ward') }}"><i class="fa fa-circle-o"></i> ওয়ার্ড  </a></li>
                                 </ul>
                             </li>
+                            <li class="treeview  @yield('mainForeignLiAdd')">
+                                <a href="#"><i class="fa fa-circle-o"></i> বিদেশ ভিত্তিক
+                                    <span class="pull-right-container">
+                                      <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class ="@yield('naming1')" ><a href="{{ url('naming1') }}"><i class="fa fa-circle-o"></i> দেশ (নেমিং ১)  </a></li>
+                                    <li class ="@yield('naming2')" ><a href="{{ url('naming2') }}"><i class="fa fa-circle-o"></i> নেমিং ২ </a></li>
+                                    <li class ="@yield('naming3')" ><a href="{{ url('naming3') }}"><i class="fa fa-circle-o"></i> নেমিং ৩ </a></li>
+                                    <li class ="@yield('naming4')" ><a href="{{ url('naming4') }}"><i class="fa fa-circle-o"></i> নেমিং ৪  </a></li>
+                                    <li class ="@yield('naming5')" ><a href="{{ url('naming5') }}"><i class="fa fa-circle-o"></i> নেমিং ৫  </a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
+                @endif
+                @if(in_array(24, $roles))
                     <li class="treeview  @yield('mainUserLiAdd')">
                         <a href="#">
                             <i class="fa fa-address-book"></i>
@@ -645,36 +633,78 @@
 
                         </ul>
                     </li>
+                @endif
+                @if(in_array(25, $roles))
                     <li class="@yield('catLiAdd')">
                         <a href ="{{ url('category') }}">
                             <i class="fa fa-bandcamp"></i> <span>ক্যাটেগরি </span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(26, $roles))
+                    <li class="@yield('sms')">
+                        <a href ="{{ url('sms') }}">
+                            <i class="fa fa-envelope-square"></i> <span>এসএমএস </span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(27, $roles))
                     <li class="@yield('subCatLiAdd')">
                         <a href ="{{ url('subcategory') }}">
                             <i class="fa fa-bandcamp"></i> <span> সাব ক্যাটেগরি </span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(28, $roles))
+                    <li class="@yield('mainSlide')">
+                        <a href ="{{ url('mainSlide') }}" >
+                            <i class="fa fa-image"></i> <span>স্লাইড ব্যবস্থাপনা</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(29, $roles))
                     <li class="@yield('proLiAdd')">
                         <a href ="{{ url('product') }}" >
                             <i class="fa fa-shopping-cart"></i> <span>পণ্য</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(30, $roles))
+                    <li class="@yield('couponLiAdd')">
+                        <a href ="{{ url('coupon') }}" >
+                            <i class="fa fa-shopping-cart"></i> <span>কুপন</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(31, $roles))
                     <li class="@yield('allMedicineList')">
                         <a href ="{{ url('allMedicineList') }}" >
                             <i class="fa fa-medkit"></i> <span>ঔষধ</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(32, $roles))
                     <li class="@yield('medicineCompanyEmail')">
                         <a href ="{{ url('medicineCompanyEmail') }}" >
                             <i class="fa fa-medkit"></i> <span>ঔষধ কোম্পানি ইমেইল</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(33, $roles))
                     <li class="@yield('deliveryLiAdd')">
                         <a href ="{{ url('delivery_charge') }}" >
                             <i class="fa fa-delicious"></i> <span> পণ্য ডেলিভারি চার্জ</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(34, $roles))
+                    <li class="@yield('transportCost')">
+                        <a href ="{{ url('transportCost') }}" >
+                            <i class="fa fa-delicious"></i> <span>পরিবহন খরচ নির্ধারণ</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(35, $roles))
                     <li class="treeview  @yield('serviceMainLi')">
                         <a href="#">
                             <i class="fa fa-address-book"></i>
@@ -695,6 +725,30 @@
                                     <li class ="@yield('ticketRoute')"><a href="{{ url('ticketRoute') }}"><i class="fa fa-circle-o"></i> টিকেট রুট</a></li>
                                 </ul>
                             </li>
+                            <li class="treeview  @yield('qourierMainLi')">
+                                <a href="#"><i class="fa fa-circle-o"></i> কুরিয়ার
+                                    <span class="pull-right-container">
+                                      <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class ="@yield('courierType')"><a href="{{ url('courierType') }}"><i class="fa fa-circle-o"></i>কুরিয়ার ধরণ</a></li>
+                                    <li class ="@yield('courierSettings')"><a href="{{ url('courierSettings') }}"><i class="fa fa-circle-o"></i>কুরিয়ার সেটিংস</a></li>
+                                    <li class ="@yield('agentArea')"><a href="{{ url('agentArea') }}"><i class="fa fa-circle-o"></i>এজেন্ট এরিয়া</a></li>
+                                </ul>
+                            </li>
+                            <li class="treeview  @yield('tntMainLi')">
+                                <a href="#"><i class="fa fa-circle-o"></i> ট্যুরস এন্ড ট্রাভেলস
+                                    <span class="pull-right-container">
+                                      <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li class ="@yield('bookingMainAddress')"><a href="{{ url('bookingMainAddress') }}"><i class="fa fa-circle-o"></i>বুকিং প্রধান ঠিকানা</a></li>
+                                    <li class ="@yield('bookingTourAll1')"><a href="{{ url('bookingTourAll1') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-১</a></li>
+                                    <li class ="@yield('bookingTourAll2')"><a href="{{ url('bookingTourAll2') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-২</a></li>
+                                </ul>
+                            </li>
                             <li class="treeview  @yield('medicalMainLi')">
                                 <a href="#"><i class="fa fa-circle-o"></i> মেডিকেল সার্ভিস
                                     <span class="pull-right-container">
@@ -712,6 +766,7 @@
                                     <li class ="@yield('diagnosticTestList')"><a href="{{ url('diagnosticTestList') }}"><i class="fa fa-circle-o"></i> ডায়াগনস্টিক টেস্ট </a></li>
                                     <li class ="@yield('diagnosticCenterList')"><a href="{{ url('diagnosticCenterList') }}"><i class="fa fa-circle-o"></i> ডায়াগনস্টিক সেন্টার </a></li>
                                     <li class ="@yield('diagnosticFees')"><a href="{{ url('diagnosticFees') }}"><i class="fa fa-circle-o"></i> ডায়াগনস্টিক ফিস </a></li>
+                                    <li class ="@yield('medicalCamp')"><a href="{{ url('medicalCampBack') }}"><i class="fa fa-circle-o"></i>মেডিকেল ক্যাম্প</a></li>
                                 </ul>
                             </li>
                             <li class="treeview  @yield('homeAssistantMainLi')">
@@ -728,233 +783,64 @@
                                     <li class ="@yield('guardSetting')"><a href="{{ url('guardSetting') }}"><i class="fa fa-circle-o"></i>গার্ড</a></li>
                                     <li class ="@yield('variousServicing')"><a href="{{ url('variousServicing') }}"><i class="fa fa-circle-o"></i> বিভিন্ন সার্ভিসিং</a></li>
                                     <li class ="@yield('parlorService')"><a href="{{ url('parlorService') }}"><i class="fa fa-circle-o"></i>পার্লার সার্ভিস</a></li>
+                                    <li class ="@yield('laundryService')"><a href="{{ url('laundryService') }}"><i class="fa fa-circle-o"></i>লন্ড্রি সার্ভিস</a></li>
                                 </ul>
                             </li>
                         </ul>
                     </li>
+                @endif
+                @if(in_array(36, $roles))
                     <li class="@yield('aboutLiAdd')">
                         <a href ="{{ url('about_us') }}" >
                             <i class="fa fa-address-book-o"></i> <span>আমাদের সম্পর্কে</span>
                         </a>
                     </li>
+                @endif
+                @if(in_array(37, $roles))
                     <li class="@yield('contactLiAdd')">
                         <a href ="{{ url('contact_us') }}" >
                             <i class="fa fa-address-card"></i> <span>যোগাযোগকারি</span>
                         </a>
                     </li>
                 @endif
-                    @if(Cookie::get('user_type') == 1 || Cookie::get('user_type') == 2 || Cookie::get('user_type') == 8)
-                        <li class="treeview  @yield('mainLiAdd')">
-                            <a href="#">
-                                <i class="fa fa-address-book"></i>
-                                <span>ঠিকানা</span>
-                                <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class ="@yield('divLiAdd')"><a href="{{ url('division') }}"><i class="fa fa-circle-o"></i> বিভাগ</a></li>
-                                <li class="treeview  @yield('mainDisLiAdd')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> জেলা ভিত্তিক
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('disLiAdd')"><a href="{{ url('district') }}"><i class="fa fa-circle-o"></i> জেলা</a></li>
-                                        <li class ="@yield('upLiAdd')"><a href="{{ url('upazilla') }}"><i class="fa fa-circle-o"></i> উপজেলা</a></li>
-                                        <li class ="@yield('uniLiAdd')"><a href="{{ url('union') }}"><i class="fa fa-circle-o"></i> ইউনিয়ন </a></li>
-                                        <li class ="@yield('wardLiAdd')"><a href="{{ url('ward') }}"><i class="fa fa-circle-o"></i> ওয়ার্ড  </a></li>
-                                    </ul>
-                                </li>
-                                <li class="treeview  @yield('mainCityLiAdd')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> শহর ভিত্তিক
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('cityLiAdd')" ><a href="{{ url('city') }}"><i class="fa fa-circle-o"></i> সিটি </a></li>
-                                        <li class ="@yield('cityCorLiAdd')" ><a href="{{ url('city_corporation') }}"><i class="fa fa-circle-o"></i> সিটি কর্পোরেশন </a></li>
-                                        <li class ="@yield('thanaLiAdd')" ><a href="{{ url('thana') }}"><i class="fa fa-circle-o"></i> থানা  </a></li>
-                                        <li class ="@yield('cWardLiAdd')" ><a href="{{ url('c_ward') }}"><i class="fa fa-circle-o"></i> ওয়ার্ড  </a></li>
-                                    </ul>
-                                </li>
-                                <li class="treeview  @yield('mainForeignLiAdd')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> বিদেশ ভিত্তিক
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('naming1')" ><a href="{{ url('naming1') }}"><i class="fa fa-circle-o"></i> দেশ (নেমিং ১)  </a></li>
-                                        <li class ="@yield('naming2')" ><a href="{{ url('naming2') }}"><i class="fa fa-circle-o"></i> নেমিং ২ </a></li>
-                                        <li class ="@yield('naming3')" ><a href="{{ url('naming3') }}"><i class="fa fa-circle-o"></i> নেমিং ৩ </a></li>
-                                        <li class ="@yield('naming4')" ><a href="{{ url('naming4') }}"><i class="fa fa-circle-o"></i> নেমিং ৪  </a></li>
-                                        <li class ="@yield('naming5')" ><a href="{{ url('naming5') }}"><i class="fa fa-circle-o"></i> নেমিং ৫  </a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="treeview  @yield('mainUserLiAdd')">
-                            <a href="#">
-                                <i class="fa fa-address-book"></i>
-                                <span>ইউজার</span>
-                                <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class ="@yield('userTypeLiAdd')"><a href="{{ url('user_type') }}"><i class="fa fa-circle-o"></i> ইউজার ধরন </a></li>
-                                <li class ="@yield('userLiAdd')"><a href="{{ url('user') }}"><i class="fa fa-circle-o"></i> ইউজার  </a></li>
-
-                            </ul>
-                        </li>
-                        <li class="@yield('catLiAdd')">
-                            <a href ="{{ url('category') }}">
-                                <i class="fa fa-bandcamp"></i> <span>ক্যাটেগরি </span>
-                            </a>
-                        </li>
-                        <li class="@yield('sms')">
-                            <a href ="{{ url('sms') }}">
-                                <i class="fa fa-envelope-square"></i> <span>এসএমএস </span>
-                            </a>
-                        </li>
-                        <li class="@yield('subCatLiAdd')">
-                            <a href ="{{ url('subcategory') }}">
-                                <i class="fa fa-bandcamp"></i> <span> সাব ক্যাটেগরি </span>
-                            </a>
-                        </li>
-                        <li class="@yield('mainSlide')">
-                            <a href ="{{ url('mainSlide') }}" >
-                                <i class="fa fa-image"></i> <span>স্লাইড ব্যবস্থাপনা</span>
-                            </a>
-                        </li>
-                        <li class="@yield('proLiAdd')">
-                            <a href ="{{ url('product') }}" >
-                                <i class="fa fa-shopping-cart"></i> <span>পণ্য</span>
-                            </a>
-                        </li>
-                        <li class="@yield('couponLiAdd')">
-                            <a href ="{{ url('coupon') }}" >
-                                <i class="fa fa-shopping-cart"></i> <span>কুপন</span>
-                            </a>
-                        </li>
-                        <li class="@yield('allMedicineList')">
-                            <a href ="{{ url('allMedicineList') }}" >
-                                <i class="fa fa-medkit"></i> <span>ঔষধ</span>
-                            </a>
-                        </li>
-                        <li class="@yield('medicineCompanyEmail')">
-                            <a href ="{{ url('medicineCompanyEmail') }}" >
-                                <i class="fa fa-medkit"></i> <span>ঔষধ কোম্পানি ইমেইল</span>
-                            </a>
-                        </li>
-                        <li class="@yield('deliveryLiAdd')">
-                            <a href ="{{ url('delivery_charge') }}" >
-                                <i class="fa fa-delicious"></i> <span> পণ্য ডেলিভারি চার্জ</span>
-                            </a>
-                        </li>
-                        <li class="@yield('transportCost')">
-                            <a href ="{{ url('transportCost') }}" >
-                                <i class="fa fa-delicious"></i> <span>পরিবহন খরচ নির্ধারণ</span>
-                            </a>
-                        </li>
-                        <li class="treeview  @yield('serviceMainLi')">
-                            <a href="#">
-                                <i class="fa fa-address-book"></i>
-                                <span>সেবাসমুহ</span>
-                                <span class="pull-right-container">
-                              <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class="treeview  @yield('transportMainLi')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> পরিবহন ও টিকেট
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('coachPage')"><a href="{{ url('coachPage') }}"><i class="fa fa-circle-o"></i> ট্রান্সপোর্ট</a></li>
-                                        <li class ="@yield('ticketRoute')"><a href="{{ url('ticketRoute') }}"><i class="fa fa-circle-o"></i> টিকেট রুট</a></li>
-                                    </ul>
-                                </li>
-                                <li class="treeview  @yield('qourierMainLi')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> কুরিয়ার
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('courierType')"><a href="{{ url('courierType') }}"><i class="fa fa-circle-o"></i>কুরিয়ার ধরণ</a></li>
-                                        <li class ="@yield('courierSettings')"><a href="{{ url('courierSettings') }}"><i class="fa fa-circle-o"></i>কুরিয়ার সেটিংস</a></li>
-                                        <li class ="@yield('agentArea')"><a href="{{ url('agentArea') }}"><i class="fa fa-circle-o"></i>এজেন্ট এরিয়া</a></li>
-                                    </ul>
-                                </li>
-                                <li class="treeview  @yield('tntMainLi')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> ট্যুরস এন্ড ট্রাভেলস
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('bookingMainAddress')"><a href="{{ url('bookingMainAddress') }}"><i class="fa fa-circle-o"></i>বুকিং প্রধান ঠিকানা</a></li>
-                                        <li class ="@yield('bookingTourAll1')"><a href="{{ url('bookingTourAll1') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-১</a></li>
-                                        <li class ="@yield('bookingTourAll2')"><a href="{{ url('bookingTourAll2') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-২</a></li>
-                                    </ul>
-                                </li>
-                                <li class="treeview  @yield('medicalMainLi')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> মেডিকেল সার্ভিস
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('departmentList')"><a href="{{ url('departmentList') }}"><i class="fa fa-circle-o"></i> ডিপার্টমেন্ট </a></li>
-                                        <li class ="@yield('hospitalList')"><a href="{{ url('hospitalList') }}"><i class="fa fa-circle-o"></i> হাসপাতাল </a></li>
-                                        <li class ="@yield('doctorList')"><a href="{{ url('doctorList') }}"><i class="fa fa-circle-o"></i> ডাক্তার লিস্ট</a></li>
-                                        <li class ="@yield('privateChamberList')"><a href="{{ url('privateChamberList') }}"><i class="fa fa-circle-o"></i> প্রাইভেট চেম্বার </a></li>
-                                        <li class ="@yield('therapyServiceList')"><a href="{{ url('therapyServiceList') }}"><i class="fa fa-circle-o"></i> থেরাপি সার্ভিস </a></li>
-                                        <li class ="@yield('therapyCenterList')"><a href="{{ url('therapyCenterList') }}"><i class="fa fa-circle-o"></i> থেরাপি সেন্টার </a></li>
-                                        <li class ="@yield('therapyFees')"><a href="{{ url('therapyFees') }}"><i class="fa fa-circle-o"></i> থেরাপি ফিস </a></li>
-                                        <li class ="@yield('diagnosticTestList')"><a href="{{ url('diagnosticTestList') }}"><i class="fa fa-circle-o"></i> ডায়াগনস্টিক টেস্ট </a></li>
-                                        <li class ="@yield('diagnosticCenterList')"><a href="{{ url('diagnosticCenterList') }}"><i class="fa fa-circle-o"></i> ডায়াগনস্টিক সেন্টার </a></li>
-                                        <li class ="@yield('diagnosticFees')"><a href="{{ url('diagnosticFees') }}"><i class="fa fa-circle-o"></i> ডায়াগনস্টিক ফিস </a></li>
-                                        <li class ="@yield('medicalCamp')"><a href="{{ url('medicalCampBack') }}"><i class="fa fa-circle-o"></i>মেডিকেল ক্যাম্প</a></li>
-                                    </ul>
-                                </li>
-                                <li class="treeview  @yield('homeAssistantMainLi')">
-                                    <a href="#"><i class="fa fa-circle-o"></i> হোম এসিস্ট্যান্ট
-                                        <span class="pull-right-container">
-                                      <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li class ="@yield('cookingPage')"><a href="{{ url('cookingPage') }}"><i class="fa fa-circle-o"></i> কুকিং</a></li>
-                                        <li class ="@yield('clothWashing')"><a href="{{ url('clothWashing') }}"><i class="fa fa-circle-o"></i>কাপড় পরিষ্কার</a></li>
-                                        <li class ="@yield('roomCleaning')"><a href="{{ url('roomCleaning') }}"><i class="fa fa-circle-o"></i>রুম/ওয়াশরুম/ট্যাংক পরিষ্কার</a></li>
-                                        <li class ="@yield('childCaring')"><a href="{{ url('childCaring') }}"><i class="fa fa-circle-o"></i>বাচ্চা দেখাশোনা ও কাজে সহায়তা</a></li>
-                                        <li class ="@yield('guardSetting')"><a href="{{ url('guardSetting') }}"><i class="fa fa-circle-o"></i>গার্ড</a></li>
-                                        <li class ="@yield('variousServicing')"><a href="{{ url('variousServicing') }}"><i class="fa fa-circle-o"></i> বিভিন্ন সার্ভিসিং</a></li>
-                                        <li class ="@yield('parlorService')"><a href="{{ url('parlorService') }}"><i class="fa fa-circle-o"></i>পার্লার সার্ভিস</a></li>
-                                        <li class ="@yield('laundryService')"><a href="{{ url('laundryService') }}"><i class="fa fa-circle-o"></i>লন্ড্রি সার্ভিস</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="@yield('aboutLiAdd')">
-                            <a href ="{{ url('about_us') }}" >
-                                <i class="fa fa-address-book-o"></i> <span>আমাদের সম্পর্কে</span>
-                            </a>
-                        </li>
-                        <li class="@yield('contactLiAdd')">
-                            <a href ="{{ url('contact_us') }}" >
-                                <i class="fa fa-address-card"></i> <span>যোগাযোগকারি</span>
-                            </a>
-                        </li>
-                    @endif
-
+                @if(in_array(38, $roles))
+                    <li class="@yield('roleAssign')">
+                        <a href ="{{ url('roleAssign') }}" >
+                            <i class="fa fa-address-card"></i> <span>রোল এসাইন</span>
+                        </a>
+                    </li>
+                @endif
+                <?php
+                    }
+                    $rows =DB::table('user_type')
+                        ->where('type', Cookie::get('user_type'))->first();
+                    $type = $rows->type;
+                ?>
+                @if($type == 2)
+                    <li class="header">ব্যবস্থাপনা</li>
+                @endif
+                @if(Cookie::get('user_type') == 15)
+                    <li class="@yield('medicineSelfName')">
+                        <a href ="{{ url('medicineSelfName') }}" >
+                            <i class="fa fa-book"></i> <span>সেলফ নাম</span>
+                        </a>
+                    </li>
+                    <li class="@yield('medicineSelfManagement')">
+                        <a href ="{{ url('medicineSelfManagement') }}" >
+                            <i class="fa fa-book"></i> <span>সেলফ এন্ট্রি</span>
+                        </a>
+                    </li>
+                    <li class="@yield('myMedicineSale')">
+                        <a href ="{{ url('myMedicineSale') }}" >
+                            <i class="fa fa-book"></i> <span>আমার বিক্রয়</span>
+                        </a>
+                    </li>
+                    <li class="@yield('medicineOrderManagement')">
+                        <a href ="{{ url('medicineOrderManagement') }}" >
+                            <i class="fa fa-book"></i> <span>অর্ডার করুন</span>
+                        </a>
+                    </li>
+                @endif
             </ul>
         </section>
         <!-- /.sidebar -->

@@ -193,11 +193,11 @@ class SellerController extends Controller
     }
     public function mySaleProduct(){
         try{
-            $products = DB::table('product_sales')
-                ->join('seller_product as a','product_sales.product_id','=','a.id')
-                ->where('product_sales.seller_id', Cookie::get('user_id'))
+            $products = DB::table('details')
+                ->join('v_assign','details.sales_id','=','v_assign.id')
+                ->join('products','products.id','=','details.product_id')
+                ->where('products.upload_by',Cookie::get('user_id'))
                 ->paginate(20);
-            //dd($products);
             return view('backend.mySaleProduct',['products' => $products]);
         }
         catch(\Illuminate\Database\QueryException $ex){
@@ -218,11 +218,20 @@ class SellerController extends Controller
             if($request) {
                 if(Cookie::get('user_id')) {
                     if($request->id) {
+                        if ($request->hasFile('logo')) {
+                            $targetFolder = 'public/asset/images/';
+                            $file = $request->file('logo');
+                            $pIname = time() . '.' . $file->getClientOriginalName();
+                            $image['filePath'] = $pIname;
+                            $file->move($targetFolder, $pIname);
+                            $logo = $targetFolder . $pIname;
+                        }
                         $result =DB::table('seller_shop')
                             ->where('id', $request->id)
                             ->update([
                                 'name' => $request->name,
                                 'address' => $request->address,
+                                'logo' => $logo,
                             ]);
                         if ($result) {
                             return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -237,10 +246,20 @@ class SellerController extends Controller
                             return back()->with('errorMessage', 'আপনার দোকান রয়েছে। আপনি নতুন দোনাল খুলতে পারবেন না।');
                         }
                         else{
+                            if ($request->hasFile('logo')) {
+                                $targetFolder = 'public/asset/images/';
+                                $file = $request->file('logo');
+                                $pIname = time() . '.' . $file->getClientOriginalName();
+                                $image['filePath'] = $pIname;
+                                $file->move($targetFolder, $pIname);
+                                $logo = $targetFolder . $pIname;
+                            }
+
                             $result = DB::table('seller_shop')->insert([
                                 'seller_id' => Cookie::get('user_id'),
                                 'name' => $request->name,
                                 'address' => $request->address,
+                                'logo' => $logo,
                             ]);
                             if ($result) {
                                 return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');

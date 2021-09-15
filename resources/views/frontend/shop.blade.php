@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <!-- End of Shop Banner -->
-                <section class="category-ellipse-section services" style="background-color: #f3f3f3;">
+                <section class="category-ellipse-section services s_shop" style="background-color: #f3f3f3;">
                     <h2 class="title title-center mb-5">সেবাসমুহ</h2>
                     <div class="container mt-1 mb-2">
                         <div class="row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">

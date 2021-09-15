@@ -169,7 +169,7 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::get('salesReport', 'backend\ReportController@salesReport');
     Route::get('animalSalesReport', 'backend\ReportController@animalSalesReport');
     Route::get('productur', 'backend\ReportController@productur');
-    Route::post('approvalChange', 'backend\ReportController@approvalChange');
+    Route::get('approvalChange', 'backend\ReportController@approvalChange');
     Route::post('getSellerProductsByIdAdmin', 'backend\SellerController@getSellerProductsByIdAdmin');
     Route::post('deleteSellerUploadProduct', 'backend\SellerController@deleteSellerUploadProduct');
     Route::get('changeSellerProductSituation', 'backend\SellerController@changeSellerProductSituation');
@@ -779,6 +779,14 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('couponCheck', 'frontend\FrontController@couponCheck');
     Route::post('productQuantityChangeDonate', 'frontend\FrontController@productQuantityChangeDonate');
     Route::post('getDonatePrice', 'frontend\FrontController@getDonatePrice');
+    Route::get('marchantShop', 'frontend\FrontController@marchantShop');
+    Route::get('sellerShop-by-id/{id}', 'frontend\FrontController@sellerShopById');
+    Route::get('changeOrderStatus', 'backend\ReportController@changeOrderStatus');
+    Route::get('shop-by-sub-cat', 'frontend\FrontController@shopBySubCat');
+    Route::get('roleAssign', 'frontend\AuthController@roleAssign');
+    Route::post('insertUserRole', 'frontend\AuthController@insertUserRole');
+    Route::get('roleAssignEditPage', 'frontend\AuthController@roleAssignEditPage');
+    Route::post('updateUserRole', 'frontend\AuthController@updateUserRole');
 
     //Payment Gateway
     Route::post('getPaymentCartView', 'frontend\PaymentController@getPaymentCartView');

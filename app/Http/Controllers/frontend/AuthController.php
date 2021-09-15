@@ -565,4 +565,75 @@ class AuthController extends Controller
         }
 
     }
+    public  function roleAssign(){
+        $result = DB::table('user_type')
+            ->where('type', 1)->get();
+        $attributes = DB::table('attribute')->get();
+        $r_as = DB::table('role_assign')->get();
+        return view('backend.roleAssignPage',['users' =>  $result,'attributes'=> $attributes,'r_as'=> $r_as]);
+    }
+    public function insertUserRole(Request $request){
+        try{
+            if($request) {
+                $result =DB::table('role_assign')
+                    ->where('user_type', $request->user)->get();
+                if($result->count()>0){
+                    return back()->with('errorMessage', 'এই ইউজা ধরনের ডাটা রয়েছে। নতুন ডাটা প্রদান করুন।');
+                }
+                else{
+                    $result = DB::table('role_assign')->insert([
+                        'user_type' => $request->user,
+                        'role' => json_encode($request->role),
+                    ]);
+                    if($result){
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    }
+                    else{
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function roleAssignEditPage(Request $request){
+        try{
+            $result = DB::table('user_type')
+                ->where('type', 1)->get();
+            $attributes = DB::table('attribute')->get();
+            $r_as = DB::table('role_assign')->get();
+            return view('backend.roleAssignEditPage', ['users' => $result, 'attributes' => $attributes, 'r_as' => $r_as]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function updateUserRole(Request $request){
+        try{
+            if($request->id) {
+                $result = DB::table('role_assign') ->where('id',$request->id)
+                    ->update([
+                        'user_type' => $request->user,
+                        'role' => json_encode($request->role),
+                    ]);
+                if($result){
+                    return redirect('roleAssign')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                }
+                else{
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
 }

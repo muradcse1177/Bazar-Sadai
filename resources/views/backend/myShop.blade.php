@@ -30,7 +30,7 @@
                     <h3 class="box-title rembut" style="display:none;"><button type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-minus-square"></i> মুছে ফেলুন </button></h3>
                 </div>
                 <div class="divform" style="display:none">
-                    {{ Form::open(array('url' => 'insertSellerShop',  'method' => 'post')) }}
+                    {{ Form::open(array('url' => 'insertSellerShop',  'method' => 'post','enctype'=>'multipart/form-data')) }}
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
@@ -40,6 +40,10 @@
                         <div class="form-group">
                             <label for="name" >দোকানের ঠিকানা</label>
                             <input type="text" class="form-control address" name="address" placeholder="দোকানের ঠিকানা"  required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" >দোকানের লোগো (190px*190px)</label>
+                            <input type="file" class="form-control logo" name="logo" accept="image/*"  placeholder="দোকানের লোগো"  required>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -60,12 +64,14 @@
                 <div class="box-body table-responsive">
                     <table class="table table-bordered">
                         <tr>
+                            <th>লোগো</th>
                             <th>নাম</th>
                             <th>ঠিকানা</th>
                             <th>টুল</th>
                         </tr>
                         @foreach($products as $product)
                             <tr>
+                                <td><img src="{{$product->logo}}" height="60" width="60">  </td>
                                 <td> {{$product->name}} </td>
                                 <td> {{$product->address}} </td>
                                 <td class="td-actions text-center">

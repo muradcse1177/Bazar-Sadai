@@ -40,54 +40,6 @@
                 </div>
             </div>
         </diV>
-        <section class="category-ellipse-section services" style="background-color: #f3f3f3;">
-            <h2 class="title title-center mb-5">সেবাসমুহ</h2>
-            <div class="container mt-1 mb-2">
-                <div class="row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">
-                    <?php
-                        $url_arr = array(
-                            "serviceSubCategoryToursNTravel",
-                            "courier",
-                            "serviceSubCategoryMedical",
-                            "serviceSubCategoryHomeAssistant",
-                            "transportService",
-                            );
-                        $i=0;
-                    ?>
-                    @foreach($ser_categories as $ser_cat)
-                        <div class="category category-ellipse">
-                            <figure class="category-media">
-                                <a href="{{url($url_arr[$i].'/'.$ser_cat->id)}}">
-                                    <img src="{{url($ser_cat->image)}}" alt="Categroy"
-                                         width="190" height="190" style="background-color: #5C92C0;" />
-                                </a>
-                            </figure>
-                            <div class="category-content">
-                                <h4 class="category-name">
-                                    <a href="{{url($url_arr[$i].'/'.$ser_cat->id)}}">{{$ser_cat->name}}</a>
-                                </h4>
-                            </div>
-                        </div>
-                        <?php
-                            $i++;
-                        ?>
-                    @endforeach
-                        <div class="category category-ellipse">
-                            <figure class="category-media">
-                                <a href="{{url('forHumanity')}}">
-                                    <img src="{{url('public/humanity.jpg')}}" alt="Categroy"
-                                         width="190" height="190" style="background-color: #5C92C0;" />
-                                </a>
-                            </figure>
-                            <div class="category-content">
-                                <h4 class="category-name">
-                                    <a href="{{url('forHumanity')}}">মানুষ মানুষের জন্য</a>
-                                </h4>
-                            </div>
-                        </div>
-                </div>
-            </div>
-        </section>
         <section class="category-ellipse-section" style="background-color: #f3f3f3;">
             <h2 class="title title-center mb-5">পণ্য ধরনসমুহ</h2>
             <div class="container mt-1 mb-2">
@@ -107,6 +59,67 @@
                             </div>
                         </div>
                     @endforeach
+                    <div class="category category-ellipse">
+                        <figure class="category-media">
+                            <a href="{{url('marchantShop')}}">
+                                <img src="{{url('public/marchant.png')}}" alt="Categroy"
+                                     width="190" height="190" style="background-color: #5C92C0;" />
+                            </a>
+                        </figure>
+                        <div class="category-content">
+                            <h4 class="category-name">
+                                <a href="{{url('marchantShop')}}">হরেক রকম বাজার</a>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="category-ellipse-section services" style="background-color: #f3f3f3;">
+            <h2 class="title title-center mb-5">সেবাসমুহ</h2>
+            <div class="container mt-1 mb-2">
+                <div class="row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">
+                    <?php
+                    $url_arr = array(
+                        "serviceSubCategoryToursNTravel",
+                        "courier",
+                        "serviceSubCategoryMedical",
+                        "serviceSubCategoryHomeAssistant",
+                        "transportService",
+                    );
+                    $i=0;
+                    ?>
+                    @foreach($ser_categories as $ser_cat)
+                        <div class="category category-ellipse">
+                            <figure class="category-media">
+                                <a href="{{url($url_arr[$i].'/'.$ser_cat->id)}}">
+                                    <img src="{{url($ser_cat->image)}}" alt="Categroy"
+                                         width="190" height="190" style="background-color: #5C92C0;" />
+                                </a>
+                            </figure>
+                            <div class="category-content">
+                                <h4 class="category-name">
+                                    <a href="{{url($url_arr[$i].'/'.$ser_cat->id)}}">{{$ser_cat->name}}</a>
+                                </h4>
+                            </div>
+                        </div>
+                        <?php
+                        $i++;
+                        ?>
+                    @endforeach
+                    <div class="category category-ellipse">
+                        <figure class="category-media">
+                            <a href="{{url('forHumanity')}}">
+                                <img src="{{url('public/humanity.jpg')}}" alt="Categroy"
+                                     width="190" height="190" style="background-color: #5C92C0;" />
+                            </a>
+                        </figure>
+                        <div class="category-content">
+                            <h4 class="category-name">
+                                <a href="{{url('forHumanity')}}">মানুষ মানুষের জন্য</a>
+                            </h4>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
