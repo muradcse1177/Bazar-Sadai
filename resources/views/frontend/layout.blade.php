@@ -536,7 +536,7 @@
                             ?>
                             <ul>
                                 @foreach($sub_categories as $s_cat)
-                                    <li><a href="{{url('shop-by-sub-cat/'.$s_cat->id)}}">{{$s_cat->name}}</a></li>
+                                    <li><a href="{{url('shop-by-sub-cat?cat_id='.$cat->id.'&sub_cat_id='.$s_cat->id)}}">{{$s_cat->name}}</a></li>
                                 @endforeach
                             </ul>
                             <?php
@@ -578,6 +578,41 @@
 <script src="{{url('public/asset/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 
 </body>
+<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyA3aN5cfWYriWpkyTtc984Uk-jYYN06kT0",
+        authDomain: "bazar-sadai-notification.firebaseapp.com",
+        projectId: "bazar-sadai-notification",
+        storageBucket: "bazar-sadai-notification.appspot.com",
+        messagingSenderId: "953502827459",
+        appId: "1:953502827459:web:87a02e6648cb370aff7376",
+        measurementId: "G-4NHGD0LFX8"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const messaging = firebase.messaging();
+    {
+        messaging
+            .requestPermission().
+        then(function () {
+            return messaging.getToken()
+        }).then(function(token) {
+            console.log(token);
+            $('#device').val(token);
+        }).catch(function (err) {
+            console.log('User Chat Token Error'+ err);
+        });
+    }
+    messaging.onMessage(function(payload) {
+        const noteTitle = payload.notification.title;
+        const noteOptions = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(noteTitle, noteOptions);
+    });
+</script>
 <script>
     $(function(){
         getCart();

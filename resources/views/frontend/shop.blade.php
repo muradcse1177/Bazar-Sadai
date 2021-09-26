@@ -23,14 +23,14 @@
     <!-- Start of Main -->
     <main class="main">
         <!-- Start of Breadcrumb -->
-        <nav class="breadcrumb-nav">
-            <div class="container">
-                <ul class="breadcrumb bb-no">
-                    <li><a href="{{url('/')}}">Home</a></li>
-                    <li>Shop</li>
-                </ul>
-            </div>
-        </nav>
+{{--        <nav class="breadcrumb-nav">--}}
+{{--            <div class="container">--}}
+{{--                <ul class="breadcrumb bb-no">--}}
+{{--                    <li><a href="{{url('/')}}">Home</a></li>--}}
+{{--                    <li>Shop</li>--}}
+{{--                </ul>--}}
+{{--            </div>--}}
+{{--        </nav>--}}
         <!-- End of Breadcrumb -->
 
         <!-- Start of Page Content -->

@@ -210,7 +210,7 @@ class ProductController extends Controller
     public function selectSubCategory(Request $request){
         try{
             $rows = DB::table('subcategories')
-                ->select('categories.name as catName', 'subcategories.id', 'subcategories.name','subcategories.type')
+                ->select('subcategories.image','categories.name as catName', 'subcategories.id', 'subcategories.name','subcategories.type')
                 ->join('categories', 'categories.id', '=', 'subcategories.cat_id')
                 ->where('subcategories.status', 1)
                 ->orderBy('subcategories.id', 'DESC')->Paginate(10);
@@ -237,13 +237,28 @@ class ProductController extends Controller
     public function insertSubcategory(Request $request){
         try{
             if($request) {
+                $photo = "";
                 if($request->id) {
+                    if ($request->hasFile('image')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('image');
+                        $pname = time(). '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $photo = $targetFolder . $pname;
+                    }
+                    else{
+                        $s_cat =DB::table('subcategories')
+                            ->where('id', $request->id)->first();
+                        $photo = $s_cat->image;
+                    }
                     $result =DB::table('subcategories')
                         ->where('id', $request->id)
                         ->update([
                             'name' =>  $request->name,
                             'cat_id' => $request->catId,
-                            'type' => $request->cat_type
+                            'type' => $request->cat_type,
+                            'image' =>$photo
                         ]);
                     if ($result) {
                         return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -258,10 +273,19 @@ class ProductController extends Controller
                     if ($rows > 0) {
                         return back()->with('errorMessage', ' নতুন বিভাগ লিখুন।');
                     } else {
+                        if ($request->hasFile('image')) {
+                            $targetFolder = 'public/asset/images/';
+                            $file = $request->file('image');
+                            $pname = time(). '.' . $file->getClientOriginalName();
+                            $image['filePath'] = $pname;
+                            $file->move($targetFolder, $pname);
+                            $photo = $targetFolder . $pname;
+                        }
                         $result = DB::table('subcategories')->insert([
                             'name' => $request->name,
                             'cat_id' => $request->catId,
-                            'type' => $request->cat_type
+                            'type' => $request->cat_type,
+                            'image' => $photo
                         ]);
                         if ($result) {
                             return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');

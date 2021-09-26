@@ -31,7 +31,7 @@
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="">Slide</label>
+                            <label for="">Slide(950px*550px)</label>
                             <input type="file" class="form-control slide" id="slide" accept="image/*"  name="slide" placeholder="Enter Slide" required>
                         </div>
                     </div>

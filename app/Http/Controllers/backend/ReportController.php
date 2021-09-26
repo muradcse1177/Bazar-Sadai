@@ -20,6 +20,7 @@ class ReportController extends Controller
     public function salesReport (Request $request){
         try {
             $order_details = DB::table('order_details')->orderBy('id','desc')->get();
+            //dd($order_details);
             $i=0;
             $sum = 0;
             $orderArr = array();
@@ -90,7 +91,7 @@ class ReportController extends Controller
                     $orderArr[$i]['v_name'] = 'Not Assigned';
                     $orderArr[$i]['v_phone'] = '';
                     $orderArr[$i]['user_id'] = 0;
-                    $orderArr[$i]['status'] =$order->status;
+                    $orderArr[$i]['status'] = @$order->status;
                     $orderArr[$i]['sales_id'] = $order->tx_id;
                 }
                 else {

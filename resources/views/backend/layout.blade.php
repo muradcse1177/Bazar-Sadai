@@ -814,11 +814,13 @@
                     }
                     $rows =DB::table('user_type')
                         ->where('id', Cookie::get('user_type'))->first();
+                    if($rows){
                     $type = $rows->type;
                 ?>
                 @if($type == 2)
                     <li class="header">ব্যবস্থাপনা</li>
                 @endif
+                <?php } ?>
                 @if(Cookie::get('user_type') == 15)
                     <li class="@yield('medicineSelfName')">
                         <a href ="{{ url('medicineSelfName') }}" >

@@ -300,6 +300,7 @@ class AuthController extends Controller
                         'status' => 1,
                         'nid' => $nid,
                         'working_status' => 1,
+                        'device_token' => $request->device
                     ]);
                     if ($result) {
                         if($user_type == 13){

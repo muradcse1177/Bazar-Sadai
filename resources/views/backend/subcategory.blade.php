@@ -27,7 +27,7 @@
                     <h3 class="box-title rembut" style="display:none;"><button type="button" class="btn btn-block btn-success btn-flat"><i class="fa fa-minus-square"></i> মুছে ফেলুন </button></h3>
                 </div>
                 <div class="divform" style="display:none">
-                    {{ Form::open(array('url' => 'insertSubcategory',  'method' => 'post')) }}
+                    {{ Form::open(array('url' => 'insertSubcategory',  'method' => 'post','enctype'=>'multipart/form-data')) }}
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
@@ -48,6 +48,10 @@
                             <label for="">সাব ক্যাটেগরি নাম</label>
                             <input type="text" class="form-control name" id="name"  name="name" placeholder="নাম লিখুন" required>
                         </div>
+                        <div class="form-group">
+                            <label for="">ছবি (190px*190px)</label>
+                            <input type="file" class="form-control image" id="image" accept="image/*"  name="image" placeholder="নাম লিখুন">
+                        </div>
                     </div>
                     <div class="box-footer">
                         <input type="hidden" name="id" id="id" class="id">
@@ -66,6 +70,7 @@
                 <div class="box-body table-responsive">
                     <table class="table table-bordered">
                         <tr>
+                            <th>ছবি  </th>
                             <th>সাব ক্যাটেগরি  </th>
                             <th>ক্যাটেগরি  </th>
                             <th>ধরন  </th>
@@ -73,6 +78,7 @@
                         </tr>
                         @foreach($subcategories as $subcategory)
                             <tr>
+                                <td> <img src="{{@$subcategory->image}}" height="60" width="60"> </td>
                                 <td> {{$subcategory-> name}} </td>
                                 <td> {{$subcategory->catName}} </td>
                                 <td>  @if ($subcategory->type ==1){{'পন্য' }}  @else{{'সার্ভিস'}} @endif </td>

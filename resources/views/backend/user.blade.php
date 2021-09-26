@@ -345,7 +345,7 @@
     </div>
 @endsection
 @section('js')
-    <script>
+   <script>
         $(document).ready(function(){
             $(".addbut").click(function(){
                 $(".divform").show();

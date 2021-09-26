@@ -4,6 +4,7 @@ namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Middleware\courier;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,38 @@ class FrontController extends Controller
 {
     public function homepageManager(Request $request){
         try{
+//            $firebaseToken =  DB::table('users')->select('device_token')->where('id',Cookie::get('user_id'))->first();
+//
+//            $SERVER_API_KEY = 'AAAA3gEyg8M:APA91bE6ClEoshglugNTdxTMNXMyMdyUywdq5_NWI7j3dlLlYeWJzgNXrF-QKQhv-Npa6fSWDXwc09MyL5YtmrmxM0XMt3yCoE4KdFmqIX_AB-RxQbarCE5YPW-Wr-9-0mjG2_czWw8q';
+//            $dd = array();
+//            $dd = [''.$firebaseToken->device_token.''];
+//            $data = [
+//                "registration_ids" => $dd,
+//                "notification" => [
+//                    "title" => 'title',
+//                    "body" => 'body',
+//                    "content_available" => true,
+//                    "priority" => "high",
+//                ]
+//            ];
+//            $dataString = json_encode($data);
+//
+//            $headers = [
+//                'Authorization: key=' . $SERVER_API_KEY,
+//                'Content-Type: application/json',
+//            ];
+//            $ch = curl_init();
+//            curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+//            curl_setopt($ch, CURLOPT_POST, true);
+//            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+//            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+//            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//            curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+//
+//            $response = curl_exec($ch);
+//
+//            dd($response);
+
             $slide= DB::table('slide')
                 ->orderBy('id', 'DESC')
                 ->take(10)->get();
@@ -964,6 +997,9 @@ class FrontController extends Controller
     }
     public function getProductByCatId($id){
         try{
+            $slide= DB::table('slide')
+                ->orderBy('id', 'DESC')
+                ->take(10)->get();
             $product_cat = DB::table('categories')
                 ->where('type', 1)
                 ->where('status', 1)
@@ -972,6 +1008,19 @@ class FrontController extends Controller
                 ->where('type', 2)
                 ->where('status', 1)
                 ->orderBy('id', 'DESC')->get();
+            $sub_cat = DB::table('subcategories')
+                ->where('cat_id', $id)
+                ->where('status', 1)
+                ->orderBy('id', 'Desc')->get();
+            if($sub_cat->count()>0){
+                return view('frontend.subcategorypage',
+                    [
+                        'ser_categories' => $service_cat,
+                        'pro_categories' => $product_cat,
+                        'sub_categories' => $sub_cat,
+                        'slides' => $slide,
+                    ]);
+            }
             if(Cookie::get('user_id') != null) {
                 $customer = DB::table('users')
                     ->where('id',Cookie::get('user_id'))
@@ -1022,6 +1071,90 @@ class FrontController extends Controller
             else {
                 $dealer_product = DB::table('products')
                     ->where('cat_id', $id)
+                    ->where('status', 1)
+                    ->orderBy('id', 'ASC')->paginate(100);
+                $dealer_status['status'] = 0;
+                return view('frontend.shop',
+                    [
+                        'products' => $dealer_product ,
+                        'status' =>$dealer_status,
+                        'ser_categories' => $service_cat,
+                        'pro_categories' => $product_cat,
+                    ]);
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function getProductBySubCatId($id){
+        try{
+
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
+            $service_cat = DB::table('categories')
+                ->where('type', 2)
+                ->where('status', 1)
+                ->orderBy('id', 'DESC')->get();
+            $sub_cat = DB::table('subcategories')
+                ->where('id', $id)
+                ->where('status', 1)
+                ->orderBy('id', 'Desc')->first();
+            if(Cookie::get('user_id') != null) {
+                $customer = DB::table('users')
+                    ->where('id',Cookie::get('user_id'))
+                    ->first();
+                $dealer = DB::table('users')
+                    ->where('add_part1',$customer->add_part1)
+                    ->where('add_part2',$customer->add_part2)
+                    ->where('add_part3',$customer->add_part3)
+                    ->where('address_type',$customer->address_type)
+                    ->where('user_type',7)
+                    ->first();
+                if(!empty($dealer)) {
+                    $dealer_product = DB::table('products')
+                        ->select('*', 'product_assign.id as p_a_id', 'products.id as id')
+                        ->join('product_assign', 'product_assign.product_id', '=', 'products.id')
+                        ->where('products.cat_id', $sub_cat->cat_id)
+                        ->where('products.sub_cat_id', $id)
+                        ->where('products.status', 1)
+                        ->where('product_assign.dealer_id', $dealer->id)
+                        ->orderBy('products.id', 'ASC')->paginate(100);
+                    //dd($dealer_product);
+                    if($dealer_product->count()>0){
+                        $dealer_status['status'] = 1;
+                        //dd($dealer_product);
+                        return view('frontend.shop',
+                            [
+                                'products' => $dealer_product ,
+                                'status' =>$dealer_status,
+                                'ser_categories' => $service_cat,
+                                'pro_categories' => $product_cat,
+                            ]);
+                    }
+                }
+                else{
+                    $dealer_product = DB::table('products')
+                        ->where('products.cat_id', $sub_cat->cat_id)
+                        ->where('products.sub_cat_id', $id)
+                        ->where('status', 1)
+                        ->orderBy('id', 'ASC')->paginate(100);
+                    $dealer_status['status'] = 0;
+                    return view('frontend.shop',
+                        [
+                            'products' => $dealer_product ,
+                            'status' =>$dealer_status,
+                            'ser_categories' => $service_cat,
+                            'pro_categories' => $product_cat,
+                        ]);
+                }
+            }
+            else {
+                $dealer_product = DB::table('products')
+                    ->where('products.cat_id', $sub_cat->cat_id)
+                    ->where('products.sub_cat_id', $id)
                     ->where('status', 1)
                     ->orderBy('id', 'ASC')->paginate(100);
                 $dealer_status['status'] = 0;
@@ -3208,4 +3341,129 @@ class FrontController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function locationBaseSearchPage(){
+        try{
+            $slide= DB::table('slide')
+                ->orderBy('id', 'DESC')
+                ->take(10)->get();
+            return view('frontend.locationBaseSearchPage' ,['slides' => $slide]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function shop1(Request $request){
+        try{
+            $service_cat = DB::table('categories')
+                ->where('type', 2)
+                ->where('status', 1)
+                ->orderBy('id', 'DESC')->get();
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
+            if(Cookie::get('user_id') != null) {
+                $customer = DB::table('users')
+                    ->where('id',Cookie::get('user_id'))
+                    ->first();
+                $dealer = DB::table('users')
+                    ->where('add_part1',$customer->add_part1)
+                    ->where('add_part2',$customer->add_part2)
+                    ->where('add_part3',$customer->add_part3)
+                    ->where('address_type',$customer->address_type)
+                    ->where('user_type',7)
+                    ->first();
+                if(!empty($dealer)) {
+                    $dealer_product_1 = DB::table('products')
+                        ->select('*', 'product_assign.id as p_a_id', 'products.id as id')
+                        ->join('product_assign', 'product_assign.product_id', '=', 'products.id')
+                        ->where('products.status', 1)
+                        ->where('product_assign.dealer_id', $dealer->id)
+                        ->orderBy('products.id', 'ASC')->paginate(60);
+                    if($dealer_product_1->count()>0){
+                        $dealer_status_1['status'] = 1;
+                    }
+                }
+                else{
+                    $dealer_product_1 = DB::table('products')
+                        ->where('status', 1)
+                        ->orderBy('id', 'ASC')->paginate(60);
+                    $dealer_status_1['status'] = 0;
+                }
+            }
+            else {
+                $dealer_product_1 = DB::table('products')
+                    ->where('status', 1)
+                    ->orderBy('id', 'ASC')->paginate(60);
+                $dealer_status_1['status'] = 0;
+            }
+
+            //dd($dealer_product_1);
+            return view('frontend.shop',
+                [
+                    'pro_categories' => $product_cat,
+                    'ser_categories' => $service_cat,
+                    'products' => $dealer_product_1 ,
+                    'status' =>$dealer_status_1,
+                ]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function locationBaseProductSearch(Request $request){
+        try{
+            $service_cat = DB::table('categories')
+                ->where('type', 2)
+                ->where('status', 1)
+                ->orderBy('id', 'DESC')->get();
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
+
+            $dealer = DB::table('users')
+                ->where('add_part1',$request->add_part1)
+                ->where('add_part2',$request->add_part2)
+                ->where('add_part3',$request->add_part3)
+                ->where('address_type',$request->address_type)
+                ->where('user_type',7)
+                ->orWhere('user_type',4)
+                ->first();
+            if(!empty($dealer)) {
+                $dealer_product_1 = DB::table('products')
+                    ->select('*', 'product_assign.id as p_a_id', 'products.id as id')
+                    ->join('product_assign', 'product_assign.product_id', '=', 'products.id')
+                    ->where('products.status', 1)
+                    ->where('product_assign.dealer_id', $dealer->id)
+                    ->orderBy('products.id', 'ASC')->paginate(60);
+
+                if($dealer_product_1->count()>0){
+                    $dealer_status_1['status'] = 1;
+                }
+                else{
+                    return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পন্য খুজে পাওয়া যাইনি।');
+                }
+            }
+            else{
+                $dealer_product_1 = DB::table('products')
+                    ->where('status', 1)
+                    ->orderBy('id', 'ASC')->paginate(60);
+                $dealer_status_1['status'] = 0;
+                return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পন্য খুজে পাওয়া যাইনি।');
+            }
+
+            return view('frontend.shop',
+                [
+                    'pro_categories' => $product_cat,
+                    'ser_categories' => $service_cat,
+                    'products' => $dealer_product_1 ,
+                    'status' =>$dealer_status_1,
+                ]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage','');
+        }
+    }
+
 }

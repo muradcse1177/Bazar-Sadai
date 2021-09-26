@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cookie;
@@ -237,6 +238,7 @@ class UserController extends Controller
                                     'out_time' => $request->outtime,
                                     'out_timezone' => $request->outtimezone,
                                     'days' => json_encode($request->days),
+                                    'device_token' => $request->device
                                 ]);
                             }
                             return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');

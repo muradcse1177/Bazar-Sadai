@@ -251,6 +251,7 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-xs-4">
+                    <input type="hidden" value="" id="device"  name="device">
                     <button type="submit" value="login"  name="login" class="btn btn-primary btn-block btn-flat">সাইন আপ </button>
                 </div>
                 <!-- /.col -->
@@ -262,9 +263,34 @@
         <!-- /.login-box-body -->
     </div>
 @endsection
-@section('js')
-    <script>
 
+@section('js')
+    <script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+        var firebaseConfig = {
+            apiKey: "AIzaSyA3aN5cfWYriWpkyTtc984Uk-jYYN06kT0",
+            authDomain: "bazar-sadai-notification.firebaseapp.com",
+            projectId: "bazar-sadai-notification",
+            storageBucket: "bazar-sadai-notification.appspot.com",
+            messagingSenderId: "953502827459",
+            appId: "1:953502827459:web:87a02e6648cb370aff7376",
+            measurementId: "G-4NHGD0LFX8"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+        {
+            messaging
+                .requestPermission().
+            then(function () {
+                return messaging.getToken()
+            }).then(function(token) {
+                console.log(token);
+                $('#device').val(token);
+            }).catch(function (err) {
+                console.log('User Chat Token Error'+ err);
+            });
+        }
         $(document).ready(function(){
             $.ajax({
                 url: 'getAllMedDept',
@@ -363,7 +389,7 @@
             });
         });
         $(function(){
-            $('.select2').select2();
+            //$('.select2').select2();
             $("#zillaGroup").click(function(){
                 $("#zillaGroupId").show();
                 $("#cityGroupId").hide();

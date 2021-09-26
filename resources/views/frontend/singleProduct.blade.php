@@ -120,6 +120,9 @@
                                             {{@$products->unit}}
                                         </div>
                                         <div class="product-short-desc" style="text-align: justify;">
+                                            {{@$products->type}}
+                                        </div>
+                                        <div class="product-short-desc" style="text-align: justify;">
                                             {{@$products->genre}}
                                         </div>
                                         <div class="product-short-desc" style="text-align: justify;">

@@ -618,6 +618,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('homepage' , 'frontend\FrontController@homepageManager');
     Route::get('logout' , 'frontend\AuthController@logout');
     Route::get('shop-by-cat/{id}', 'frontend\FrontController@getProductByCatId');
+    Route::get('shop-by-subCat/{id}', 'frontend\FrontController@getProductBySubCatId');
     Route::post('getProductMiqty', 'frontend\FrontController@getProductMiqty');
     Route::get('cart_view', 'frontend\FrontController@cart_view');
     Route::post('product/cart_add', 'frontend\FrontController@cart_add');
@@ -787,6 +788,8 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('insertUserRole', 'frontend\AuthController@insertUserRole');
     Route::get('roleAssignEditPage', 'frontend\AuthController@roleAssignEditPage');
     Route::post('updateUserRole', 'frontend\AuthController@updateUserRole');
+    Route::get('locationBaseSearchPage', 'frontend\FrontController@locationBaseSearchPage');
+    Route::post('locationBaseProductSearch', 'frontend\FrontController@locationBaseProductSearch');
 
     //Payment Gateway
     Route::post('getPaymentCartView', 'frontend\PaymentController@getPaymentCartView');
