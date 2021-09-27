@@ -409,9 +409,7 @@ class ProductController extends Controller
     }
     public function delivery_charge(Request $request){
         try{
-            $rows = DB::table('delivery_charges')
-                ->where('purpose_id', 1)
-                ->get();
+            $rows = DB::table('delivery_charges')->get();
             return view('backend.delivery_charge', ['delivery_charges' => $rows]);
         }
         catch(\Illuminate\Database\QueryException $ex){
@@ -436,6 +434,20 @@ class ProductController extends Controller
                     $result =DB::table('delivery_charges')
                         ->where('id', $request->id)
                         ->update([
+                            'lower' =>  $request->lower,
+                            'higher' =>  $request->higher,
+                            'charge' =>  $request->name,
+                        ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+                else{
+                    $result =DB::table('delivery_charges')->insert([
+                            'lower' =>  $request->lower,
+                            'higher' =>  $request->higher,
                             'charge' =>  $request->name,
                         ]);
                     if ($result) {

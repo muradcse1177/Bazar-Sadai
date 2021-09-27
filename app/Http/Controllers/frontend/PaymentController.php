@@ -12,7 +12,6 @@ use smasif\ShurjopayLaravelPackage\ShurjopayService;
 class PaymentController extends Controller
 {
    public function getPaymentCartView(Request $request){
-       //dd($request);
        Session::put('order_details',$request->all());
        if($request->cash == 'cash' || $request->bank == 'bank') {
            if($request->cash == 'cash')
@@ -50,7 +49,8 @@ class PaymentController extends Controller
                }
            }
            $rows = DB::table('delivery_charges')
-               ->where('purpose_id', 1)
+               ->where('lower','<=', $total)
+               ->where('higher','>=', $total)
                ->first();
            $delivery_charge = $rows->charge;
            $d_total = 0;

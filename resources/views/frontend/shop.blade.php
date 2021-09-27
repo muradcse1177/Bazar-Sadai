@@ -177,6 +177,62 @@
                                 </div>
                             </div>
                         @endif
+                        <?php
+                            $last_part = request()->segment(count(request()->segments()));
+
+                        ?>
+                        @if($last_part == 3 || $last_part == 'searchMedicine')
+                        <div align="center">
+                            <button class="btn btn-secondary btn-ellipse btn-icon-right trade_button">
+                                ট্রেড নাম<i class="w-icon-long-arrow-right"></i>
+                            </button>
+                            <button class="btn btn-primary btn-ellipse btn-icon-right generic_button">
+                                জেনেরিক নাম<i class="w-icon-long-arrow-right"></i>
+                            </button>
+                            <button class="btn btn-success btn-ellipse btn-icon-right company_button">
+                                কোম্পানি<i class="w-icon-long-arrow-right"></i>
+                            </button>
+                        </div>
+                        <center>
+                            <div style="padding-top: 10px;">
+                                {{ Form::open(array('url' => 'searchMedicine',  'method' => 'get')) }}
+                                {{ csrf_field() }}
+                                <input type="text" name="trade_name" id="trade_name"  placeholder=" Search Trade Name"  class="form-control searchMedicine" style="display: none;">
+                                <input type="text" name="generic_name" id="generic_name" placeholder="Search Generic Name" class="form-control searchMedicine" style="display: none;">
+                                <input type="text" name="company_name" id="company_name" placeholder="Search Company Name" class="form-control searchMedicine" style="display: none;">
+                                <button type="submit" class="pull-right" style="display: none;"></button>
+                                {{ Form::close() }}
+                            </div>
+                        </center>
+                        <center>
+                            <a href="{{url('searchMedicineByLetter/A')}}" class="medicine_text"> <u>A</u></a>
+                            <a href="{{url('searchMedicineByLetter/B')}}" class="medicine_text"> <u>B</u></a>
+                            <a href="{{url('searchMedicineByLetter/C')}}" class="medicine_text"> <u>C</u></a>
+                            <a href="{{url('searchMedicineByLetter/D')}}" class="medicine_text"> <u>D</u></a>
+                            <a href="{{url('searchMedicineByLetter/E')}}" class="medicine_text"> <u>E</u></a>
+                            <a href="{{url('searchMedicineByLetter/F')}}" class="medicine_text"> <u>F</u></a>
+                            <a href="{{url('searchMedicineByLetter/G')}}" class="medicine_text"> <u>G</u></a>
+                            <a href="{{url('searchMedicineByLetter/H')}}" class="medicine_text"> <u>H</u></a>
+                            <a href="{{url('searchMedicineByLetter/I')}}" class="medicine_text"> <u>I</u></a>
+                            <a href="{{url('searchMedicineByLetter/J')}}" class="medicine_text"> <u>J</u></a>
+                            <a href="{{url('searchMedicineByLetter/K')}}" class="medicine_text"> <u>K</u></a>
+                            <a href="{{url('searchMedicineByLetter/L')}}" class="medicine_text"> <u>L</u></a>
+                            <a href="{{url('searchMedicineByLetter/M')}}" class="medicine_text"> <u>M</u></a>
+                            <a href="{{url('searchMedicineByLetter/N')}}" class="medicine_text"> <u>N</u></a>
+                            <a href="{{url('searchMedicineByLetter/O')}}" class="medicine_text"> <u>O</u></a>
+                            <a href="{{url('searchMedicineByLetter/P')}}" class="medicine_text"> <u>P</u></a>
+                            <a href="{{url('searchMedicineByLetter/Q')}}" class="medicine_text"> <u>Q</u></a>
+                            <a href="{{url('searchMedicineByLetter/R')}}" class="medicine_text"> <u>R</u></a>
+                            <a href="{{url('searchMedicineByLetter/S')}}" class="medicine_text"> <u>S</u></a>
+                            <a href="{{url('searchMedicineByLetter/T')}}" class="medicine_text"> <u>T</u></a>
+                            <a href="{{url('searchMedicineByLetter/U')}}" class="medicine_text"> <u>U</u></a>
+                            <a href="{{url('searchMedicineByLetter/V')}}" class="medicine_text"> <u>V</u></a>
+                            <a href="{{url('searchMedicineByLetter/W')}}" class="medicine_text"> <u>W</u></a>
+                            <a href="{{url('searchMedicineByLetter/X')}}" class="medicine_text"> <u>X</u></a>
+                            <a href="{{url('searchMedicineByLetter/Y')}}" class="medicine_text"> <u>Y</u></a>
+                            <a href="{{url('searchMedicineByLetter/Z')}}" class="medicine_text"> <u>Z</u></a>
+                        </center><br>
+                        @endif
                         <div class="product-wrapper row cols-md-4 cols-sm-2 cols-2">
                             @foreach($products as $product)
                                 @php
@@ -244,4 +300,28 @@
 
 @endsection
 @section('js')
+    <script>
+        $(document).ready(function(){
+            $(".withPick").click(function(){
+                $(".photoShow").show();
+                $(".withPick").hide();
+                $(".withoutPick").show();
+            });
+            $(".trade_button").click(function(){
+                $("#trade_name").show();
+                $("#generic_name").hide();
+                $("#company_name").hide();
+            });
+            $(".generic_button").click(function(){
+                $("#generic_name").show();
+                $("#trade_name").hide();
+                $("#company_name").hide();
+            });
+            $(".company_button").click(function(){
+                $("#company_name").show();
+                $("#trade_name").hide();
+                $("#generic_name").hide();
+            });
+        });
+    </script>
 @endsection

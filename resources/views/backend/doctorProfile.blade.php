@@ -84,7 +84,7 @@
                     <div class="box-body">
                         <center>
                             <?php
-                               if($dr_status == 1)
+                               if(@$dr_status == 1)
                                    $checked = 'checked';
                                else
                                    $checked = '';

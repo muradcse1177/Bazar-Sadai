@@ -206,7 +206,7 @@ class SellerController extends Controller
     }
     public function myShop(){
         try{
-            $products = DB::table('seller_shop')->paginate(20);
+            $products = DB::table('seller_shop')->where("seller_id",Cookie::get('user_id'))->paginate(20);
             return view('backend.myShop',['products' => $products]);
         }
         catch(\Illuminate\Database\QueryException $ex){

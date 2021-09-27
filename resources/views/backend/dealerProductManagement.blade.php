@@ -54,7 +54,7 @@
                         <?php $i=1?>
 
                         @foreach($products as $product)
-                            <?php $noImage ="public/asset/images/noImage.jpg"; ?>
+                            <?php $noImage ="public/asset/images/no_image.jpg"; ?>
                             <tr>
                                 <td> {{$i}} </td>
                                 <td>

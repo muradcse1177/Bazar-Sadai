@@ -171,6 +171,43 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function changeCustomOrderStatus(Request $request){
+        try{
+            if($request->id) {
+                $id = explode('&',$request->id);
+                if($id[0] == 'Delivered'){
+                    $result =DB::table('custom_order_booking')
+                        ->where('id', $id[1])
+                        ->update([
+                            'status' =>  $id[0],
+                            'delivered_date' => date('Y-m-d'),
+                        ]);
+                }
+                else{
+                    $result =DB::table('custom_order_booking')
+                        ->where('id', $id[1])
+                        ->update([
+                            'status' =>  $id[0],
+                        ]);
+                }
+
+                if ($result) {
+                    Session::flash('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return response()->json(array('data'=>$result));
+                } else {
+                    Session::flash('errorMessage', 'আবার চেষ্টা করুন।');
+                    return response()->json(array('data'=>$result));
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
     public function getProductSalesOrderListByDate (Request $request){
         try{
             $order_details = DB::table('order_details') ->whereBetween('created_at',array($request->from_date,$request->to_date))->orderBy('id','desc')->get();
@@ -336,29 +373,38 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function accounting (){
+    public function accountName (){
         try{
-            $row = DB::table('accounting')
-                ->orderBy('date','desc')
+            $row = DB::table('account_name')
                 ->paginate(20);
-            return view('backend.accounting', ['accountings' => $row]);
+            return view('backend.accountName', ['accountings' => $row]);
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function insertAccounting(Request $request){
+    public function accountHead (){
+        try{
+            $row = DB::table('account_head')
+                ->select('*','account_head.id as h_id')
+                ->join('account_name','account_name.id','=','account_head.name_id')
+                ->paginate(20);
+            $name = DB::table('account_name')
+                ->get();
+            return view('backend.accountHead', ['accountings' => $row,'names' => $name]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function insertAccountName(Request $request){
         try{
             if($request) {
                 if($request->id) {
-                    $result =DB::table('accounting')
+                    $result =DB::table('account_name')
                         ->where('id', $request->id)
                         ->update([
-                            'type' => $request->type,
-                            'purpose' => $request->purpose,
-                            'amount' => $request->amount,
-                            'date' => $request->date,
-                            'person' => $request->person,
+                            'name' => $request->name,
                         ]);
                     if ($result) {
                         return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -367,25 +413,17 @@ class ReportController extends Controller
                     }
                 }
                 else {
-                    $rows = DB::table('accounting')
+                    $rows = DB::table('account_name')
                         ->select('id')
                         ->where([
-                            ['type', '=', $request->type],
-                            ['purpose', '=', $request->purpose],
-                            ['amount', '=', $request->amount],
-                            ['date', '=', $request->date],
-                            ['person', '=', $request->person],
+                            ['name', '=', $request->name],
                         ])
                         ->distinct()->get()->count();
                     if ($rows > 0) {
                         return back()->with('errorMessage', ' নতুন ডাটা দিন');
                     } else {
-                        $result = DB::table('accounting')->insert([
-                            'type' => $request->type,
-                            'purpose' => $request->purpose,
-                            'amount' => $request->amount,
-                            'date' => $request->date,
-                            'person' => $request->person,
+                        $result = DB::table('account_name')->insert([
+                            'name' => $request->name,
                         ]);
                         if ($result) {
                             return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -403,11 +441,161 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function insertAccountHead(Request $request){
+        try{
+            if($request) {
+                if($request->id) {
+                    $result =DB::table('account_head')
+                        ->where('id', $request->id)
+                        ->update([
+                            'name_id' => $request->name_id,
+                            'head' => $request->head,
+                        ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+                else {
+                    $rows = DB::table('account_head')
+                        ->select('id')
+                        ->where([
+                            ['head', '=', $request->head],
+                        ])
+                        ->distinct()->get()->count();
+                    if ($rows > 0) {
+                        return back()->with('errorMessage', ' নতুন ডাটা দিন');
+                    } else {
+                        $result = DB::table('account_head')->insert([
+                            'name_id' => $request->name_id,
+                            'head' => $request->head,
+                        ]);
+                        if ($result) {
+                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        } else {
+                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                        }
+                    }
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function getAccountingNameListById(Request $request){
+        try{
+            $rows = DB::table('account_name')
+                ->where('id', $request->id)
+                ->first();
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function getAccountingHeadListById(Request $request){
+        try{
+            $rows = DB::table('account_head')
+                ->where('id', $request->id)
+                ->first();
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function accounting (){
+        try{
+            $name = DB::table('account_name')
+                ->get();
+            $row = DB::table('accounting')
+                ->select('*','accounting.id as acc_id')
+                ->join('account_name','account_name.id','=','accounting.ac_name_id')
+                ->join('account_head','account_head.id','=','accounting.acc_head_id')
+                ->orderBy('date','desc')
+                ->paginate(30);
+            return view('backend.accounting', ['accountings' => $row,'names' => $name]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function getAccountHeadListAll(Request $request){
+        try{
+            $rows = DB::table('account_head')
+                ->where('name_id', $request->id)
+                ->get();
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function insertAccounting(Request $request){
+        try{
+            if($request) {
+                if($request->id) {
+                    $result =DB::table('accounting')
+                        ->where('id', $request->id)
+                        ->update([
+                            'ac_name_id' => $request->name_id,
+                            'acc_head_id' => $request->head_id,
+                            'type' => $request->type,
+                            'purpose' => $request->purpose,
+                            'amount' => $request->amount,
+                            'amount1' => $request->amount1,
+                            'amount2' => $request->amount2,
+                            'date' => $request->date,
+                            'person' => $request->person,
+                        ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+                else {
+                    $result = DB::table('accounting')->insert([
+                        'ac_name_id' => $request->name_id,
+                        'acc_head_id' => $request->head_id,
+                        'type' => $request->type,
+                        'purpose' => $request->purpose,
+                        'amount' => $request->amount,
+                        'amount1' => $request->amount1,
+                        'amount2' => $request->amount2,
+                        'date' => $request->date,
+                        'person' => $request->person,
+                    ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
     public function getAccountingReportByDate (Request $request){
+        $name = DB::table('account_name')
+            ->get();
         $row = DB::table('accounting')
+            ->select('*','accounting.id as acc_id')
+            ->join('account_name','account_name.id','=','accounting.ac_name_id')
+            ->join('account_head','account_head.id','=','accounting.acc_head_id')
             ->whereBetween('date',array($request->from_date,$request->to_date))
             ->orderBy('date', 'Desc')->paginate(20);
-        return view('backend.accounting', ['accountings' => $row,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
+        return view('backend.accounting', ['accountings' => $row,'names' => $name,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
     public function getAccountingListById(Request $request){
         try{
@@ -1211,6 +1399,223 @@ class ReportController extends Controller
         $paginatedItems->setPath($request->url());
         return view('backend.courierReport',['bookings' => $paginatedItems,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
+    public function customOrderReport(Request $request){
+
+        $results = DB::table('custom_order_booking')
+            ->orderBy('id','desc')
+            ->get();
+        $i=0;
+        foreach ($results as $result){
+            $address_type  = $result->address_type;
+            if($address_type == 1){
+                $add_part1 = DB::table('divisions')
+                    ->where('id',$result->add_part1)
+                    ->first();
+                $add_part2 = DB::table('districts')
+                    ->where('div_id',$result->add_part1)
+                    ->where('id',$result->add_part2)
+                    ->first();
+                $add_part3 = DB::table('upazillas')
+                    ->where('div_id',$result->add_part1)
+                    ->where('dis_id',$result->add_part2)
+                    ->where('id',$result->add_part3)
+                    ->first();
+                $add_part4 = DB::table('unions')
+                    ->where('div_id',$result->add_part1)
+                    ->where('dis_id',$result->add_part2)
+                    ->where('upz_id',$result->add_part3)
+                    ->where('id',$result->add_part4)
+                    ->first();
+                $add_part5 = DB::table('wards')
+                    ->where('div_id',$result->add_part1)
+                    ->where('dis_id',$result->add_part2)
+                    ->where('upz_id',$result->add_part3)
+                    ->where('uni_id',$result->add_part4)
+                    ->where('id',$result->add_part5)
+                    ->first();
+            }
+            if($address_type ==2){
+                $add_part1 = DB::table('divisions')
+                    ->where('id',$result->add_part1)
+                    ->first();
+                $add_part2 = DB::table('cities')
+                    ->where('div_id',$result->add_part1)
+                    ->where('id',$result->add_part2)
+                    ->first();
+                $add_part3 = DB::table('city_corporations')
+                    ->where('div_id',$result->add_part1)
+                    ->where('city_id',$result->add_part2)
+                    ->where('id',$result->add_part3)
+                    ->first();
+                $add_part4 = DB::table('thanas')
+                    ->where('div_id',$result->add_part1)
+                    ->where('city_id',$result->add_part2)
+                    ->where('city_co_id',$result->add_part3)
+                    ->where('id',$result->add_part4)
+                    ->first();
+                $add_part5 = DB::table('c_wards')
+                    ->where('div_id',$result->add_part1)
+                    ->where('city_id',$result->add_part2)
+                    ->where('city_co_id',$result->add_part3)
+                    ->where('thana_id',$result->add_part4)
+                    ->where('id',$result->add_part5)
+                    ->first();
+            }
+            $cat = DB::table('categories')
+                ->where('id',$result->category)
+                ->first();
+            if($result->sub_category){
+                $sub_cat = DB::table('subcategories')
+                    ->where('cat_id',$result->category)
+                    ->where('id',$result->sub_category)
+                    ->first();
+            }
+            $users = DB::table('users')
+                ->where('id',$result->seller_id)
+                ->first();
+
+            if($users)
+                $user = $users->name;
+            else
+                $user = "";
+            $booking[$i]['id'] = $result->id;
+            $booking[$i]['category'] = $cat->name;
+            $booking[$i]['sub_category'] = $sub_cat->name;
+            $booking[$i]['name'] = $result->name;
+            $booking[$i]['phone'] = $result->phone;
+            $booking[$i]['add_part1'] = $add_part1->name;
+            $booking[$i]['add_part2'] = $add_part2->name;
+            $booking[$i]['add_part3'] = $add_part3->name;
+            $booking[$i]['add_part4'] = $add_part4->name;
+            $booking[$i]['add_part5'] = $add_part5->name;
+            $booking[$i]['address'] = $result->address;
+            $booking[$i]['details'] = $result->details;
+            $booking[$i]['date'] = $result->date;
+            $booking[$i]['amount'] = $result->amount;
+            $booking[$i]['price'] = $result->price;
+            $booking[$i]['image'] = $result->image;
+            $booking[$i]['status'] = $result->status;
+            $booking[$i]['seller_id'] = $user;
+            $booking[$i]['delivery_date'] = $result->delivered_date;
+            $i++;
+        }
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $itemCollection = collect($booking);
+        $perPage = 30;
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems->setPath($request->url());
+        return view('backend.customOrderReport',['bookings' => $paginatedItems]);
+    }
+    public function customOrderReportListByDate(Request $request){
+        $results = DB::table('custom_order_booking')
+            ->whereBetween('date',array($request->from_date,$request->to_date))
+            ->orderBy('id','desc')
+            ->get();
+        $i=0;
+        $booking = array();
+        foreach ($results as $result){
+            $address_type  = $result->address_type;
+            if($address_type == 1){
+                $add_part1 = DB::table('divisions')
+                    ->where('id',$result->add_part1)
+                    ->first();
+                $add_part2 = DB::table('districts')
+                    ->where('div_id',$result->add_part1)
+                    ->where('id',$result->add_part2)
+                    ->first();
+                $add_part3 = DB::table('upazillas')
+                    ->where('div_id',$result->add_part1)
+                    ->where('dis_id',$result->add_part2)
+                    ->where('id',$result->add_part3)
+                    ->first();
+                $add_part4 = DB::table('unions')
+                    ->where('div_id',$result->add_part1)
+                    ->where('dis_id',$result->add_part2)
+                    ->where('upz_id',$result->add_part3)
+                    ->where('id',$result->add_part4)
+                    ->first();
+                $add_part5 = DB::table('wards')
+                    ->where('div_id',$result->add_part1)
+                    ->where('dis_id',$result->add_part2)
+                    ->where('upz_id',$result->add_part3)
+                    ->where('uni_id',$result->add_part4)
+                    ->where('id',$result->add_part5)
+                    ->first();
+            }
+            if($address_type ==2){
+                $add_part1 = DB::table('divisions')
+                    ->where('id',$result->add_part1)
+                    ->first();
+                $add_part2 = DB::table('cities')
+                    ->where('div_id',$result->add_part1)
+                    ->where('id',$result->add_part2)
+                    ->first();
+                $add_part3 = DB::table('city_corporations')
+                    ->where('div_id',$result->add_part1)
+                    ->where('city_id',$result->add_part2)
+                    ->where('id',$result->add_part3)
+                    ->first();
+                $add_part4 = DB::table('thanas')
+                    ->where('div_id',$result->add_part1)
+                    ->where('city_id',$result->add_part2)
+                    ->where('city_co_id',$result->add_part3)
+                    ->where('id',$result->add_part4)
+                    ->first();
+                $add_part5 = DB::table('c_wards')
+                    ->where('div_id',$result->add_part1)
+                    ->where('city_id',$result->add_part2)
+                    ->where('city_co_id',$result->add_part3)
+                    ->where('thana_id',$result->add_part4)
+                    ->where('id',$result->add_part5)
+                    ->first();
+            }
+            $cat = DB::table('categories')
+                ->where('id',$result->category)
+                ->first();
+            if($result->sub_category){
+                $sub_cat = DB::table('subcategories')
+                    ->where('cat_id',$result->category)
+                    ->where('id',$result->sub_category)
+                    ->first();
+            }
+            $users = DB::table('users')
+                ->where('id',$result->seller_id)
+                ->first();
+
+            if($users)
+                $user = $users->name;
+            else
+                $user = "";
+            $booking[$i]['id'] = $result->id;
+            $booking[$i]['category'] = $cat->name;
+            $booking[$i]['sub_category'] = $sub_cat->name;
+            $booking[$i]['name'] = $result->name;
+            $booking[$i]['phone'] = $result->phone;
+            $booking[$i]['add_part1'] = $add_part1->name;
+            $booking[$i]['add_part2'] = $add_part2->name;
+            $booking[$i]['add_part3'] = $add_part3->name;
+            $booking[$i]['add_part4'] = $add_part4->name;
+            $booking[$i]['add_part5'] = $add_part5->name;
+            $booking[$i]['address'] = $result->address;
+            $booking[$i]['details'] = $result->details;
+            $booking[$i]['date'] = $result->date;
+            $booking[$i]['amount'] = $result->amount;
+            $booking[$i]['price'] = $result->price;
+            $booking[$i]['image'] = $result->image;
+            $booking[$i]['status'] = $result->status;
+            $booking[$i]['seller_id'] = $user;
+            $booking[$i]['delivery_date'] = $result->delivered_date;
+            $i++;
+        }
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $itemCollection = collect($booking);
+        $perPage = 30;
+        $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+        $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+        $paginatedItems->setPath($request->url());
+        return view('backend.customOrderReport',['bookings' => $paginatedItems,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
+    }
     public function cookingReport (){
         try{
 
@@ -1579,4 +1984,27 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function ConfirmSellerOrder(Request  $request){
+        try{
+            if($request->id) {
+                $result =DB::table('custom_order_booking')
+                    ->where('id', $request->id)
+                    ->update([
+                        'seller_id' =>  Cookie::get('user_id'),
+                    ]);
+                if ($result) {
+                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+
 }

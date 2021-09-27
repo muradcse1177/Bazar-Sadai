@@ -117,11 +117,41 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>নাম </th>
+                            <th>ওয়ার্ড</th>
                             <th>টুল</th>
                         </tr>
                         @foreach($users as $user)
                             <tr>
                                 <td> {{$user->name}} </td>
+                                <?php
+                                    $name ="";
+                                    $wards = json_decode($user->add_part5);
+                                    if($user->address_group == 1){
+                                        foreach ($wards as $ward){
+                                            $row = DB::table('wards')
+                                                ->where('div_id',$user->add_part1)
+                                                ->where('dis_id',$user->add_part2)
+                                                ->where('upz_id',$user->add_part3)
+                                                ->where('uni_id',$user->add_part4)
+                                                ->where('id',$ward)
+                                                ->first();
+                                            $name .=$row->name.' ,';
+                                        }
+                                    }
+                                    if($user->address_group == 2){
+                                        foreach ($wards as $ward){
+                                            $row = DB::table('c_wards')
+                                                ->where('div_id',$user->add_part1)
+                                                ->where('city_id',$user->add_part2)
+                                                ->where('city_co_id',$user->add_part3)
+                                                ->where('thana_id',$user->add_part4)
+                                                ->where('id',$ward)
+                                                ->first();
+                                            $name .=$row->name.' ,';
+                                        }
+                                    }
+                                ?>
+                                <td> {{$name}} </td>
                                 <td class="td-actions text-center">
                                     <button type="button" rel="tooltip"  class="btn btn-danger delete" data-id="{{$user->c_id}}">
                                         <i class="fa fa-close"></i>
@@ -163,7 +193,7 @@
 @endsection
 @section('js')
     <script>
-        $(document).ready(function(){
+        $(function(){
             $('.select2').select2();
             $(".addbut").click(function(){
                 $(".divform").show();
@@ -195,47 +225,45 @@
                 $('.ward_name').prop('required',false);
                 $('.checkDiv,.chelev').remove();
             });
-            $(document).ready(function(){
-                $.ajax({
-                    url: 'getAllDivision',
-                    type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        var data = response.data;
-                        var len = data.length;
-                        for( var i = 0; i<len; i++){
-                            var id = data[i]['id'];
-                            var name = data[i]['name'];
-                            $(".div_name").append("<option value='"+id+"'>"+name+"</option>");
-                        }
-
-                    },
-                    failure: function (msg) {
-                        alert('an error occured');
+            $.ajax({
+                url: 'getAllDivision',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".div_name").append("<option value='"+id+"'>"+name+"</option>");
                     }
-                });
-                $.ajax({
-                    url: 'getAllCourierAgent',
-                    type: "GET",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        var data = response.data;
-                        var len = data.length;
-                        for( var i = 0; i<len; i++){
-                            var id = data[i]['id'];
-                            var name = data[i]['name'];
-                            $(".agent_id").append("<option value='"+id+"'>"+name+"</option>");
-                        }
 
-                    },
-                    failure: function (msg) {
-                        alert('an error occured');
-                    }
-                });
-
+                },
+                failure: function (msg) {
+                    alert('an error occured');
+                }
             });
+            $.ajax({
+                url: 'getAllCourierAgent',
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".agent_id").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+
+                },
+                failure: function (msg) {
+                    alert('an error occured');
+                }
+            });
+
             $(".div_name").change(function(){
                 var id =$(this).val();
                 $('.dis_name').find('option:not(:first)').remove();
@@ -304,14 +332,13 @@
                     success: function(response){
                         var data = response.data;
                         var len = data.length;
-                        var c_area = '<label for="wardArea" class="chelev" >ওয়ার্ড</label>';
+                        var c_area = '<label for="wardArea" class="chelev" >ওয়ার্ড</label><hr>';
                         for( var i = 0; i<len; i++){
                             var id = data[i]['id'];
                             var name = data[i]['name'];
-                            c_area +=' <div class="form-check form-check-inline checkDiv">'+
+                            c_area +=
                                 '<input  class="form-check-input" name="wardid[]" type="checkbox" id="option-'+id+'" value="'+id+'">'+
-                                '<label class="form-check-label" for="option-'+id+'">'+name+'</label>'+
-                                '</div>';
+                                '&nbsp;&nbsp;<label class="form-check-label" for="option-'+id+'">'+name+'</label>&nbsp;&nbsp;';
                         }
                         $(".wardDiv").append(c_area);
                     }
@@ -385,20 +412,18 @@
                     success: function(response){
                         var data = response.data;
                         var len = data.length;
-                        var c_area = '<label for="wardArea" class="chelev" >ওয়ার্ড</label>';
+                        var c_area = '<label for="wardArea" class="chelev" >থানা</label><hr>';
                         for( var i = 0; i<len; i++){
                             var id = data[i]['id'];
                             var name = data[i]['name'];
-                            c_area +=' <div class="form-check form-check-inline checkDiv">'+
+                            c_area +=
                                 '<input class="form-check-input" name="c_wardid[]" type="checkbox" id="'+id+'" value="'+id+'">'+
-                                '<label class="form-check-label" for="'+id+'">'+name+'</label>'+
-                                '</div>';
+                                '&nbsp;&nbsp;<label class="form-check-label" for="'+id+'">'+name+'</label>&nbsp;&nbsp;';
                         }
                         $(".wardDiv").append(c_area);
                     }
                 });
             });
-
         });
 
         $(function(){

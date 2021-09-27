@@ -237,6 +237,11 @@
                             <i class="fa fa-shopping-cart"></i> <span>আমার বিক্রয়</span>
                         </a>
                     </li>
+                    <li class="@yield('customOrderReport')">
+                        <a href="{{ url('customOrderReport') }}">
+                            <i class="fa fa-shopping-bag"></i> <span>কাস্টম অর্ডার রিপোর্ট</span>
+                        </a>
+                    </li>
                     <li class="@yield('sellerForm')">
                         <a href ="{{ url('sellerForm') }}" >
                             <i class="fa fa-shopping-cart"></i> <span>আমার পণ্য</span>
@@ -427,6 +432,13 @@
                     <li class="@yield('salesLiAdd')">
                         <a href="{{ url('salesReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>পণ্য বিক্রয় রিপোর্ট</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(39, $roles))
+                    <li class="@yield('customOrderReport')">
+                        <a href="{{ url('customOrderReport') }}">
+                            <i class="fa fa-shopping-bag"></i> <span>কাস্টম অর্ডার রিপোর্ট</span>
                         </a>
                     </li>
                 @endif
@@ -862,7 +874,7 @@
     </div>
     <!-- /.content-wrapper -->
     <footer class="main-footer">
-        <center><strong>&copy; বাজার-সদাই, ২০২০। সার্বিক সহযোগীতায়-  <a href="https://parallaxsoft.com/">Parallax Soft Inc.</a></strong></center>
+        <center><strong>&copy; বাজার-সদাই, ২০২০। সার্বিক সহযোগীতায়-  <a href="https://parallax-soft.com/" target="_blank">Parallax Soft Inc.</a></strong></center>
     </footer>
 </div>
 

@@ -196,7 +196,7 @@ class MedicalServiceController extends Controller
     }
     public function doctorList(){
         $rows = DB::table('doctors')
-            ->select('*','med_departments.name as dept_name','hospitals.name as hos_name','users.name as u_name')
+            ->select('*','med_departments.name as dept_name','hospitals.name as hos_name','users.name as u_name','doctors.id as d_id')
             ->join('med_departments','doctors.dept_name_id','=','med_departments.id')
             ->join('users','users.id','=','doctors.doctor_id')
             ->join('hospitals','hospitals.id','=','doctors.hos_name_id')
@@ -204,7 +204,28 @@ class MedicalServiceController extends Controller
             ->orderBy('hospitals.id', 'DESC')->Paginate(10);
         return view('backend.doctorList',['doctorLists' => $rows]);
     }
-
+    public function changeDoctorFees(Request  $request){
+        try{
+            if($request->id) {
+                $result =DB::table('doctors')
+                    ->where('id', $request->id)
+                    ->update([
+                        'fees' =>  $request->price,
+                    ]);
+                if ($result) {
+                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
     public function getHospitalListAll(Request $request){
         try{
             $rows = DB::table('hospitals')

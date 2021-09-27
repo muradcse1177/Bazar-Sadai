@@ -514,10 +514,10 @@ class TransportController extends Controller
         }
     }
     public function agentArea(){
-        $rows = DB::table('courier_agent_area')
+        $rows = DB::table('users')
             ->select('*','courier_agent_area.id as c_id')
-            ->join('users','users.id','=','courier_agent_area.user_id')
-            ->Paginate(30);
+            ->join('courier_agent_area','courier_agent_area.user_id','=','users.id')
+            ->paginate(30);
         return view('backend.agentArea', ['users' => $rows]);
     }
     public function insertCourierAgentArea(Request  $request){
@@ -537,40 +537,21 @@ class TransportController extends Controller
                     $add_part4 = $request->c_uniid;
                     $add_part5 = $request->c_wardid;
                 }
-                $row = DB::table('courier_agent_area')->where('user_id', $request->agent_id)->get();
-                if (count($row) > 0) {
-
-                    $result =DB::table('courier_agent_area')
-                        ->where('user_id', $request->agent_id)
-                        ->update([
-                            'address_group' => $request->addressGroup,
-                            'add_part1' => $add_part1,
-                            'add_part2' => $add_part2,
-                            'add_part3' => $add_part3,
-                            'add_part4' => $add_part4,
-                            'add_part5' => json_encode($add_part5),
-                        ]);
-                    if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                    } else {
-                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                    }
+                $result = DB::table('courier_agent_area')->insert([
+                    'user_id' => $request->agent_id,
+                    'address_group' => $request->addressGroup,
+                    'add_part1' => $add_part1,
+                    'add_part2' => $add_part2,
+                    'add_part3' => $add_part3,
+                    'add_part4' => $add_part4,
+                    'add_part5' => json_encode($add_part5),
+                ]);
+                if ($result) {
+                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
                 } else {
-                    $result = DB::table('courier_agent_area')->insert([
-                        'user_id' => $request->agent_id,
-                        'address_group' => $request->addressGroup,
-                        'add_part1' => $add_part1,
-                        'add_part2' => $add_part2,
-                        'add_part3' => $add_part3,
-                        'add_part4' => $add_part4,
-                        'add_part5' => json_encode($add_part5),
-                    ]);
-                    if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
-                    } else {
-                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                    }
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
+
             }
             else{
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');

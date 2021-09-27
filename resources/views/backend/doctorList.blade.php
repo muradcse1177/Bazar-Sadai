@@ -22,7 +22,7 @@
     @endif
     <div class="row">
         <div class="col-md-12">
-            <div class="box">
+            <div class="box box-success">
                 <div class="box-header with-border">
                     <h3 class="box-title">ডাক্তার লিস্ট </h3>
                 </div>
@@ -37,6 +37,8 @@
                             <th>বর্তমান কর্মস্থল  </th>
                             <th>শিক্ষা </th>
                             <th>বিশেষজ্ঞ</th>
+                            <th>ফিস</th>
+                            <th>টুলস</th>
                         </tr>
                         @foreach($doctorLists as $doctorList)
                             <tr>
@@ -47,13 +49,45 @@
                                 <td> {{$doctorList->current_institute}} </td>
                                 <td> {{$doctorList->education}} </td>
                                 <td> {{$doctorList->specialized}} </td>
+                                <td> {{$doctorList->fees.' /-'}} </td>
+                                <td class="td-actions text-center">
+                                    <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$doctorList->d_id}}">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </table>
                     {{ $doctorLists->links() }}
                 </div>
             </div>
+            <div class="modal fade"  tabindex="-1"   id="priceChange"  role="dialog">
+                <div class="modal-dialog modal-medium">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">ডাক্তার ফিস পরিবর্তন</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div id="modalRes">
+                                {{ Form::open(array('url' => 'changeDoctorFees',  'method' => 'post')) }}
+                                {{ csrf_field() }}
+                                <div class="form-group">
+                                    <label for="">নতুন ফিস</label>
+                                    <input type="number" class="form-control price" id="price"  name="price" min="1" placeholder="দাম" required>
+                                </div>
 
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">না</button>
+                            <button type="submit" class="btn btn-success" >সেভ করুন</button>
+                            <input type="hidden" name="id" id="id" class="id">
+                            {{ Form::close() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -61,6 +95,14 @@
 @endsection
 @section('js')
     <script>
+        $(function(){
+            $(document).on('click', '.edit', function(e){
+                e.preventDefault();
+                $('#priceChange').modal('show');
+                var id = $(this).data('id');
+                $('.id').val(id);
 
+            });
+        });
     </script>
 @endsection

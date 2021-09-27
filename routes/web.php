@@ -214,9 +214,17 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::get('getCourierMessageAdmin', 'backend\CourierController@getCourierMessageAdmin');
     Route::get('toursNTravelsReport', 'backend\ReportController@toursNTravelsReport');
     Route::post('toursNTravelsReportListByDate', 'backend\ReportController@toursNTravelsReportListByDate');
+
 //Accounting
+    Route::get('accountName', 'backend\ReportController@accountName');
+    Route::post('insertAccountName', 'backend\ReportController@insertAccountName');
+    Route::post('getAccountingNameListById', 'backend\ReportController@getAccountingNameListById');
+    Route::get('accountHead', 'backend\ReportController@accountHead');
+    Route::post('insertAccountHead', 'backend\ReportController@insertAccountHead');
+    Route::post('getAccountingHeadListById', 'backend\ReportController@getAccountingHeadListById');
     Route::get('accounting', 'backend\ReportController@accounting');
     Route::post('insertAccounting', 'backend\ReportController@insertAccounting');
+    Route::get('getAccountHeadListAll', 'backend\ReportController@getAccountHeadListAll');
     Route::post('getAccountingReportByDate', 'backend\ReportController@getAccountingReportByDate');
     Route::post('getAccountingListById', 'backend\ReportController@getAccountingListById');
 
@@ -248,6 +256,7 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::post('hospitalListsById', 'backend\MedicalServiceController@hospitalListsById');
     Route::post('deleteHospital', 'backend\MedicalServiceController@deleteHospital');
     Route::get('doctorList', 'backend\MedicalServiceController@doctorList');
+    Route::post('changeDoctorFees', 'backend\MedicalServiceController@changeDoctorFees');
     Route::get('getHospitalListAll', 'backend\MedicalServiceController@getHospitalListAll');
     Route::get('privateChamberList', 'backend\MedicalServiceController@privateChamberList');
     Route::get('getDoctorListAll', 'backend\MedicalServiceController@getDoctorListAll');
@@ -402,6 +411,10 @@ Route::group(['middleware' => ['buyer']], function () {
 Route::group(['middleware' => ['deliveryMan']], function () {
     Route::get('deliveryProfile', 'backend\UserController@deliveryProfile');
 });
+Route::get('customOrderReport', 'backend\ReportController@customOrderReport');
+Route::get('changeCustomOrderStatus', 'backend\ReportController@changeCustomOrderStatus');
+Route::get('customOrderReportListByDate', 'backend\ReportController@customOrderReportListByDate');
+Route::post('ConfirmSellerOrder', 'backend\ReportController@ConfirmSellerOrder');
 Route::group(['middleware' => ['seller']], function () {
     Route::get('sellerForm', 'backend\SellerController@sellerForm');
     Route::post('getSellerProductsById', 'backend\SellerController@getSellerProductsById');
@@ -790,6 +803,9 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('updateUserRole', 'frontend\AuthController@updateUserRole');
     Route::get('locationBaseSearchPage', 'frontend\FrontController@locationBaseSearchPage');
     Route::post('locationBaseProductSearch', 'frontend\FrontController@locationBaseProductSearch');
+    Route::get('customOrder', 'frontend\FrontController@customOrder');
+    Route::get('getSubcategoryByCat', 'frontend\FrontController@getSubcategoryByCat');
+    Route::post('insertCustomOrder', 'frontend\FrontController@insertCustomOrder');
 
     //Payment Gateway
     Route::post('getPaymentCartView', 'frontend\PaymentController@getPaymentCartView');

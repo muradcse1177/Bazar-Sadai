@@ -106,11 +106,17 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #555;
         }
+        form, input, label, p,select,textarea {
+            color: black !important;
+        }
+        .form-group > select > option{
+            color: black !important;
+        }
     </style>
 </head>
 <?php
     use Illuminate\Support\Facades\DB;
-    $categories = DB::table('categories')->where('type','1')->where('status','1')->orWhere('type','3')->where('status','1')->get();
+    $categories = DB::table('categories')->where('type','1')->where('status','1')->orWhere('type','3')->where('status','1')->take(12)->get();
 ?>
 <body class="home">
 <div class="page-wrapper">
@@ -525,6 +531,9 @@
                     @endif
                 </ul>
             </div>
+            <?php
+            $categories = DB::table('categories')->where('type','1')->where('status','1')->orWhere('type','3')->where('status','1')->get();
+            ?>
             <div class="tab-pane" id="categories">
                 <ul class="mobile-menu">
                     @foreach($categories as $cat)
@@ -578,41 +587,41 @@
 <script src="{{url('public/asset/bower_components/select2/dist/js/select2.full.min.js')}}"></script>
 
 </body>
-<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script>
-    var firebaseConfig = {
-        apiKey: "AIzaSyA3aN5cfWYriWpkyTtc984Uk-jYYN06kT0",
-        authDomain: "bazar-sadai-notification.firebaseapp.com",
-        projectId: "bazar-sadai-notification",
-        storageBucket: "bazar-sadai-notification.appspot.com",
-        messagingSenderId: "953502827459",
-        appId: "1:953502827459:web:87a02e6648cb370aff7376",
-        measurementId: "G-4NHGD0LFX8"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const messaging = firebase.messaging();
-    {
-        messaging
-            .requestPermission().
-        then(function () {
-            return messaging.getToken()
-        }).then(function(token) {
-            console.log(token);
-            $('#device').val(token);
-        }).catch(function (err) {
-            console.log('User Chat Token Error'+ err);
-        });
-    }
-    messaging.onMessage(function(payload) {
-        const noteTitle = payload.notification.title;
-        const noteOptions = {
-            body: payload.notification.body,
-            icon: payload.notification.icon,
-        };
-        new Notification(noteTitle, noteOptions);
-    });
-</script>
+{{--<script src="https://www.gstatic.com/firebasejs/7.23.0/firebase.js"></script>--}}
+{{--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>--}}
+{{--<script>--}}
+{{--    var firebaseConfig = {--}}
+{{--        apiKey: "AIzaSyA3aN5cfWYriWpkyTtc984Uk-jYYN06kT0",--}}
+{{--        authDomain: "bazar-sadai-notification.firebaseapp.com",--}}
+{{--        projectId: "bazar-sadai-notification",--}}
+{{--        storageBucket: "bazar-sadai-notification.appspot.com",--}}
+{{--        messagingSenderId: "953502827459",--}}
+{{--        appId: "1:953502827459:web:87a02e6648cb370aff7376",--}}
+{{--        measurementId: "G-4NHGD0LFX8"--}}
+{{--    };--}}
+{{--    firebase.initializeApp(firebaseConfig);--}}
+{{--    const messaging = firebase.messaging();--}}
+{{--    {--}}
+{{--        messaging--}}
+{{--            .requestPermission().--}}
+{{--        then(function () {--}}
+{{--            return messaging.getToken()--}}
+{{--        }).then(function(token) {--}}
+{{--            console.log(token);--}}
+{{--            $('#device').val(token);--}}
+{{--        }).catch(function (err) {--}}
+{{--            console.log('User Chat Token Error'+ err);--}}
+{{--        });--}}
+{{--    }--}}
+{{--    messaging.onMessage(function(payload) {--}}
+{{--        const noteTitle = payload.notification.title;--}}
+{{--        const noteOptions = {--}}
+{{--            body: payload.notification.body,--}}
+{{--            icon: payload.notification.icon,--}}
+{{--        };--}}
+{{--        new Notification(noteTitle, noteOptions);--}}
+{{--    });--}}
+{{--</script>--}}
 <script>
     $(function(){
         getCart();

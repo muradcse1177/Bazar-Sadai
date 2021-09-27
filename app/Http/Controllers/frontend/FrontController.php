@@ -522,10 +522,6 @@ class FrontController extends Controller
     public function couponCheck(Request $request){
         if($request->coupon_code){
             $output = array();
-            $rows = DB::table('delivery_charges')
-                ->where('purpose_id', 1)
-                ->first();
-            $delivery_charge = $rows->charge;
             $total_arr = array();
             $item = array();
             $i =0;
@@ -667,6 +663,11 @@ class FrontController extends Controller
                                     $i++;
                                     $item = array();
                                 }
+                                $rows = DB::table('delivery_charges')
+                                    ->where('lower','<=', $total)
+                                    ->where('higher','>=', $total)
+                                    ->first();
+                                $delivery_charge = $rows->charge;
                                 $total_arr['delivery'] = number_format($delivery_charge, 2);
                                 $total_arr['s_total'] = number_format($total, 2);
                                 $total_arr['g_discount'] = number_format($discount, 2);
@@ -711,7 +712,11 @@ class FrontController extends Controller
                             $i++;
                             $item = array();
                         }
-
+                        $rows = DB::table('delivery_charges')
+                            ->where('lower','<=', $total)
+                            ->where('higher','>=', $total)
+                            ->first();
+                        $delivery_charge = $rows->charge;
                         $total_arr['delivery'] = number_format($delivery_charge, 2);
                         $total_arr['s_total'] = number_format($total, 2);
                         $total_arr['g_discount'] = number_format($discount, 2);
@@ -797,10 +802,6 @@ class FrontController extends Controller
             $user = array();
         }
         $output = array();
-        $rows = DB::table('delivery_charges')
-            ->where('purpose_id', 1)
-            ->first();
-        $delivery_charge = $rows->charge;
         $total_arr = array();
         $item = array();
         $i =0;
@@ -874,6 +875,11 @@ class FrontController extends Controller
                         $i++;
                         $item = array();
                     }
+                    $rows = DB::table('delivery_charges')
+                        ->where('lower','<=', $total)
+                        ->where('higher','>=', $total)
+                        ->first();
+                    $delivery_charge = $rows->charge;
                     $total_arr['delivery'] = number_format($delivery_charge, 2,'.','');
                     $total_arr['s_total'] = number_format($total, 2,'.','');
                     $total_arr['g_total'] = number_format(($total + $delivery_charge), 2,'.','');
@@ -911,7 +917,11 @@ class FrontController extends Controller
                         $i++;
                         $item = array();
                     }
-
+                    $rows = DB::table('delivery_charges')
+                        ->where('lower','<=', $total)
+                        ->where('higher','>=', $total)
+                        ->first();
+                    $delivery_charge = $rows->charge;
                     $total_arr['delivery'] = number_format($delivery_charge, 2,'.','');
                     $total_arr['s_total'] = number_format($total, 2,'.','');
                     $total_arr['g_total'] = number_format($total + $delivery_charge, 2,'.','');
@@ -2013,7 +2023,6 @@ class FrontController extends Controller
     }
     public function sales(Request $request){
         try{
-            $delivery_charge = DB::table('delivery_charges')->first();
 
             if(Session::get('discount'))
                 $discount = Session::get('discount');
@@ -2319,6 +2328,11 @@ class FrontController extends Controller
                                 'v_type' => $delivery_man[0]->user_type,
                                 'v_status' => 2,
                             ]);
+                        $rows = DB::table('delivery_charges')
+                            ->where('lower','<=', $total)
+                            ->where('higher','>=', $total)
+                            ->first();
+                        $delivery_charge = $rows->charge;
                         $data = [
                             [   'user_id' => Cookie::get('user_id'),
                                 'tx_id' => $tx_id,
@@ -2372,6 +2386,11 @@ class FrontController extends Controller
                                 'v_type' => 0,
                                 'v_status' => 0,
                             ]);
+                        $rows = DB::table('delivery_charges')
+                            ->where('lower','<=', $total)
+                            ->where('higher','>=', $total)
+                            ->first();
+                        $delivery_charge = $rows->charge;
                         $data = [
                             [   'user_id' => Cookie::get('user_id'),
                                 'tx_id' => $tx_id,
@@ -2429,6 +2448,11 @@ class FrontController extends Controller
                             'price' => $product->price
                         ]);
                     }
+                    $rows = DB::table('delivery_charges')
+                        ->where('lower','<=', $total)
+                        ->where('higher','>=', $total)
+                        ->first();
+                    $delivery_charge = $rows->charge;
                     $total = $total + $delivery_charge->charge;
                     $data = [
                         [   'user_id' => 0,
@@ -2786,6 +2810,14 @@ class FrontController extends Controller
     }
     public function searchMedicine(Request $request){
         try{
+            $service_cat = DB::table('categories')
+                ->where('type', 2)
+                ->where('status', 1)
+                ->orderBy('id', 'DESC')->get();
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
             $trade_name = $request->trade_name;
             $generic_name = $request->generic_name;
             $company_name = $request->company_name ;
@@ -2837,7 +2869,6 @@ class FrontController extends Controller
                         }
                         if($dealer_product->count()>0){
                             $dealer_status['status'] = 1;
-                            return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                         }
                         else{
                             return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2852,7 +2883,6 @@ class FrontController extends Controller
                                 ->orderBy('id', 'ASC')->paginate(100);
                             if($dealer_product->count()>0){
                                 $dealer_status['status'] = 0;
-                                return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                             }
                             else{
                                 return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2866,7 +2896,6 @@ class FrontController extends Controller
                                 ->orderBy('id', 'ASC')->paginate(100);
                             if($dealer_product->count()>0){
                                 $dealer_status['status'] = 0;
-                                return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                             }
                             else{
                                 return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2880,7 +2909,6 @@ class FrontController extends Controller
                                 ->orderBy('id', 'ASC')->paginate(100);
                             if($dealer_product->count()>0){
                                 $dealer_status['status'] = 0;
-                                return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                             }
                             else{
                                 return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2898,7 +2926,6 @@ class FrontController extends Controller
                             ->orderBy('id', 'ASC')->paginate(100);
                         if($dealer_product->count()>0){
                             $dealer_status['status'] = 0;
-                            return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                         }
                         else{
                             return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2912,7 +2939,6 @@ class FrontController extends Controller
                             ->orderBy('id', 'ASC')->paginate(100);
                         if($dealer_product->count()>0){
                             $dealer_status['status'] = 0;
-                            return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                         }
                         else{
                             return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2926,7 +2952,6 @@ class FrontController extends Controller
                             ->orderBy('id', 'ASC')->paginate(100);
                         if($dealer_product->count()>0){
                             $dealer_status['status'] = 0;
-                            return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                         }
                         else{
                             return back()->with('errorMessage', 'পণ্যটি পাওয়া যায়নি।');
@@ -2934,7 +2959,7 @@ class FrontController extends Controller
                     }
                 }
             }
-
+            return view('frontend.shop', ['products' => $dealer_product,'status' =>$dealer_status,'pro_categories' => $product_cat, 'ser_categories' => $service_cat]);
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage', $ex->getMessage());
@@ -3463,6 +3488,80 @@ class FrontController extends Controller
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage','');
+        }
+    }
+    public function customOrder(Request $request){
+        try{
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
+            return view('frontend.customOrder', ['categories' =>$product_cat]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage','');
+        }
+    }
+    public function  getSubcategoryByCat(Request $request){
+        try{
+
+            $rows = DB::table('subcategories')->where('cat_id', $request->id)->get();
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function  insertCustomOrder(Request $request){
+        try{
+            $addressGroup = $request->addressGroup;
+            $add_part1 = $request->div_id;
+            if ($addressGroup == 1) {
+                $add_part2 = $request->disid;
+                $add_part3 = $request->upzid;
+                $add_part4 = $request->uniid;
+                $add_part5 = $request->wardid;
+            }
+            if ($addressGroup == 2) {
+                $add_part2 = $request->c_disid;
+                $add_part3 = $request->c_upzid;
+                $add_part4 = $request->c_uniid;
+                $add_part5 = $request->c_wardid;
+            }
+            if ($request->hasFile('image')) {
+                $targetFolder = 'public/asset/images/';
+                $file = $request->file('image');
+                $pname = time() . '.' . $file->getClientOriginalName();
+                $image['filePath'] = $pname;
+                $file->move($targetFolder, $pname);
+                $userPhotoPath = $targetFolder . $pname;
+            }
+            $result = DB::table('custom_order_booking')->insert([
+                'category' => $request->category,
+                'sub_category' => $request->sub_category,
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'address_type' =>$addressGroup,
+                'add_part1' => $add_part1,
+                'add_part2' => $add_part2,
+                'add_part3' => $add_part3,
+                'add_part4' => $add_part4,
+                'add_part5' => $add_part5,
+                'address' => $request->address,
+                'details' => $request->details,
+                'date' => $request->date,
+                'amount' => $request->amount,
+                'price' => $request->price,
+                'image' =>$userPhotoPath,
+            ]);
+            if ($result) {
+                return view('frontend.orderComplete');
+            } else {
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
         }
     }
 
