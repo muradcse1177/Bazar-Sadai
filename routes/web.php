@@ -382,6 +382,10 @@ Route::group(['middleware' => ['adminUser']], function () {
     //sms
     Route::get('sms', 'backend\SmsController@sms');
     Route::post('smsSend', 'backend\SmsController@smsSend');
+    Route::get('pageSettings', 'backend\AddressController@pageSettings');
+    Route::get('getAllPagesText', 'backend\AddressController@getAllPagesText');
+    Route::post('insertPrivacy', 'backend\AddressController@insertPrivacy');
+    Route::post('insertTerms', 'backend\AddressController@insertTerms');
 });
 Route::group(['middleware' => ['buyer']], function () {
     Route::get('profile', 'frontend\AuthController@profile');
@@ -829,6 +833,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('insertBookingHNTOnCash', 'frontend\ToursController@insertBookingHNTOnCash');
     Route::post('insertTourPackagePayment', 'frontend\PaymentController@insertTourPackagePayment');
     Route::get('insertTourPackagePayOnline', 'frontend\ToursController@insertTourPackagePayOnline');
+    Route::get('pages/{id}', 'backend\AddressController@getPages');
 
     //my_acc_personal
     Route::get('m_acc', 'backend\UserController@m_acc');

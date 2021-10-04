@@ -435,7 +435,7 @@
                         </a>
                     </li>
                 @endif
-                @if(in_array(39, $roles))
+                @if(in_array(38, $roles))
                     <li class="@yield('customOrderReport')">
                         <a href="{{ url('customOrderReport') }}">
                             <i class="fa fa-shopping-bag"></i> <span>কাস্টম অর্ডার রিপোর্ট</span>
@@ -819,6 +819,13 @@
                     <li class="@yield('roleAssign')">
                         <a href ="{{ url('roleAssign') }}" >
                             <i class="fa fa-address-card"></i> <span>রোল এসাইন</span>
+                        </a>
+                    </li>
+                @endif
+                @if(in_array(40, $roles))
+                    <li class="@yield('pageSettings')">
+                        <a href ="{{ url('pageSettings') }}" >
+                            <i class="fa fa-hacker-news"></i> <span>পেজ সেটিংস</span>
                         </a>
                     </li>
                 @endif

@@ -60,7 +60,7 @@
                                     <input type="tel" class="form-control phone" name="phone" placeholder="ফোন নম্বর" pattern="\+?(88)?0?1[3456789][0-9]{8}\b"  required>
                                 </div>
                                 <div class="form-group">
-                                    <label>কোথায় ডেলিভারি চান</label>
+                                    <label>কোথায় ডেলিভারি/সার্ভিস চান</label>
                                 </div>
                                 <div class="form-group">
                                     <label class="radio-inline">

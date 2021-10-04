@@ -1472,5 +1472,51 @@ class AddressController extends Controller
             return response()->json(array('data'=>$ex->getMessage()));
         }
     }
-
+    public function getAllPagesText(Request $request){
+        try{
+            $rows = DB::table('page_settings')
+                ->get();
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function pageSettings(Request $request){
+        try{
+            return view('backend.pageSettings');
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function insertPrivacy(Request $request){
+        try{
+            if($request) {
+                $result = DB::table('page_settings') ->where('id', $request->id)->update([
+                    'pages' => $request->text,
+                ]);
+                if ($result) {
+                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function getPages($id){
+        try{
+            $result = DB::table('page_settings') ->where('id', $id)->first();
+            return view('frontend.pages',['pages'=>$result]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
 }

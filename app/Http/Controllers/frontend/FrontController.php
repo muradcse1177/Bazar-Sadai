@@ -2967,6 +2967,14 @@ class FrontController extends Controller
     }
     public function searchMedicineByLetter($letter){
         try{
+            $service_cat = DB::table('categories')
+                ->where('type', 2)
+                ->where('status', 1)
+                ->orderBy('id', 'DESC')->get();
+            $product_cat = DB::table('categories')
+                ->where('type', 1)
+                ->where('status', 1)
+                ->orderBy('id', 'ASC')->get();
             if($letter==""){
                 return back()->with('errorMessage', 'কোন ডাটা পাওয়া যাইনি।');
             }
@@ -2996,7 +3004,6 @@ class FrontController extends Controller
                         if($dealer_product->count()>0){
                             $dealer_status['status'] = 1;
                             //dd($dealer_product);
-                            return view('frontend.productPage', ['products' => $dealer_product,'status' =>$dealer_status]);
                         }
                     }
                     else{
@@ -3007,7 +3014,6 @@ class FrontController extends Controller
                                 ->where('cat_id', 3)
                                 ->orderBy('id', 'ASC')->paginate(100);
                             $dealer_status['status'] = 0;
-                            return view('frontend.productPage', ['products' => $dealer_product, 'status' => $dealer_status]);
                         }
                     }
 
@@ -3020,11 +3026,10 @@ class FrontController extends Controller
                             ->where('cat_id', 3)
                             ->orderBy('id', 'ASC')->paginate(100);
                         $dealer_status['status'] = 0;
-                        return view('frontend.productPage', ['products' => $dealer_product, 'status' => $dealer_status]);
                     }
                 }
             }
-
+            return view('frontend.shop', ['products' => $dealer_product,'status' =>$dealer_status,'pro_categories' => $product_cat, 'ser_categories' => $service_cat]);
         }
         catch(\Illuminate\Database\QueryException $ex){
             return back()->with('errorMessage', $ex->getMessage());

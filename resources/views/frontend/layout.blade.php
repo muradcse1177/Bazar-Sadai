@@ -372,10 +372,9 @@
                             <h3 class="widget-title">Company</h3>
                             <ul class="widget-body">
                                 <li><a href="{{url('about')}}">About Us</a></li>
-                                <li><a href="#">Team Member</a></li>
-                                <li><a href="#">Career</a></li>
                                 <li><a href="{{url('contact')}}">Contact Us</a></li>
-                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="{{url('pages/1')}}">Privacy Policy</a></li>
+                                <li><a href="{{url('pages/2')}}">Term and Conditions</a></li>
                             </ul>
                         </div>
                     </div>
@@ -383,11 +382,11 @@
                         <div class="widget">
                             <h4 class="widget-title">My Account</h4>
                             <ul class="widget-body">
-                                <li><a href="#">Track My Order</a></li>
-                                <li><a href="{{url('cart')}}">View Cart</a></li>
                                 <li><a href="{{url('login')}}">Login In</a></li>
                                 <li><a href="{{url('signup')}}">Sign Up</a></li>
-                                <li><a href="{{url('wishlist')}}">My Wishlist</a></li>
+                                <li><a href="{{url('cart')}}">View Cart</a></li>
+                                <li><a href="{{url('checkout')}}">Checkout</a></li>
+                                <li><a href="{{url('myProductOrder')}}">Track My Order</a></li>
                             </ul>
                         </div>
                     </div>
@@ -395,11 +394,10 @@
                         <div class="widget">
                             <h4 class="widget-title">Customer Service</h4>
                             <ul class="widget-body">
-                                <li><a href="#">Payment Methods</a></li>
-                                <li><a href="#">Money-back guarantee!</a></li>
-                                <li><a href="#">Product Returns</a></li>
-                                <li><a href="#">Shipping</a></li>
-                                <li><a href="#">Term and Conditions</a></li>
+                                <li><a href="{{url('pages/3')}}">Payment Methods</a></li>
+                                <li><a href="{{url('pages/4')}}">Money-back guarantee!</a></li>
+                                <li><a href="{{url('pages/5')}}">Return Policy</a></li>
+                                <li><a href="{{url('pages/6')}}">Shipping Method Policy</a></li>
                             </ul>
                         </div>
                     </div>
