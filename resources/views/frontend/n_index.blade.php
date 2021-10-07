@@ -64,14 +64,14 @@
                     @endforeach
                     <div class="category category-ellipse">
                         <figure class="category-media">
-                            <a href="{{url('customOrder')}}">
-                                <img src="{{url('public/c_order.png')}}" alt="Categroy"
+                            <a href="{{url('customerDemandList')}}">
+                                <img src="{{url('public/list.png')}}" alt="Categroy"
                                      width="190" height="190" style="background-color: #5C92C0;" />
                             </a>
                         </figure>
                         <div class="category-content">
                             <h4 class="category-name">
-                                <a href="{{url('customOrder')}}">কাস্টমার চাহিদা লিস্ট</a>
+                                <a href="{{url('customerDemandList')}}">কাস্টমার চাহিদা লিস্ট</a>
                             </h4>
                         </div>
                     </div>

@@ -834,6 +834,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('insertTourPackagePayment', 'frontend\PaymentController@insertTourPackagePayment');
     Route::get('insertTourPackagePayOnline', 'frontend\ToursController@insertTourPackagePayOnline');
     Route::get('pages/{id}', 'backend\AddressController@getPages');
+    Route::get('customerDemandList', 'frontend\FrontController@customerDemandList');
 
     //my_acc_personal
     Route::get('m_acc', 'backend\UserController@m_acc');

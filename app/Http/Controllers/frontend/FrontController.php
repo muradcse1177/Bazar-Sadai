@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Middleware\courier;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -3569,5 +3570,89 @@ class FrontController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-
+    public function customerDemandList (Request $request){
+        try {
+            $order_details = DB::table('custom_order_booking')->orderBy('id','desc')->get();
+            //dd($order_details);
+            $i=0;
+            $sum = 0;
+            $orderArr = array();
+            foreach($order_details as $order){
+                if($order->address_type == 1){
+                    $add_part1 = DB::table('divisions')
+                        ->where('id',$order->add_part1)
+                        ->first();
+                    $add_part2 = DB::table('districts')
+                        ->where('div_id',$order->add_part1)
+                        ->where('id',$order->add_part2)
+                        ->first();
+                    $add_part3 = DB::table('upazillas')
+                        ->where('div_id',$order->add_part1)
+                        ->where('dis_id',$order->add_part2)
+                        ->where('id',$order->add_part3)
+                        ->first();
+                    $add_part4 = DB::table('unions')
+                        ->where('div_id',$order->add_part1)
+                        ->where('dis_id',$order->add_part2)
+                        ->where('upz_id',$order->add_part3)
+                        ->where('id',$order->add_part4)
+                        ->first();
+                    $add_part5 = DB::table('wards')
+                        ->where('div_id',$order->add_part1)
+                        ->where('dis_id',$order->add_part2)
+                        ->where('upz_id',$order->add_part3)
+                        ->where('uni_id',$order->add_part4)
+                        ->where('id',$order->add_part5)
+                        ->first();
+                }
+                if($order->address_type == 2){
+                    $add_part1 = DB::table('divisions')
+                        ->where('id',$order->add_part1)
+                        ->first();
+                    $add_part2 = DB::table('cities')
+                        ->where('div_id',$order->add_part1)
+                        ->where('id',$order->add_part2)
+                        ->first();
+                    $add_part3 = DB::table('city_corporations')
+                        ->where('div_id',$order->add_part1)
+                        ->where('city_id',$order->add_part2)
+                        ->where('id',$order->add_part3)
+                        ->first();
+                    $add_part4 = DB::table('thanas')
+                        ->where('div_id',$order->add_part1)
+                        ->where('city_id',$order->add_part2)
+                        ->where('city_co_id',$order->add_part3)
+                        ->where('id',$order->add_part4)
+                        ->first();
+                    $add_part5 = DB::table('c_wards')
+                        ->where('div_id',$order->add_part1)
+                        ->where('city_id',$order->add_part2)
+                        ->where('city_co_id',$order->add_part3)
+                        ->where('thana_id',$order->add_part4)
+                        ->where('id',$order->add_part5)
+                        ->first();
+                }
+                $orderArr[$i]['name'] = $order->name;
+                $orderArr[$i]['phone'] = $order->phone;
+                $orderArr[$i]['address'] = $add_part1->name.' ,'.$add_part2->name.' ,'.$add_part3->name.' ,'.$add_part4->name.' ,'.$add_part5->name;
+                $orderArr[$i]['date'] = $order->date;
+                $orderArr[$i]['amount'] = $order->amount;
+                $orderArr[$i]['price'] = $order->price;
+                $orderArr[$i]['image'] = $order->image;
+                $orderArr[$i]['status'] = $order->status;
+                $orderArr[$i]['details'] = $order->details;
+                $i++;
+            }
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $itemCollection = collect($orderArr);
+            $perPage = 20;
+            $currentPageItems = $itemCollection->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+            $paginatedItems= new LengthAwarePaginator($currentPageItems , count($itemCollection), $perPage);
+            $paginatedItems->setPath($request->url());
+            return view('frontend.customerDemandList', ['orders' => $paginatedItems]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
 }
