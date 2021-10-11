@@ -48,7 +48,7 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="box">
+            <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">পেশেন্ট লিস্ট </h3>
                 </div>
@@ -57,9 +57,7 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>তারিখ</th>
-                            <th>ডাক্তার নাম</th>
-                            <th>টাইপ</th>
-                            <th>ডাক্তার ফোন নং</th>
+                            <th>জুম লিংক</th>
                             <th>পেশেন্ট নাম</th>
                             <th>পেশেন্ট ফোন</th>
                             <th>পেশেন্ট বয়স</th>
@@ -69,9 +67,11 @@
                         @foreach($drReports as $drReport)
                             <tr>
                                 <td> {{$drReport-> date}} </td>
-                                <td> {{$drReport->dr_name}} </td>
-                                <td> {{$drReport->type}} </td>
-                                <td> {{$drReport->dr_phone}} </td>
+                                <td class="td-actions">
+                                    <button type="button" rel="tooltip" class="btn btn-success link" data-id="{{$drReport->a_id}}">
+                                        <i class="fa fa-video-camera"></i>
+                                    </button>
+                                </td>
                                 <td> {{$drReport->patient_name}} </td>
                                 <td> {{$drReport->p_phone}} </td>
                                 <td> {{$drReport->age}} </td>
@@ -83,16 +83,16 @@
                     {{ $drReports->links() }}
                 </div>
                 <div class="modal fade"  tabindex="-1"   id="distance"  role="dialog">
-                    <div class="modal-dialog modal-sm">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">দুরত্ত্ব সেট</h4>
+                                <h4 class="modal-title">জুম লিংক</h4>
                             </div>
-                            {{ Form::open(array('url' => 'setRiderDistance',  'method' => 'post')) }}
+                            {{ Form::open(array('url' => 'updateZoomLink',  'method' => 'post')) }}
                             {{ csrf_field() }}
                             <div class="modal-body">
-                                <input class="form-control" name="distance" id="setDistance" placeholder="দুরত্ত্ব সেট">
+                                <input class="form-control" name="link" id="link" placeholder="জুম লিংক সেট করুন">
                             </div>
                             <div class="modal-footer">
                                 <input type="hidden" name="id" id="id" class="id">
@@ -122,7 +122,7 @@
                 dateFormat: "yy-m-dd",
             })
         } );
-        $(document).on('click', '.distance', function(e){
+        $(document).on('click', '.link', function(e){
             e.preventDefault();
             var id = $(this).data('id');
             $('.id').val(id);

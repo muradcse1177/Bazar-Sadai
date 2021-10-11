@@ -45,6 +45,7 @@
                                                 <th>টাইপ</th>
                                                 <th>ডাক্তার নাম</th>
                                                 <th>ডাক্তার ফোন নং</th>
+                                                <th>জুম লিংক</th>
                                                 <th>পেশেন্ট নাম</th>
                                                 <th>পেশেন্ট ফোন</th>
                                                 <th>পেশেন্ট বয়স</th>
@@ -59,12 +60,34 @@
                                             @foreach($drReports as $drReport)
                                                 @php
                                                     $sum= $sum +$drReport->price;
+                                                    if($drReport->zoom_link){
+                                                        $link = $drReport->zoom_link;
+                                                        $z_linka = 'Zoom Link';
+                                                    }
+                                                    else{
+                                                        $link = null;
+                                                         $z_link = 'Not Set Yet';
+                                                    }
+
                                                 @endphp
                                                 <tr>
                                                     <td> {{$drReport-> date}} </td>
                                                     <td> {{$drReport->type}} </td>
                                                     <td> {{$drReport->dr_name}} </td>
                                                     <td> {{$drReport->dr_phone}} </td>
+                                                    @if($link)
+                                                        <td class="td-actions">
+                                                            <button type="button" rel="tooltip" class="btn btn-success link">
+                                                                <a href="{{$link}}">{{$z_linka}}</a>
+                                                            </button>
+                                                        </td>
+                                                    @else
+                                                        <td class="td-actions">
+                                                            <button type="button" rel="tooltip" class="btn btn-success link">
+                                                               {{$z_link}}
+                                                            </button>
+                                                        </td>
+                                                    @endif
                                                     <td> {{$drReport->patient_name}} </td>
                                                     <td> {{$drReport->p_phone}} </td>
                                                     <td> {{$drReport->age}} </td>
@@ -73,6 +96,7 @@
                                                     <td> {{$drReport->problem}} </td>
                                                     <td> {{$drReport->price.'/-'}} </td>
                                                 </tr>
+                                                <?php $link = ""; ?>
                                             @endforeach
                                             <tr>
                                                 <td colspan="10" style="text-align: right"><b>মোটঃ</b></td>

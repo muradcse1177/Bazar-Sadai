@@ -456,6 +456,7 @@ Route::group(['middleware' => ['doctor']], function () {
     Route::get('myPatientList', 'backend\DoctorController@myPatientList');
     Route::post('myPatientListByDate', 'backend\DoctorController@myPatientListByDate');
     Route::get('changeLocalDoctorStatus', 'backend\DoctorController@changeLocalDoctorStatus');
+    Route::post('updateZoomLink', 'backend\DoctorController@updateZoomLink');
 });
 
 Route::group(['middleware' => ['cooker']], function () {

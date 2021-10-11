@@ -113,6 +113,7 @@ class DoctorController extends Controller
             ->select('*','dr_apportionment.id as a_id','a.phone as dr_phone','b.phone as p_phone','a.name as dr_name')
             ->join('users as a','a.id','=','dr_apportionment.dr_id')
             ->join('users as b','b.id','=','dr_apportionment.user_id')
+            ->orderBy('a_id','desc')
             ->paginate('20');
         return view('backend.myPatientList',['drReports' => $rows]);
     }
@@ -157,6 +158,23 @@ class DoctorController extends Controller
                 }
             }
             return response()->json(array('data'=>$msg));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function updateZoomLink(Request $request){
+        try{
+            $result = DB::table('dr_apportionment')
+                ->where('id', $request->id)
+                ->update([
+                    'zoom_link' => $request->link,
+                ]);
+            if ($result) {
+                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            } else {
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
         }
         catch(\Illuminate\Database\QueryException $ex){
             return response()->json(array('data'=>$ex->getMessage()));

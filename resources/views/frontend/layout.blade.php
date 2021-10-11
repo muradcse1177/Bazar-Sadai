@@ -445,7 +445,7 @@
         </div>
         <!-- End of Dropdown Box -->
     </div>
-    <a href="{{'my-account'}}" class="sticky-link">
+    <a href="{{'myProductOrder'}}" class="sticky-link">
         <i class="w-icon-account"></i>
         <p>Account</p>
     </a>
