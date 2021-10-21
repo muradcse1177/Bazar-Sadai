@@ -364,6 +364,10 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::post('getCourierAgentArea', 'backend\TransportController@getCourierAgentArea');
     Route::post('deleteAgentArea', 'backend\TransportController@deleteAgentArea');
     // Tours & Travels
+    Route::get('travelSlide', 'backend\ToursController@travelSlide');
+    Route::post('insertTravelSlide', 'backend\ToursController@insertTravelSlide');
+    Route::post('getTravelSlideList', 'backend\ToursController@getTravelSlideList');
+    Route::post('deleteTravelSlide', 'backend\ToursController@deleteTravelSlide');
     Route::get('bookingMainAddress', 'backend\ToursController@bookingMainAddress');
     Route::post('insertMainAddress', 'backend\ToursController@insertMainAddress');
     Route::post('getTourAddressListById', 'backend\ToursController@getTourAddressListById');

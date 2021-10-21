@@ -19,11 +19,11 @@
 @section('content')
     <main class="main">
         <!-- Start of Page Header -->
-        <div class="page-header" style="margin-top: -30px;">
-            <div class="container">
-                <h1 class="page-title mb-0"> ট্যুরস  এন্ড ট্রাভেলস</h1>
-            </div>
-        </div>
+{{--        <div class="page-header" style="margin-top: 0px;">--}}
+{{--            <div class="container">--}}
+{{--                <h1 class="page-title mb-0"> ট্যুরস  এন্ড ট্রাভেলস</h1>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         <br>
         <div class="page-content">
             <div class="container">

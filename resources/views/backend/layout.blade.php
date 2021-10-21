@@ -756,6 +756,7 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
+                                    <li class ="@yield('travelSlide')"><a href="{{ url('travelSlide') }}"><i class="fa fa-circle-o"></i>ট্রাভেল স্লাইড </a></li>
                                     <li class ="@yield('bookingMainAddress')"><a href="{{ url('bookingMainAddress') }}"><i class="fa fa-circle-o"></i>বুকিং প্রধান ঠিকানা</a></li>
                                     <li class ="@yield('bookingTourAll1')"><a href="{{ url('bookingTourAll1') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-১</a></li>
                                     <li class ="@yield('bookingTourAll2')"><a href="{{ url('bookingTourAll2') }}"><i class="fa fa-circle-o"></i>হোটেল/রুম/ট্যুর বুকিং ধাপ-২</a></li>

@@ -17,7 +17,10 @@ class ToursController extends Controller
             ->where('type', 2)
             ->where('status', 1)
             ->orderBy('id', 'ASC')->get();
-        return view('frontend.serviceSubCategoryTours', ['tours_sub_cats' => $tours_sub_cats]);
+        $slides = DB::table('travel_slide')
+            ->where('status', 1)
+            ->orderBy('id', 'DESC')->get()->take(10);
+        return view('frontend.serviceSubCategoryTours', ['tours_sub_cats' => $tours_sub_cats,'slides' => $slides]);
     }
     public function bookingPageTNT(Request $request){
         return view('frontend.searchBTNT', ['scat_id' => $request->scat_id]);

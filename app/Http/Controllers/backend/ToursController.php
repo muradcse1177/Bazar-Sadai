@@ -9,6 +9,108 @@ use Illuminate\Support\Facades\DB;
 
 class ToursController extends Controller
 {
+    public function travelSlide(Request  $request){
+        try{
+            $rows = DB::table('travel_slide')
+                ->orderBy('id', 'DESC')->Paginate(20);
+            return view('backend.travelSlide', ['slides' => $rows]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function insertTravelSlide(Request $request){
+        try{
+            if($request) {
+                if($request->id) {
+                    $photo='';
+                    if ($request->hasFile('slide')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('slide');
+                        $pname = time() . '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $photo = $targetFolder . $pname;
+                    }
+                    $result =DB::table('travel_slide')
+                        ->where('id', $request->id)
+                        ->update([
+                            'name' =>  $request->name,
+                            'slide' =>  $photo,
+                            'status' =>  $request->status,
+                        ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+                else{
+                    $rows = DB::table('travel_slide')->select('name')->where([
+                        ['name', '=', $request->name]
+                    ])->distinct()->get()->count();
+                    if ($rows > 0) {
+                        return back()->with('errorMessage', ' নতুন নাম লিখুন।');
+                    } else {
+                        $photo='';
+                        if ($request->hasFile('slide')) {
+                            $targetFolder = 'public/asset/images/';
+                            $file = $request->file('slide');
+                            $pname = time() . '.' . $file->getClientOriginalName();
+                            $image['filePath'] = $pname;
+                            $file->move($targetFolder, $pname);
+                            $photo = $targetFolder . $pname;
+                        }
+                        $result = DB::table('travel_slide')->insert([
+                            'name' =>  $request->name,
+                            'slide' =>  $photo,
+                            'status' =>  $request->status,
+                        ]);
+                        if ($result) {
+                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        } else {
+                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                        }
+                    }
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function deleteTravelSlide(Request $request){
+        try{
+            if($request->id) {
+                $result =DB::table('travel_slide')
+                    ->where('id', $request->id)->delete();
+                if ($result) {
+                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function getTravelSlideList(Request $request){
+        try{
+            $rows = DB::table('travel_slide')->where('id', $request->id)->first();
+
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
     public function bookingMainAddress(Request  $request){
         try{
             $rows = DB::table('booking_main_address')

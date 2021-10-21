@@ -3,7 +3,8 @@
 @section('myOrder', 'active')
 @section('css')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{url('public/asset/woolmart/css/style.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{url('public/asset/woolmart/css/demo10.min.css')}}">
     <style>
         form, input, label, p {
             color: black !important;
@@ -12,21 +13,38 @@
             color: black !important;
         }
         @media screen and (max-width: 600px) {
-            margin-top: -50px;
+            .main{
+                margin-top: -30px;
+            }
         }
     </style>
 
 @endsection
 @section('content')
     <main class="main">
-        <!-- Start of Page Header -->
-        <div class="page-header" style="margin-top: -1px;">
-            <div class="container">
-                <h1 class="page-title mb-0"> ট্যুরস  এন্ড ট্রাভেলস</h1>
+        <section class="intro-wrapper">
+            <div class="owl-carousel owl-theme owl-nav-inner owl-dot-inner owl-nav-lg row gutter-no cols-1 animation-slider"
+                 data-owl-options="{
+                    'nav': false,
+                    'dots': true,
+                    'autoplay': false,
+                    'items': 1,
+                    'responsive': {
+                        '1500': {
+                            'nav': true,
+                            'dots': false
+                        }
+                    }
+                }">
+                @foreach($slides as $slide)
+                    <div class="banner banner-fixed intro-slide intro-slide1" style="background-image: url({{url($slide->slide)}});
+                            background-color: #F7F8FA;">
+                    </div>
+                @endforeach
             </div>
-        </div>
-        <br>
+        </section>
         <div class="page-content">
+
             <div class="container">
                 @if ($message = Session::get('successMessage'))
                     <div class="col-md-12 mb-4">
