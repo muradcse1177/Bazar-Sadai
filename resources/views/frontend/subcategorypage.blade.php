@@ -64,6 +64,26 @@
             </div>
             <div class="container mt-1 mb-2">
                 <div class="row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">
+                <?php
+                    use Illuminate\Support\Facades\Request;
+                    $last_segment = request()->segment(count(request()->segments()));
+                    $second_last_segment = Request::segment(1);
+                    if($second_last_segment == 'shop-by-cat' && $last_segment == 23){
+                ?>
+                    <div class="category category-ellipse">
+                        <figure class="category-media">
+                            <a href="{{url('allRestaurantShop')}}">
+                                <img src="{{url('public/restaurant.jpg')}}"
+                                     width="190" height="190" style="background-color: #5C92C0;" />
+                            </a>
+                        </figure>
+                        <div class="category-content">
+                            <h4 class="category-name">
+                                <a href="{{url('allRestaurantShop')}}">রেস্তোরা সমূহ</a>
+                            </h4>
+                        </div>
+                    </div>
+                <?php  } ?>
                     @foreach($sub_categories as $pro_cat)
                         <div class="category category-ellipse">
                             <figure class="category-media">

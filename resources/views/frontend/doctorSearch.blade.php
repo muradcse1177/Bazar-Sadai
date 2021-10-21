@@ -68,7 +68,7 @@
                                 <div class="col-sm-9">
                                     <h3 class="card-title">{{$doctorList->dr_name}}</h3>
                                     <p class="card-text">বর্তমান কর্মস্থলঃ {{$doctorList->current_institute}} </p>
-                                    <p style="margin-top: -15px;">স্পেশালিষ্টঃ {{$doctorList->name}} </p>
+                                    <p style="margin-top: -15px;">বিভাগ / স্পেশালিষ্টঃ {{$doctorList->name}} </p>
                                     <p style="margin-top: -15px;">পদবীঃ  {{$doctorList->designation}} </p>
                                     <p style="margin-top: -15px;">শিক্ষাঃ {{$doctorList->education}} </p>
                                     <p style="margin-top: -15px;">হাস্পাতালঃ {{$doctorList->hos_name}} </p>

@@ -811,6 +811,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('customOrder', 'frontend\FrontController@customOrder');
     Route::get('getSubcategoryByCat', 'frontend\FrontController@getSubcategoryByCat');
     Route::post('insertCustomOrder', 'frontend\FrontController@insertCustomOrder');
+    Route::get('allRestaurantShop', 'frontend\FrontController@allRestaurantShop');
 
     //Payment Gateway
     Route::post('getPaymentCartView', 'frontend\PaymentController@getPaymentCartView');

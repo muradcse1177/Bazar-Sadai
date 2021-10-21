@@ -232,6 +232,8 @@ class SellerController extends Controller
                                 'name' => $request->name,
                                 'address' => $request->address,
                                 'logo' => $logo,
+                                'cat_id' => $request->category,
+                                'subcat_id' => json_encode($request->subCat),
                             ]);
                         if ($result) {
                             return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -243,7 +245,7 @@ class SellerController extends Controller
                         $count =DB::table('seller_shop')
                             ->where('seller_id', Cookie::get('user_id'))->get()->count();
                         if($count>0){
-                            return back()->with('errorMessage', 'আপনার দোকান রয়েছে। আপনি নতুন দোনাল খুলতে পারবেন না।');
+                            return back()->with('errorMessage', 'আপনার দোকান রয়েছে। আপনি নতুন দোকান খুলতে পারবেন না।');
                         }
                         else{
                             if ($request->hasFile('logo')) {
@@ -260,6 +262,8 @@ class SellerController extends Controller
                                 'name' => $request->name,
                                 'address' => $request->address,
                                 'logo' => $logo,
+                                'cat_id' => $request->category,
+                                'subcat_id' => json_encode($request->subCat),
                             ]);
                             if ($result) {
                                 return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
@@ -268,7 +272,6 @@ class SellerController extends Controller
                             }
                         }
                     }
-
                 }
                 else{
                     return back()->with('errorMessage', 'ফর্ম পুরন করুন।');

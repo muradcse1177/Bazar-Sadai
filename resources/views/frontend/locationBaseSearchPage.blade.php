@@ -106,7 +106,7 @@
                         </select>
                     </div><br>
                     <div class="col-xs-4">
-                        <button type="submit" value="login"  name="login" class="btn btn-primary btn-block btn-flat">লগ ইন</button>
+                        <button type="submit" value="login"  name="login" class="btn btn-primary btn-block btn-flat">সাবমিট</button>
                     </div>
                 </div>
                 <div class="col-sm-12" id= "cityGroupId" style="display: none;" >

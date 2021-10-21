@@ -3655,4 +3655,17 @@ class FrontController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function allRestaurantShop (Request $request){
+        $shop = DB::table('seller_shop')->where('cat_id','23')->orderBy('id','desc')->paginate(50);
+        if($shop->count()>0){
+            $slide= DB::table('slide')
+                ->orderBy('id', 'DESC')
+                ->take(10)->get();
+            return view('frontend.marchantShop', ['slides' => $slide,'shops' => $shop]);
+        }
+        else{
+            return back()->with('errorMessage', 'কোন শপ পাওয়া যায়নি।');
+        }
+
+    }
 }

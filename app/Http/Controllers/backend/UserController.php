@@ -503,6 +503,7 @@ class UserController extends Controller
     public function contact_us(Request $request){
         try{
             $rows = DB::table('contact_us')
+                ->orderBy('id','desc')
                 ->paginate();
             return view('backend.contact_us', ['lists' => $rows]);
         }
@@ -1105,7 +1106,6 @@ class UserController extends Controller
     public function deliveryProfile(Request $request){
         try{
             $stmt = DB::table('delivery_charges')
-                ->where('purpose_id', 1)
                 ->first();
             $delivery_charge = $stmt->charge;
             $id = Cookie::get('user_id');

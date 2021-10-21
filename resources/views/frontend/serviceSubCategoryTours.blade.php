@@ -46,19 +46,33 @@
                 @endif
                 <div class="row">
                     <div class="col-md-12">
-                        @foreach($tours_sub_cats as $tours_sub_cats)
-                            <a href='{{ URL::to('bookingPageTNT?scat_id='.$tours_sub_cats->id) }}'>
-                                <div class='col-sm-4'>
-                                    <div class='box box-solid'>
-                                        <div class='box-body prod-body'>
-                                            <div class="alert boxBody">
-                                                <center><strong>{{ $tours_sub_cats->name }}</strong></center>
+                        <?php
+                          $i = 0;
+                          $img = ['d.png','c.jpg','e.jpg','a.jpg'];
+                        ?>
+                        <section class="category-classic-section pt-10 pb-10">
+                            <div class="container mt-1 mb-2">
+                                <h2 class="title title-center mb-5">ট্যুরস ও ট্রাভেলস</h2>
+                                <div class="row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">
+                                    @foreach($tours_sub_cats as $tours_sub_cats)
+                                        <div class="category category-classic category-absolute overlay-zoom br-xs">
+                                            <a href='{{ URL::to('bookingPageTNT?scat_id='.$tours_sub_cats->id) }}'>
+                                                <figure class="category-media">
+                                                    <img src="{{url('public/'.$img[$i])}}" alt="Category"
+                                                         width="190" height="184" />
+                                                </figure>
+                                            </a>
+                                            <div class="category-content">
+                                                <h4 class="category-name">{{ $tours_sub_cats->name }}</h4>
                                             </div>
                                         </div>
-                                    </div>
+                                        <?php
+                                        $i ++;
+                                        ?>
+                                    @endforeach
                                 </div>
-                            </a>
-                        @endforeach
+                            </div>
+                        </section>
                     </div>
                 </div>
                 {{ Form::close() }}

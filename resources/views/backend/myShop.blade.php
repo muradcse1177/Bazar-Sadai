@@ -45,6 +45,18 @@
                             <label for="name" >দোকানের লোগো (190px*190px)</label>
                             <input type="file" class="form-control logo" name="logo" accept="image/*"  placeholder="দোকানের লোগো"  required>
                         </div>
+                        <div class="form-group">
+                            <label>ক্যাটেগরি</label>
+                            <select class="form-control select2 category" name="category" style="width: 100%;" required>
+                                <option value="" selected> ক্যাটেগরি নির্বাচন করুন</option>
+                            </select>
+                        </div>
+                        <div class="form-group sub" style="display: none;">
+                            <label>সাব ক্যাটেগরি</label>
+                            <div class="addSub">
+
+                            </div>
+                        </div>
                     </div>
                     <div class="box-footer">
                         <input type="hidden" name="id" id="id" class="id">
@@ -154,5 +166,46 @@
                 }
             });
         }
+        $.ajax({
+            url: 'getAllProductCategory',
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                var data = response.data;
+                var len = data.length;
+                for( var i = 0; i<len; i++){
+                    var id = data[i]['id'];
+                    var name = data[i]['name'];
+                    $(".category").append("<option value='"+id+"'>"+name+"</option>");
+                }
+            },
+            failure: function (msg) {
+                alert('an error occured');
+            }
+        });
+        $(".category").change(function(){
+            var id =$(this).val();
+            $(".sub").show();
+            $(".addSub").empty();
+            $.ajax({
+                type: 'GET',
+                url: 'getSubCategoryListAll',
+                data: {id:id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    if(len < 1){
+                        $(".addSub").append('<p> No Data Available!!</p>');
+                    }
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['id'];
+                        var name = data[i]['name'];
+                        $(".addSub").append('<input class="form-check-input" type="checkbox" name="subCat[]" value="'+ id +'" id="'+ id +'" checked> <label class="form-check-label" for="'+ id +'"> '+ name +' </label>&nbsp;&nbsp;');
+                    }
+                }
+            });
+        });
     </script>
 @endsection

@@ -33,6 +33,7 @@
                         <tr>
                             <th>যোগাযোগকারি </th>
                             <th>ফোন </th>
+                            <th>  সময়</th>
                             <th>  মন্তব্য </th>
                             <th>টুল</th>
                         </tr>
@@ -40,6 +41,7 @@
                             <tr>
                                 <td> {{$list->name}} </td>
                                 <td> {{$list->phone}} </td>
+                                <td> {{$list->time}} </td>
                                 <td> {{ \Illuminate\Support\Str::limit($list->purpose, 50, $end='...') }} </td>
                                 <td class="td-actions text-center">
                                     <button type="button" rel="tooltip" class="btn btn-success search" data-id="{{$list->id}}">
