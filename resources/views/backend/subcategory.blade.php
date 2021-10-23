@@ -82,7 +82,7 @@
                                 <td> <img src="{{@$subcategory->image}}" height="60" width="60"> </td>
                                 <td> {{$subcategory-> name}} </td>
                                 <td> {{$subcategory->catName}} </td>
-                                <td>  @if ($subcategory->type ==1){{'পন্য' }}  @else{{'সার্ভিস'}} @endif </td>
+                                <td>  @if ($subcategory->type ==1){{'পন্য' }} @elseif ($subcategory->type ==2){{'সার্ভিস' }}  @else{{'ক্রয় বিক্রয়'}} @endif </td>
                                 <td class="td-actions text-center">
                                     <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$subcategory->id}}">
                                         <i class="fa fa-edit"></i>

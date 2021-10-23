@@ -145,7 +145,7 @@
         <!-- End of Header Top -->
         <div class="container">
             <div class='aaaaaaaa'>
-                <img  src="{{url('public/bb.png')}}" style="width: 1920px; height:80px;" />
+                <img  src="{{url('public/bb.png')}}" style="width: 1200px; height:80px;" />
             </div>
         </div>
         <div class="header-middle">
