@@ -61,6 +61,7 @@
                         <tr>
                             <th>#</th>
                             <th>নাম </th>
+                            <th>কোম্পানি</th>
                             <th>দাম</th>
                             <th>ইউনিট</th>
                             <th>টাইপ</th>
@@ -190,6 +191,8 @@
                                     '</div>' +
                                     '</td>' +
                                     '<td>' + data[i].name +
+                                    '</td>' +
+                                    '<td>' + data[i].company +
                                     '</td>' +
                                     '</td>' +
                                     '<td>' + data[i].price +

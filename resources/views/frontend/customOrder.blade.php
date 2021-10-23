@@ -42,7 +42,7 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <select class="form-control select2 category" id="category" name="category" style="width: 100%;" required>
-                                        <option value="" selected> ক্যাটেগরি নির্বাচন করুন</option>
+                                        <option value="" selected> ক্যাটেগরি / চাহিদা নির্বাচন করুন</option>
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}"> {{$category->name}}</option>
                                         @endforeach
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control select2 sub_category" id="sub_category" name="sub_category" style="width: 100%;">
-                                        <option value="" selected> সাব ক্যাটেগরি নির্বাচন করুন</option>
+                                        <option value="" selected> সাব ক্যাটেগরি / চাহিদা  নির্বাচন করুন</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -125,19 +125,19 @@
                                     <input type="text" class="form-control" name="address" placeholder="ঠিকানা"  required>
                                 </div>
                                 <div class="form-group">
-                                    <textarea type="text" class="form-control" name="details" placeholder="পন্যের বিস্তারিত লিখুন" rows="8"  required></textarea>
+                                    <textarea type="text" class="form-control" name="details" placeholder="পন্যের / চাহিদার বিস্তারিত লিখুন" rows="8"  required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control date" name="date" placeholder="কবে ডেলিভারি চান"  required readonly>
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" class="form-control amount" name="amount" placeholder="পণ্যের পরিমান"  required>
+                                    <input type="text" class="form-control amount" name="amount" placeholder="পণ্যের / চাহিদার  পরিমান"  required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="number" min="1" class="form-control price" name="price" placeholder="পণ্যের জন্য কত টাকা দিতে চান"  required>
+                                    <input type="number" min="1" class="form-control price" name="price" placeholder="পণ্যের / চাহিদার  জন্য কত টাকা দিতে চান"  required>
                                 </div>
                                 <div class="form-group">
-                                    <label>পণ্যের ছবি</label>
+                                    <label>পণ্যের / চাহিদার ছবি</label>
                                 </div>
                                 <div class="form-group">
                                     <input type="file" class="form-control image" name="image" accept="image/*" required>

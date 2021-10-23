@@ -57,16 +57,19 @@
                             <th>অর্ডার নং</th>
                             <th>ছবি</th>
                             <th>ডেলিভারি তারিখ</th>
-                            <th>অবস্থা</th>
+                            <th width="8%">অবস্থা</th>
                             <th>নাম</th>
                             <th>ফোন</th>
                             <th>ক্যাটেগরি</th>
                             <th>সাব ক্যাটেগরি</th>
-                            <th>এপ্রুভাল</th>
                             <th>ঠিকানা</th>
                             <th>বিস্তারিত</th>
                             <th>পরিমান</th>
                             <th>দাম</th>
+                            <th>সেলার নাম</th>
+                            <th>সেলার ফোন</th>
+                            <th>সেলার ই-মেইল</th>
+                            <th>সেলার ডেলিভারি ডেট</th>
                         </tr>
                         @foreach($bookings as $booking)
                             <tr>
@@ -88,17 +91,14 @@
                                 <td>{{$booking['phone']}}</td>
                                 <td>{{$booking['category']}}</td>
                                 <td>{{$booking['sub_category']}}</td>
-                                <td>
-                                    @if($booking['seller_id'])
-                                        <button class="btn btn-success">{{$booking['seller_id']}}</button>
-                                    @else
-                                        <button class="btn btn-danger take"  data-id="{{$booking['id']}}">গ্রহণ করুন</button>
-                                    @endif
-                                </td>
                                 <td> {{ $booking['add_part1'].', '.$booking['add_part2'].', '.$booking['add_part3'].', '.$booking['add_part4'].', '.$booking['add_part5'].', '.$booking['address'] }} </td>
                                 <td>{!! nl2br($booking['details']) !!}</td>
                                 <td><b>{{$booking['amount']}}</b></td>
                                 <td><b>{{$booking['price'].' /-'}}</b></td>
+                                <td><b>{{$booking['seller_name']}}</b></td>
+                                <td><b>{{$booking['s_phone']}}</b></td>
+                                <td><b>{{$booking['s_date']}}</b></td>
+                                <td><b>{{$booking['s_price'].' /-'}}</b></td>
                             </tr>
                         @endforeach
                     </table>

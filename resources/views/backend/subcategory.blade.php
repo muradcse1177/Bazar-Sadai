@@ -36,6 +36,7 @@
                                 <option value="" selected> ধরন  নির্বাচন করুন</option>
                                 <option value="1">পন্য</option>
                                 <option value="2">সার্ভিস</option>
+                                <option value="3">ক্রয় বিক্রয়</option>
                             </select>
                         </div>
                         <div class="form-group">

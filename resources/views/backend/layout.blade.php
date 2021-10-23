@@ -237,11 +237,6 @@
                             <i class="fa fa-shopping-cart"></i> <span>আমার বিক্রয়</span>
                         </a>
                     </li>
-                    <li class="@yield('customOrderReport')">
-                        <a href="{{ url('customOrderReport') }}">
-                            <i class="fa fa-shopping-bag"></i> <span>কাস্টম অর্ডার রিপোর্ট</span>
-                        </a>
-                    </li>
                     <li class="@yield('sellerForm')">
                         <a href ="{{ url('sellerForm') }}" >
                             <i class="fa fa-shopping-cart"></i> <span>আমার পণ্য</span>

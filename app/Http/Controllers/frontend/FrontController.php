@@ -3499,7 +3499,6 @@ class FrontController extends Controller
     public function customOrder(Request $request){
         try{
             $product_cat = DB::table('categories')
-                ->where('type', 1)
                 ->where('status', 1)
                 ->orderBy('id', 'ASC')->get();
             return view('frontend.customOrder', ['categories' =>$product_cat]);
@@ -3559,6 +3558,26 @@ class FrontController extends Controller
                 'amount' => $request->amount,
                 'price' => $request->price,
                 'image' =>$userPhotoPath,
+            ]);
+            if ($result) {
+                return view('frontend.orderComplete');
+            } else {
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function  insertCustomOrderRequest(Request $request){
+        try{
+            $result = DB::table('custom_order_seller')->insert([
+                'buyer_request_id' => $request->id,
+                'seller_name' => $request->name,
+                'phone' => $request->phone,
+                'email' => $request->email,
+                'date' => $request->date,
+                'price' => $request->price,
             ]);
             if ($result) {
                 return view('frontend.orderComplete');
@@ -3632,6 +3651,7 @@ class FrontController extends Controller
                         ->where('id',$order->add_part5)
                         ->first();
                 }
+                $orderArr[$i]['id'] = $order->id;
                 $orderArr[$i]['name'] = $order->name;
                 $orderArr[$i]['phone'] = $order->phone;
                 $orderArr[$i]['address'] = $add_part1->name.' ,'.$add_part2->name.' ,'.$add_part3->name.' ,'.$add_part4->name.' ,'.$add_part5->name;

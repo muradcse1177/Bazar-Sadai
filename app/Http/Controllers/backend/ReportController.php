@@ -180,7 +180,6 @@ class ReportController extends Controller
                         ->where('id', $id[1])
                         ->update([
                             'status' =>  $id[0],
-                            'delivered_date' => date('Y-m-d'),
                         ]);
                 }
                 else{
@@ -1402,7 +1401,9 @@ class ReportController extends Controller
     public function customOrderReport(Request $request){
 
         $results = DB::table('custom_order_booking')
-            ->orderBy('id','desc')
+            ->select('*','custom_order_seller.phone as s_phone','custom_order_seller.date as s_date','custom_order_seller.price as s_price')
+            ->leftJoin('custom_order_seller','custom_order_seller.buyer_request_id','=','custom_order_booking.id')
+            ->orderBy('custom_order_booking.id','desc')
             ->get();
         $i=0;
         foreach ($results as $result){
@@ -1470,14 +1471,7 @@ class ReportController extends Controller
                     ->where('id',$result->sub_category)
                     ->first();
             }
-            $users = DB::table('users')
-                ->where('id',$result->seller_id)
-                ->first();
 
-            if($users)
-                $user = $users->name;
-            else
-                $user = "";
             $booking[$i]['id'] = $result->id;
             $booking[$i]['category'] = $cat->name;
             $booking[$i]['sub_category'] = $sub_cat->name;
@@ -1495,8 +1489,10 @@ class ReportController extends Controller
             $booking[$i]['price'] = $result->price;
             $booking[$i]['image'] = $result->image;
             $booking[$i]['status'] = $result->status;
-            $booking[$i]['seller_id'] = $user;
-            $booking[$i]['delivery_date'] = $result->delivered_date;
+            $booking[$i]['seller_name'] = $result->seller_name;
+            $booking[$i]['s_phone'] = $result->s_phone;
+            $booking[$i]['s_date'] = $result->s_date;
+            $booking[$i]['s_price'] = $result->s_price;
             $i++;
         }
         $currentPage = LengthAwarePaginator::resolveCurrentPage();

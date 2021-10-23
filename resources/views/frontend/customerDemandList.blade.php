@@ -70,6 +70,33 @@
                                     <p style="margin-top: -10px;"><b>Demand Price: </b>{{$order['amount']}}</p>
                                     <p style="margin-top: -10px;"><b>Status :</b><button style="background-color: #72b8a5;">{{$order['status']}}</button></p>
                                     <p style="margin-top: -10px;"><b>Product/Service Details: </b>{!! nl2br($order['details']) !!}</p>
+                                    <div>
+                                        <div class="" style="margin-bottom: 20px;">
+                                            <button class="btn btn-success contactButton" data-id="{{$order['id']}}">Contact Buyer</button>
+                                        </div>
+                                        <div id="contactForm{{$order['id']}}" style="display: none; margin-bottom: 20px;">
+                                            {{ Form::open(array('url' => 'insertCustomOrderRequest',  'method' => 'post')) }}
+                                            {{ csrf_field() }}
+                                            <div class="form-group">
+                                                <input type="text" class="form-control name" name="name" placeholder="Enter Name"  required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="email" class="form-control email" name="email" placeholder="Enter Email"  required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="tel" class="form-control phone" name="phone" placeholder="Enter Phone"   required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="number" class="form-control price" name="price" placeholder="My Demand Price"   required>
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="text" class="form-control date" name="date" placeholder="My Expected Delivery date"   required>
+                                            </div>
+                                            <input type="hidden"  name="id" value="{{$order['id']}}">
+                                            <button type="submit" class="btn btn-primary" >Send Request</button>
+                                            {{ Form::close() }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -83,6 +110,19 @@
 @endsection
 @section('js')
     <script>
+        $(document).ready(function(){
+            $(".contactButton").click(function(){
+                var id = $(this).data('id');
+                $("#contactForm"+id).show();
+            });
+        });
+        $( function() {
+            $('.date').datepicker({
+                autoclose: true,
+                minDate:0,
+                dateFormat: "yy-m-dd",
+            })
 
+        } );
     </script>
 @endsection
