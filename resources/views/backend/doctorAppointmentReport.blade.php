@@ -59,8 +59,11 @@
                             <th>টাইপ</th>
                             <th>ডাক্তার ফোন নং</th>
                             <th>পেশেন্ট নাম</th>
+                            <th>পেশেন্ট আইডি</th>
                             <th>পেশেন্ট ফোন</th>
                             <th>পেশেন্ট বয়স</th>
+                            <th>সময়</th>
+                            <th>হোয়াটস এপ </th>
                             <th>সমস্যা</th>
                             <th>ফিস</th>
                         </tr>
@@ -77,8 +80,11 @@
                                 <td> {{$drReport->type}} </td>
                                 <td> {{$drReport->dr_phone}} </td>
                                 <td> {{$drReport->patient_name}} </td>
+                                <td> {{$drReport->a_id}} </td>
                                 <td> {{$drReport->p_phone}} </td>
                                 <td> {{$drReport->age}} </td>
+                                <td> {{$drReport->serial}} </td>
+                                <td> {{$drReport->w_number}} </td>
                                 <td> {{$drReport->problem}} </td>
                                 <td> {{$drReport->price.'/-'}} </td>
                             </tr>
