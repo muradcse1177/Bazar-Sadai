@@ -188,7 +188,7 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">প্রোফাইল</a>
+                                    <a href="{{url('profile')}}" class="btn btn-default btn-flat">প্রোফাইল</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="{{ url('logout') }}" class="btn btn-default btn-flat">লগ আউট </a>

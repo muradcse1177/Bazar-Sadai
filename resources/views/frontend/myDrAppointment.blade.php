@@ -50,7 +50,6 @@
                                                 <th>পেশেন্ট ফোন</th>
                                                 <th>পেশেন্ট বয়স</th>
                                                 <th>সিরিয়াল</th>
-                                                <th>সময়</th>
                                                 <th>সমস্যা</th>
                                                 <th>ফিস</th>
                                             </tr>
@@ -92,7 +91,6 @@
                                                     <td> {{$drReport->p_phone}} </td>
                                                     <td> {{$drReport->age}} </td>
                                                     <td> {{$drReport->serial}} </td>
-                                                    <td> {{$drReport->time}} </td>
                                                     <td> {{$drReport->problem}} </td>
                                                     <td> {{$drReport->price.'/-'}} </td>
                                                 </tr>

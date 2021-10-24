@@ -461,6 +461,8 @@ Route::group(['middleware' => ['doctor']], function () {
     Route::post('myPatientListByDate', 'backend\DoctorController@myPatientListByDate');
     Route::get('changeLocalDoctorStatus', 'backend\DoctorController@changeLocalDoctorStatus');
     Route::post('updateZoomLink', 'backend\DoctorController@updateZoomLink');
+    Route::post('updatePrescription', 'backend\DoctorController@updatePrescription');
+    Route::post('getPrescriptionList', 'backend\DoctorController@getPrescriptionList');
 });
 
 Route::group(['middleware' => ['cooker']], function () {
@@ -685,6 +687,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('searchDoctorListFront', 'frontend\MedicalServiceController@searchDoctorListFront');
     Route::get('doctorProfileFront/{id}', 'frontend\MedicalServiceController@doctorProfileFront');
     Route::get('insertAppointment', 'frontend\MedicalServiceController@insertAppointment');
+    Route::get('getAllEmptySerial', 'frontend\MedicalServiceController@getAllEmptySerial');
     Route::get('therapyServiceForm', 'frontend\MedicalServiceController@therapyServiceForm');
     Route::get('getAllTherapyServiceListFront', 'backend\MedicalServiceController@getAllTherapyServiceList');
     Route::post('searchTherapyListFront', 'frontend\MedicalServiceController@searchTherapyListFront');
@@ -817,6 +820,9 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::post('insertCustomOrder', 'frontend\FrontController@insertCustomOrder');
     Route::get('allRestaurantShop', 'frontend\FrontController@allRestaurantShop');
 
+    //profile
+    Route::get('profile', 'backend\ProfileController@profile');
+    Route::post('updateProfile', 'backend\ProfileController@updateProfile');
     //Payment Gateway
     Route::post('getPaymentCartView', 'frontend\PaymentController@getPaymentCartView');
     Route::get('paymentFromVariousMarket', 'frontend\PaymentController@paymentFromVariousMarket');

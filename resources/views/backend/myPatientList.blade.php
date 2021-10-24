@@ -57,24 +57,36 @@
                     <table class="table table-bordered">
                         <tr>
                             <th>তারিখ</th>
+                            <th>আইডি</th>
                             <th>জুম লিংক</th>
+                            <th>প্রেসক্রিপশন</th>
                             <th>পেশেন্ট নাম</th>
                             <th>পেশেন্ট ফোন</th>
                             <th>পেশেন্ট বয়স</th>
+                            <th>সময়</th>
+                            <th>হোয়াটস এপ </th>
                             <th>সমস্যা</th>
                             <th>ফিস</th>
                         </tr>
                         @foreach($drReports as $drReport)
                             <tr>
                                 <td> {{$drReport-> date}} </td>
+                                <td> {{$drReport-> a_id}} </td>
                                 <td class="td-actions">
                                     <button type="button" rel="tooltip" class="btn btn-success link" data-id="{{$drReport->a_id}}">
                                         <i class="fa fa-video-camera"></i>
                                     </button>
                                 </td>
+                                <td class="td-actions">
+                                    <button type="button" rel="tooltip" class="btn btn-success prescription" data-id="{{$drReport->a_id}}">
+                                        Prescription
+                                    </button>
+                                </td>
                                 <td> {{$drReport->patient_name}} </td>
                                 <td> {{$drReport->p_phone}} </td>
                                 <td> {{$drReport->age}} </td>
+                                <td> {{$drReport->serial}} </td>
+                                <td> {{$drReport->w_number}} </td>
                                 <td> {{$drReport->problem}} </td>
                                 <td> {{$drReport->price.'/-'}} </td>
                             </tr>
@@ -96,6 +108,27 @@
                             </div>
                             <div class="modal-footer">
                                 <input type="hidden" name="id" id="id" class="id">
+                                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">সেভ করুন</button>
+                            </div>
+                            {{ Form::close() }}
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade"  tabindex="-1"   id="pr_modal"  role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">প্রেসক্রিপশন</h4>
+                            </div>
+                            {{ Form::open(array('url' => 'updatePrescription',  'method' => 'post')) }}
+                            {{ csrf_field() }}
+                            <div class="modal-body">
+                                <textarea class="form-control pre" name="pre" id="pre" rows="7" placeholder="প্রেসক্রিপশন লিখুন"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <input type="hidden" name="idPre" id="idPre" class="idPre">
                                 <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Close</button>
                                 <button type="submit" class="btn btn-primary">সেভ করুন</button>
                             </div>
@@ -128,5 +161,28 @@
             $('.id').val(id);
             $('#distance').modal('show');
         });
+        $(document).on('click', '.prescription', function(e){
+            e.preventDefault();
+            var id = $(this).data('id');
+            $('.idPre').val(id);
+            $('#pr_modal').modal('show');
+            getRow(id);
+        });
+        function getRow(id){
+            $.ajax({
+                type: 'POST',
+                url: 'getPrescriptionList',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    $('.pre').html(data.prescription);
+
+                }
+            });
+        }
     </script>
 @endsection

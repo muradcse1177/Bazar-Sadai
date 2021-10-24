@@ -102,10 +102,18 @@
                                     <input type="text" class="form-control patient_name" name="patient_name" id="patient_name" placeholder="রোগীর নাম" required>
                                 </div>
                                 <div class="form-group">
+                                    <input type="tel" class="form-control w_number" name="w_number" id="w_number" placeholder="হোয়াটস এপ নম্বর " required>
+                                </div>
+                                <div class="form-group">
                                     <input type="number" class="form-control patient_name" name="age" id="age" placeholder="বয়স" required>
                                     <input type="hidden" class="form-control" name="type" value="{{$type}}" required>
                                     <input type="hidden" class="form-control" name="dr_id" value="{{$doctorProfile->u_id}}" required>
                                     <input type="hidden" class="form-control" name="fees" value="{{$doctorProfile->fees}}" required>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control  serial" name="serial" style="width: 100%;" required>
+                                        <option value="" selected> সিরিয়াল নির্বাচন করুন</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <textarea type="text" class="form-control problem" name="problem" id="problem" placeholder="সমস্যা" required></textarea>
@@ -139,5 +147,25 @@
             })
 
         } );
+        $(".date").change(function(){
+            var id =$(this).val();
+            var u_id = {{$doctorProfile->u_id}};
+            $('.serial').find('option:not(:first)').remove();
+            $.ajax({
+                type: 'GET',
+                url: '{{ url('/') }}/getAllEmptySerial',
+                data: {id:id,u_id:u_id},
+                dataType: 'json',
+                success: function(response){
+                    var data = response.data;
+                    var len = data.length;
+                    for( var i = 0; i<len; i++){
+                        var id = data[i]['time'];
+                        var name = data[i]['time'];
+                        $(".serial").append("<option value='"+id+"'>"+name+"</option>");
+                    }
+                }
+            });
+        });
     </script>
 @endsection

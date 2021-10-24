@@ -113,6 +113,7 @@ class DoctorController extends Controller
             ->select('*','dr_apportionment.id as a_id','a.phone as dr_phone','b.phone as p_phone','a.name as dr_name')
             ->join('users as a','a.id','=','dr_apportionment.dr_id')
             ->join('users as b','b.id','=','dr_apportionment.user_id')
+            ->where('a.id',Cookie::get('user_id'))
             ->orderBy('a_id','desc')
             ->paginate('20');
         return view('backend.myPatientList',['drReports' => $rows]);
@@ -122,6 +123,7 @@ class DoctorController extends Controller
             ->select('*','dr_apportionment.id as a_id','a.phone as dr_phone','b.phone as p_phone','a.name as dr_name')
             ->join('users as a','a.id','=','dr_apportionment.dr_id')
             ->join('users as b','b.id','=','dr_apportionment.user_id')
+            ->where('a.id',Cookie::get('user_id'))
             ->whereBetween('date',array($request->from_date,$request->to_date))
             ->paginate('20');
         //dd($rows);
@@ -175,6 +177,34 @@ class DoctorController extends Controller
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function updatePrescription(Request $request){
+        try{
+            $result = DB::table('dr_apportionment')
+                ->where('id', $request->idPre)
+                ->update([
+                    'prescription' => $request->pre,
+                ]);
+            if ($result) {
+                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            } else {
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }
+    public function getPrescriptionList(Request $request){
+        try{
+            $rows = DB::table('dr_apportionment')
+                ->where('id', $request->id)
+                ->first();
+            return response()->json(array('data'=>$rows));
         }
         catch(\Illuminate\Database\QueryException $ex){
             return response()->json(array('data'=>$ex->getMessage()));

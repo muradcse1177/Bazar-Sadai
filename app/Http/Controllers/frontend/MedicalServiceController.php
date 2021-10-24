@@ -108,8 +108,11 @@ class MedicalServiceController extends Controller
                 ->where('users.id', $id)
                 ->first();
         }
+        $d_time = DB::table('dr_time_assign')
+            ->where('dr_id',$id)
+            ->get();
         //dd($rows);
-        return view('frontend.doctorProfile',['doctorProfile' => $rows,'type'=>$type]);
+        return view('frontend.doctorProfile',['doctorProfile' => $rows,'type'=>$type,'d_times'=>$d_time]);
     }
     public function localDoctorProfileFront($id){
         $rows = DB::table('doctors')
@@ -124,6 +127,25 @@ class MedicalServiceController extends Controller
             ->first();
         $type ='Local';
         return view('frontend.localDoctorProfile',['doctorProfile' => $rows,'type'=>$type]);
+    }
+    public function getAllEmptySerial(Request $request){
+        try{
+            $rows = DB::table('dr_time_assign')
+                ->join('dr_apportionment','dr_apportionment.serial','!=','dr_time_assign.time')
+                ->where('dr_apportionment.date', $request->id)
+                ->where('dr_time_assign.dr_id', $request->u_id)
+                ->get();
+            if($rows->count() <1){
+                $rows = DB::table('dr_time_assign')
+                    ->where('dr_id', $request->u_id)
+                    ->get();
+            }
+            //dd($rows);
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
     }
     public function insertAppointment(Request $request){
         try{
@@ -164,71 +186,17 @@ class MedicalServiceController extends Controller
                     'age' => $sessRequest->age,
                     'problem' => $sessRequest->problem,
                     'price' => $sessRequest->fees,
+                    'w_number' => $sessRequest->w_number,
+                    'serial' => $sessRequest->serial,
                 ]);
                 if ($result) {
-                    $lastId = DB::getPdo()->lastInsertId();
                     $rows = DB::table('doctors')
                         ->join('users', 'users.id', '=', 'doctors.doctor_id')
                         ->where('users.id', $sessRequest->dr_id)
                         ->first();
-                    if($rows->in_timezone == 'AM'){
-                        $inTime = $rows->in_time;
+                        return redirect()->to('myDrAppointment')->with('successMessage', 'ডাক্তার এর ফোন নাম্বারঃ '.$rows->phone.' ভিডিও কল করতে পারেন অথবা কল করতে পারেন। আপনার ভিসিট টাইম আনুমানিক: '.$sessRequest->serial);
                     }
-                    if($rows->in_timezone == 'PM'){
-                        $inTime = $rows->in_time+12;
-                    }
-                    if($rows->out_timezone == 'AM'){
-                        $outTime = $rows->out_time;
-                    }
-                    if($rows->out_timezone == 'PM'){
-                        $outTime = $rows->out_time+12;
-                    }
-                    $timeDifference = $outTime - $inTime;
-                    $timSlot =15;
-                    $totalSerial = ($timeDifference*60)/$timSlot;
-                    $rowsDr = DB::table('dr_apportionment')
-                        ->where('dr_id', $sessRequest->dr_id)
-                        ->where('type', $sessRequest->type)
-                        ->where('date', $sessRequest->date)
-                        ->orderBy('id','desc')
-                        ->skip(1)
-                        ->take(1)
-                        ->first();
-
-                    if(!empty($rowsDr->serial)){
-                        $currSerial = $rowsDr->serial+1;
-                    }
-                    else{
-                        $currSerial = 1;
-                    }
-                    $timeMode = $currSerial % 4;
-                    $hour = (int) floor( $currSerial/4);
-                    $totalHour = $inTime+$hour;
-                    if($timeMode == 1){
-                        $totalMinutes = 15;
-                    }
-                    if($timeMode == 2){
-                        $totalMinutes = 30;
-                    }
-                    if($timeMode == 3){
-                        $totalMinutes = 45;
-                    }
-                    if($timeMode == 0){
-                        $totalMinutes = '00';
-                    }
-                    $result =DB::table('dr_apportionment')
-                        ->where('id', $lastId)
-                        ->update([
-                            'serial' =>  $currSerial,
-                            'time' =>  $totalHour.':'.$totalMinutes,
-                        ]);
-                    if($result){
-                        return redirect()->to('myDrAppointment')->with('successMessage', 'ডাক্তার এর ফোন নাম্বারঃ '.$rows->phone.' ভিডিও কল করতে পারেন অথবা কল করতে পারেন।আপনার সিরিয়াল নম্বর:'. $currSerial. ' আপনার ভিসিট টাইম আনুমানিক: '.$totalHour.':'.$totalMinutes);
-                    }
-                    else{
-                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                    }
-                } else {
+                else{
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
             }
@@ -269,14 +237,10 @@ class MedicalServiceController extends Controller
             if($result) {
                 $sessRequest = json_encode(Session::get('localAppointmentRequest'));
                 $sessRequest = json_decode($sessRequest);
-                $lastId = DB::getPdo()->lastInsertId();
-                $rows = DB::table('doctors')
-                    ->join('users', 'users.id', '=', 'doctors.doctor_id')
-                    ->where('users.id', $sessRequest->dr_id)
-                    ->first();
+
                 $result = DB::table('dr_apportionment')->insert([
-                    'tx_id' => $tx_id,
                     'dr_id' => $sessRequest->dr_id,
+                    'tx_id' => $tx_id,
                     'type' => $sessRequest->type,
                     'user_id' => Cookie::get('user_id'),
                     'date' => $sessRequest->date,
@@ -284,70 +248,18 @@ class MedicalServiceController extends Controller
                     'age' => $sessRequest->age,
                     'problem' => $sessRequest->problem,
                     'price' => $sessRequest->fees,
+                    'w_number' => $sessRequest->w_number,
+                    'serial' => $sessRequest->serial,
                 ]);
                 if ($result) {
-                    $lastId = DB::getPdo()->lastInsertId();
                     $rows = DB::table('doctors')
                         ->join('users', 'users.id', '=', 'doctors.doctor_id')
                         ->where('users.id', $sessRequest->dr_id)
                         ->first();
-                    if($rows->in_timezone == 'AM'){
-                        $inTime = $rows->in_time;
-                    }
-                    if($rows->in_timezone == 'PM'){
-                        $inTime = $rows->in_time+12;
-                    }
-                    if($rows->out_timezone == 'AM'){
-                        $outTime = $rows->out_time;
-                    }
-                    if($rows->out_timezone == 'PM'){
-                        $outTime = $rows->out_time+12;
-                    }
-                    $timeDifference = $outTime - $inTime;
-                    $timSlot =15;
-                    $totalSerial = ($timeDifference*60)/$timSlot;
-                    $rowsDr = DB::table('dr_apportionment')
-                        ->where('dr_id', $sessRequest->dr_id)
-                        ->where('type', $sessRequest->type)
-                        ->where('date', $sessRequest->date)
-                        ->orderBy('id','desc')
-                        ->skip(1)
-                        ->take(1)
-                        ->first();
-
-                    if(!empty($rowsDr->serial)){
-                        $currSerial = $rowsDr->serial+1;
-                    }
-                    else{
-                        $currSerial = 1;
-                    }
-                    $timeMode = $currSerial % 4;
-                    $hour = (int) floor( $currSerial/4);
-                    $totalHour = $inTime+$hour;
-                    if($timeMode == 1){
-                        $totalMinutes = 15;
-                    }
-                    if($timeMode == 2){
-                        $totalMinutes = 30;
-                    }
-                    if($timeMode == 3){
-                        $totalMinutes = 45;
-                    }
-                    if($timeMode == 0){
-                        $totalMinutes = '00';
-                    }
-                    $result =DB::table('dr_apportionment')
-                        ->where('id', $lastId)
-                        ->update([
-                            'serial' =>  $currSerial,
-                            'time' =>  $totalHour.':'.$totalMinutes,
-                        ]);
-                    if($result){
-                        return redirect()->to('myDrAppointment')->with('successMessage', 'ডাক্তার এর ফোন নাম্বারঃ '.$rows->phone.' ভিডিও কল করতে পারেন অথবা কল করতে পারেন।আপনার সিরিয়াল নম্বর:'. $currSerial. ' আপনার ভিসিট টাইম আনুমানিক: '.$totalHour.':'.$totalMinutes);
-                    }
-                    else{
-                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                    }
+                    return redirect()->to('myDrAppointment')->with('successMessage', 'ডাক্তার এর ফোন নাম্বারঃ '.$rows->phone.' ভিডিও কল করতে পারেন অথবা কল করতে পারেন। আপনার ভিসিট টাইম আনুমানিক: '.$sessRequest->serial);
+                }
+                else{
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
             }
             else{
