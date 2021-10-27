@@ -179,9 +179,10 @@
                         @endif
                         <?php
                             $last_part = request()->segment(count(request()->segments()));
+                            $second = Request::segment(1);
 
                         ?>
-                        @if($last_part == 3 || $last_part == 'searchMedicine')
+                        @if(($last_part == 3 && $second == 'shop-by-cat') || $last_part == 'searchMedicine')
                         <div align="center">
                             <button class="btn btn-secondary btn-ellipse btn-icon-right trade_button">
                                 ট্রেড নাম<i class="w-icon-long-arrow-right"></i>

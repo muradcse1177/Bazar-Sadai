@@ -648,6 +648,13 @@
                         </a>
                     </li>
                 @endif
+                @if(in_array(41, $roles))
+                    <li class="@yield('sellerCatShop')">
+                        <a href ="{{ url('sellerCatShop') }}">
+                            <i class="fa fa-bandcamp"></i> <span>সেলার শপ ক্যাটেগরি</span>
+                        </a>
+                    </li>
+                @endif
                 @if(in_array(26, $roles))
                     <li class="@yield('sms')">
                         <a href ="{{ url('sms') }}">

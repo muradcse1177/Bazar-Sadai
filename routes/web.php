@@ -149,6 +149,9 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::get('subcategory', 'backend\ProductController@selectSubCategory');
     Route::get('getCategoryListAll', 'backend\ProductController@getCategoryListAll');
     Route::post('insertSubcategory', 'backend\ProductController@insertSubcategory');
+    Route::get('sellerCatShop', 'backend\ProductController@sellerCatShop');
+    Route::post('insertSellerShopCategory', 'backend\ProductController@insertSellerShopCategory');
+    Route::post('getSellerShopCategoryList', 'backend\ProductController@getSellerShopCategoryList');
     Route::post('getSubCategoryList', 'backend\ProductController@getSubCategoryList');
     Route::post('deleteSubCategory', 'backend\ProductController@deleteSubCategory');
     Route::get('product', 'backend\ProductController@selectProduct');
@@ -432,10 +435,10 @@ Route::group(['middleware' => ['seller']], function () {
     Route::post('insertSellerShop', 'backend\SellerController@insertSellerShop');
     Route::post('getSellerShopsById', 'backend\SellerController@getSellerShopsById');
     Route::get('importProduct', 'backend\SellerController@importProduct');
-    Route::get('getAllProductCategory', 'backend\SellerController@getAllProductCategory');
     Route::get('selectProductByCategory', 'backend\SellerController@selectProductByCategory');
     Route::post('importSellerProduct', 'backend\SellerController@importSellerProduct');
 });
+Route::get('getAllProductCategory', 'backend\SellerController@getAllProductCategory');
 Route::post('insertSellerProduct', 'backend\SellerController@insertSellerProduct');
 Route::group(['middleware' => ['dealer']], function () {
     Route::get('dealerProfile', 'backend\DealerController@dealerProfile');

@@ -1024,12 +1024,21 @@ class FrontController extends Controller
                 ->where('status', 1)
                 ->orderBy('id', 'Desc')->get();
             if($sub_cat->count()>0){
+                $shops= DB::table('seller_shop_category')
+                    ->where('cat_id', $id)
+                    ->first();
+                if($shops)
+                    $check = 1;
+                else
+                    $check = 0;
                 return view('frontend.subcategorypage',
                     [
                         'ser_categories' => $service_cat,
                         'pro_categories' => $product_cat,
                         'sub_categories' => $sub_cat,
                         'slides' => $slide,
+                        'shops' => $shops,
+                        'check' => $check,
                     ]);
             }
             else{
@@ -3521,6 +3530,11 @@ class FrontController extends Controller
                 ->take(10)->get();
             $shop= DB::table('seller_shop')
                 ->orderBy('id', 'DESC')->paginate(100);
+            if($request->cat_id){
+                $shop= DB::table('seller_shop')
+                    ->where('cat_id',$request->cat_id)
+                    ->orderBy('id', 'DESC')->paginate(100);
+            }
             return view('frontend.marchantShop', ['slides' => $slide,'shops' => $shop]);
         }
         catch(\Illuminate\Database\QueryException $ex){

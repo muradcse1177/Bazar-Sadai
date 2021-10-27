@@ -658,6 +658,7 @@ class ProductController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+
     public function insertCoupon(Request $request){
         try{
             if($request) {
@@ -706,9 +707,96 @@ class ProductController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function getCouponList(Request $request){
+    public function sellerCatShop(Request $request){
         try{
-            $rows = DB::table('coupon')
+
+            $rows = DB::table('seller_shop_category')
+                ->select('*','seller_shop_category.image as im')
+                ->join('categories','categories.id','seller_shop_category.cat_id')
+                ->orderBy('seller_shop_category.id','desc')->paginate(20);
+            return view('backend.sellerCatShop', ['cat' => $rows]);
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function insertSellerShopCategory(Request $request){
+        try{
+            if($request) {
+                if($request->id) {
+                    $photo ="";
+                    if ($request->hasFile('image')) {
+                        $targetFolder = 'public/asset/images/';
+                        $file = $request->file('image');
+                        $pname = time(). '.' . $file->getClientOriginalName();
+                        $image['filePath'] = $pname;
+                        $file->move($targetFolder, $pname);
+                        $photo = $targetFolder . $pname;
+                    }
+                    $result =DB::table('seller_shop_category')
+                        ->where('id', $request->id)
+                        ->update([
+                            'cat_id' =>  $request->catId,
+                            'cat_name' => $request->name,
+                            'image' => $photo,
+                        ]);
+                    if ($result) {
+                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    } else {
+                        return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                    }
+                }
+                else{
+                    $rows = DB::table('seller_shop_category')
+                        ->where('cat_id', $request->catId)
+                        ->distinct()->get()->count();
+                    if ($rows > 0) {
+                        return back()->with('errorMessage', ' নতুন ডাটা লিখুন।');
+                    }
+                    else {
+                        $photo ="";
+                        if ($request->hasFile('image')) {
+                            $targetFolder = 'public/asset/images/';
+                            $file = $request->file('image');
+                            $pname = time(). '.' . $file->getClientOriginalName();
+                            $image['filePath'] = $pname;
+                            $file->move($targetFolder, $pname);
+                            $photo = $targetFolder . $pname;
+                        }
+                        $result = DB::table('seller_shop_category')->insert([
+                            'cat_id' =>  $request->catId,
+                            'cat_name' => $request->name,
+                            'image' => $photo,
+                        ]);
+                        if ($result) {
+                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        } else {
+                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                        }
+                    }
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function getSellerShopCategoryList(Request $request){
+        try{
+            $rows = DB::table('seller_shop_category')
+                ->where('id', $request->id)
+                ->first();
+            return response()->json(array('data'=>$rows));
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return response()->json(array('data'=>$ex->getMessage()));
+        }
+    }public function getCouponList(Request $request){
+        try{
+            $rows = DB::table('seller_shop_category')
                 ->where('id', $request->id)
                 ->first();
             return response()->json(array('data'=>$rows));
@@ -718,6 +806,28 @@ class ProductController extends Controller
         }
     }
     public function deleteCoupon(Request $request){
+        try{
+
+            if($request->id) {
+                $result =DB::table('coupon')
+                    ->where('id', $request->id)
+                    ->delete();
+                if ($result) {
+                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
+    public function deleteSellerShopCategory(Request $request){
         try{
 
             if($request->id) {

@@ -104,6 +104,9 @@
         </div>
         <section class="category-ellipse-section" style="background-color: #f3f3f3;">
             <h2 class="title title-center mb-5">শপ সমূহ</h2>
+            @if($shops->count()<1)
+                <center><div class="row"><h3>কোন শপ খুজে পাওয়া যায়নি।</h3></div></center>
+            @endif
             <div class="container mt-1 mb-2">
                 <div class="row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2">
                     @foreach($shops as $shop)

@@ -112,6 +112,15 @@
         .form-group > select > option{
             color: black !important;
         }
+        .centered {
+            height: 100px;
+            width: 100px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
     </style>
 </head>
 <?php
@@ -119,6 +128,9 @@
     $categories = DB::table('categories')->where('type','1')->where('status','1')->orWhere('type','3')->where('status','1')->take(12)->get();
 ?>
 <body class="home">
+{{--<div  id="loading" class="loading" style="">--}}
+{{--    <img src="{{url('public/loading.gif')}}" class="centered">--}}
+{{--</div>--}}
 <div class="page-wrapper">
     <!-- Start of Header -->
     <header class="header">
@@ -148,6 +160,7 @@
                 <img  src="{{url('public/c-banner.png')}}" style="width: 1200px; height:80px;" />
             </div>
         </div>
+
         <div class="header-middle">
             <div class="container onSticky">
                 <div class="header-left mr-md-4">
@@ -317,7 +330,6 @@
             </div>
         </div>
     </header>
-
     @yield('content')
     <footer class="footer appear-animate" data-animation-options="{
             'name': 'fadeIn'
@@ -621,6 +633,14 @@
 {{--    });--}}
 {{--</script>--}}
 <script>
+    $(document).ajaxStart(function() {
+        $(".loading").show();
+    }).ajaxStop(function() {
+        $(".loading").hide();
+    });
+    $(window).on('load', function () {
+        $('#loading').show();
+    })
     $(function(){
         getCart();
         $('.submit').on('click',function(){
@@ -885,6 +905,7 @@
             $('#mbSearchForm').fadeOut();
         });
     });
+
 </script>
 @yield('js')
 </html>
