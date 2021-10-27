@@ -2540,9 +2540,9 @@ class FrontController extends Controller
                                 'address' => $address,
                                 'order_notes' => $order_notes,
                                 'user_type' => 3,
-                                'total' => ((int)$total + (int)$donate_total + (int)$delivery_charge->charge - (int)$discount) ,
+                                'total' => ((int)$total + (int)$donate_total + (int)$delivery_charge - (int)$discount) ,
                                 'discount' => (int)$discount,
-                                'delivery_charge' => (int)$delivery_charge->charge,
+                                'delivery_charge' => (int)$delivery_charge,
                             ],
                         ];
                         DB::table('order_details')->insert($data);
@@ -2566,10 +2566,10 @@ class FrontController extends Controller
                         }
                         $salesEmail = 'sales@bazar-sadai.com';
                         $emails = [$userEmail];
-                        Mail::send('frontend.salesEmailFormat',$data, function($message) use($emails,$salesEmail,$userName,$userPhone) {
-                            $message->to($emails)->subject('Daily bazar order by '.$userName.' ('.$userPhone. ' )');
-                            $message->from(''.$salesEmail.'','Bazar-sadai.com');
-                        });
+//                        Mail::send('frontend.salesEmailFormat',$data, function($message) use($emails,$salesEmail,$userName,$userPhone) {
+//                            $message->to($emails)->subject('Daily bazar order by '.$userName.' ('.$userPhone. ' )');
+//                            $message->from(''.$salesEmail.'','Bazar-sadai.com');
+//                        });
                         $result =DB::table('v_assign')
                             ->where('id', $salesid)
                             ->update([
@@ -2598,9 +2598,9 @@ class FrontController extends Controller
                                 'address' => $address,
                                 'order_notes' => $order_notes,
                                 'user_type' => 3,
-                                'total' => ((int)$total + (int)$donate_total + (int)$delivery_charge->charge - (int)$discount) ,
+                                'total' => ((int)$total + (int)$donate_total + (int)$delivery_charge - (int)$discount) ,
                                 'discount' => (int)$discount,
-                                'delivery_charge' => (int)$delivery_charge->charge,
+                                'delivery_charge' => (int)$delivery_charge,
                             ],
                         ];
                         DB::table('order_details')->insert($data);
@@ -2644,7 +2644,7 @@ class FrontController extends Controller
                         ->where('higher','>=', $total)
                         ->first();
                     $delivery_charge = $rows->charge;
-                    $total = $total + $delivery_charge->charge;
+                    $total = $total + $delivery_charge;
                     $data = [
                         [   'user_id' => 0,
                             'tx_id' => $tx_id,
@@ -2663,7 +2663,7 @@ class FrontController extends Controller
                             'user_type' => 3,
                             'total' => $total,
                             'discount' => 0,
-                            'delivery_charge' => $delivery_charge->charge,
+                            'delivery_charge' => $delivery_charge,
                         ],
                     ];
                     $result = DB::table('order_details')->insert($data);
