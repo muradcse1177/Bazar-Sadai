@@ -88,6 +88,7 @@
                                     <p style="text-align: justify;"><b> মানুষের জন্য প্রাপ্ত দান হতে সাহায্য পাওয়ার জন্য বা আপনার নিকটস্থ খোঁজ পাওয়া অসহায় বা অর্থাভাবে চিকিৎসা করাতে পারছে না এমন মানুষের জন্য আমাদের সাথে যোগাযোগ করুন ।</b></p>
                                     <p style="text-align: justify;"><a href ='{{ URL::to('shop') }}'> <u>নিত্য প্রয়োজনীয় জিনিষ ডোনেট করুন।</u></a></p>
                                     <p style="text-align: justify;"><a href ='{{ URL::to('shop-by-cat/3') }}'> <u>মেডিসিন ডোনেট করুন।</u></a></p>
+                                    <p style="text-align: justify;"><a href ='{{ URL::to('searchFreeDoctorListFront') }}'> <u>বিনামূল্যে অথবা কম খরচে ডাক্তার দেখান</u></a></p>
                                 </div>
                             </div>
                         </div>

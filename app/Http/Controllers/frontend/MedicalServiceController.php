@@ -52,6 +52,21 @@ class MedicalServiceController extends Controller
         //dd($rows);
         return view('frontend.doctorSearch',['doctorLists' => $rows,'d_type'=>$request->type]);
     }
+    public function searchFreeDoctorListFront(Request $request){
+
+        $rows = DB::table('doctors')
+            ->select('*','users.name as dr_name','hospitals.name as hos_name',
+                'doctors.address as dr_address','users.id as u_id')
+            ->join('users', 'users.id', '=', 'doctors.doctor_id')
+            ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
+            ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
+            ->where('doctors.fees','>=', 0)
+            ->where('doctors.fees','<=', 200)
+            ->where('doctors.status', 1)
+            ->where('users.status', 1)
+            ->get();
+        return view('frontend.doctorSearch',['doctorLists' => $rows,'d_type'=>'Free']);
+    }
     public function searchLocalDoctorListFront(Request $request){
         $users = DB::table('users')
             ->where('id',  Cookie::get('user_id'))
@@ -84,7 +99,7 @@ class MedicalServiceController extends Controller
         $req_item = explode("&",$id);
         $id = $req_item[0];
         $type = $req_item[1];
-        if($type =='Hospital') {
+        if($type =='Hospital' || $type =='Free') {
             $rows = DB::table('doctors')
                 ->select('*','users.name as dr_name','hospitals.name as hos_name',
                     'doctors.address as dr_address','users.id as u_id')

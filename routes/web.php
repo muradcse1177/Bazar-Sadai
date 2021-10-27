@@ -688,6 +688,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('getDepartmentListAllFromDap', 'frontend\MedicalServiceController@getDepartmentListAllFromDap');
     Route::get('getAllMedDepartmentFront', 'backend\MedicalServiceController@getAllMedDepartment');
     Route::post('searchDoctorListFront', 'frontend\MedicalServiceController@searchDoctorListFront');
+    Route::get('searchFreeDoctorListFront', 'frontend\MedicalServiceController@searchFreeDoctorListFront');
     Route::get('doctorProfileFront/{id}', 'frontend\MedicalServiceController@doctorProfileFront');
     Route::get('insertAppointment', 'frontend\MedicalServiceController@insertAppointment');
     Route::get('getAllEmptySerial', 'frontend\MedicalServiceController@getAllEmptySerial');
