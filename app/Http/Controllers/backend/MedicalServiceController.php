@@ -196,12 +196,12 @@ class MedicalServiceController extends Controller
     }
     public function doctorList(){
         $rows = DB::table('doctors')
-            ->select('*','med_departments.name as dept_name','hospitals.name as hos_name','users.name as u_name','doctors.id as d_id')
+            ->select('*','med_departments.name as dept_name','users.name as u_name','doctors.id as d_id')
             ->join('med_departments','doctors.dept_name_id','=','med_departments.id')
             ->join('users','users.id','=','doctors.doctor_id')
-            ->join('hospitals','hospitals.id','=','doctors.hos_name_id')
+            //->join('hospitals','hospitals.id','=','doctors.hos_name_id')
             ->where('doctors.status', 1)
-            ->orderBy('hospitals.id', 'DESC')->Paginate(10);
+            ->orderBy('doctors.id', 'DESC')->Paginate(10);
         return view('backend.doctorList',['doctorLists' => $rows]);
     }
     public function changeDoctorFees(Request  $request){

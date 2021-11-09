@@ -32,7 +32,7 @@
                         <tr>
                             <th>নাম </th>
                             <th>ডিপার্টমেন্ট </th>
-                            <th>হাশপাতাল </th>
+{{--                            <th>হাশপাতাল </th>--}}
                             <th>পদবী </th>
                             <th>বর্তমান কর্মস্থল  </th>
                             <th>শিক্ষা </th>
@@ -47,7 +47,7 @@
                             <tr>
                                 <td> {{$doctorList->u_name}} </td>
                                 <td> {{$doctorList->dept_name}} </td>
-                                <td> {{$doctorList->hos_name}} </td>
+{{--                                <td> {{$doctorList->hos_name}} </td>--}}
                                 <td> {{$doctorList->designation}} </td>
                                 <td> {{$doctorList->current_institute}} </td>
                                 <td> {{$doctorList->education}} </td>
@@ -57,11 +57,6 @@
                                     <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$doctorList->d_id}}">
                                         <i class="fa fa-edit"></i>
                                     </button>
-                                </td>
-                                <td class="td-actions text-center">
-                                    <a  href="{{url('changeM_statusDoctor?id='.$doctorList->d_id)}}" class="btn btn-success status">
-                                       @if($doctorList->m_status==1) {{'Active'}} @else {{'Inactive'}} @endif
-                                    </a>
                                 </td>
                                 <td class="td-actions text-center">
                                     <a  href="{{url('changeM_statusDoctor?id='.$doctorList->d_id)}}" class="btn btn-success status">
