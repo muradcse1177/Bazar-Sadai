@@ -3647,7 +3647,6 @@ class FrontController extends Controller
                 ->where('type', 1)
                 ->where('status', 1)
                 ->orderBy('id', 'ASC')->get();
-
             $dealer = DB::table('users')
                 ->where('add_part1',$request->add_part1)
                 ->where('add_part2',$request->add_part2)

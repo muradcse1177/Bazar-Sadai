@@ -233,10 +233,6 @@ class UserController extends Controller
                                     'experience' => $request->experience,
                                     'fees' => $request->fees,
                                     'address' => $request->pa_address,
-                                    'in_time' => $request->intime,
-                                    'in_timezone' => $request->intimezone,
-                                    'out_time' => $request->outtime,
-                                    'out_timezone' => $request->outtimezone,
                                     'days' => json_encode($request->days),
                                     'device_token' => $request->device
                                 ]);

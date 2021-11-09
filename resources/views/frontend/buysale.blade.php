@@ -110,6 +110,7 @@
                                                 <input type="text" class="form-control date" name="date" placeholder="My Expected Delivery date"   required>
                                             </div>
                                             <input type="hidden"  name="id" value="{{$order['id']}}">
+                                            <p>N.B: To get feedback please <a href="{{url('login')}}">login</a></p>
                                             <button type="submit" class="btn btn-primary" >Send Request</button>
                                             {{ Form::close() }}
                                         </div>

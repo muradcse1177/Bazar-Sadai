@@ -167,26 +167,6 @@
                             <input type="text" class="form-control pa_address" id="pa_address"  name="pa_address" placeholder="রোগী দেখার ঠিকানা" required>
                         </div>
                         <div class="form-group">
-                            <input type="number" class="form-control intime" id="intime"  name="intime" min="0" placeholder="ইন টাইম" required>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control select2 intimezone" name="intimezone" id="intimezone" style="width: 100%;" required>
-                                <option  value="" selected> ইন টাইম নির্বাচন করুন</option>
-                                <option  value="AM">AM</option>
-                                <option  value="PM">PM</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <input type="number" class="form-control outtime" id="outtime"  name="outtime" min="0" placeholder="আউট টাইম" required>
-                        </div>
-                        <div class="form-group">
-                            <select class="form-control select2 outtimezone" name="outtimezone" id="outtimezone" style="width: 100%;" required>
-                                <option  value="" selected> আউট টাইম নির্বাচন করুন</option>
-                                <option  value="AM">AM</option>
-                                <option  value="PM">PM</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label> রোগী দেখার দিন সমুহ </label>
                             <div class="form-check">
                                 <input type="checkbox" class="form-check-input" id="saturday" name="days[]" value="Saturday" checked>

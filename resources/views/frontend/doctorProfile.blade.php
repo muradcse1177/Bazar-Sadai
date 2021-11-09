@@ -111,7 +111,7 @@
                                     <input type="number" class="form-control patient_name" name="age" id="age" placeholder="বয়স" required>
                                     <input type="hidden" class="form-control" name="type" value="{{$type}}" required>
                                     <input type="hidden" class="form-control" name="dr_id" value="{{$doctorProfile->u_id}}" required>
-                                    <input type="hidden" class="form-control" name="fees" value="{{$doctorProfile->fees}}" required>
+                                    <input type="hidden" class="form-control" name="fees" value="@if($doctorProfile->m_status == 2){{$doctorProfile->fees}} @else {{$doctorProfile->m_fees}} @endif" required>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control  serial" name="serial" style="width: 100%;" required>

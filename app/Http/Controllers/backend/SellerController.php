@@ -226,10 +226,31 @@ class SellerController extends Controller
                             $file->move($targetFolder, $pIname);
                             $logo = $targetFolder . $pIname;
                         }
+                        $addressGroup = $request->addressGroup;
+                        if ($addressGroup == 1) {
+                            $add_part1 = $request->div_id;
+                            $add_part2 = $request->disid;
+                            $add_part3 = $request->upzid;
+                            $add_part4 = $request->uniid;
+                            $add_part5 = $request->wardid;
+                        }
+                        if ($addressGroup == 2) {
+                            $add_part1 = $request->div_id;
+                            $add_part2 = $request->c_disid;
+                            $add_part3 = $request->c_upzid;
+                            $add_part4 = $request->c_uniid;
+                            $add_part5 = $request->c_wardid;
+                        }
                         $result =DB::table('seller_shop')
                             ->where('id', $request->id)
                             ->update([
                                 'name' => $request->name,
+                                'address_type' => $addressGroup,
+                                'add_part1' => $add_part1,
+                                'add_part2' => $add_part2,
+                                'add_part3' => $add_part3,
+                                'add_part4' => $add_part4,
+                                'add_part5' => $add_part5,
                                 'address' => $request->address,
                                 'logo' => $logo,
                                 'cat_id' => $request->category,
@@ -256,10 +277,30 @@ class SellerController extends Controller
                                 $file->move($targetFolder, $pIname);
                                 $logo = $targetFolder . $pIname;
                             }
-
+                            $addressGroup = $request->addressGroup;
+                            if ($addressGroup == 1) {
+                                $add_part1 = $request->div_id;
+                                $add_part2 = $request->disid;
+                                $add_part3 = $request->upzid;
+                                $add_part4 = $request->uniid;
+                                $add_part5 = $request->wardid;
+                            }
+                            if ($addressGroup == 2) {
+                                $add_part1 = $request->div_id;
+                                $add_part2 = $request->c_disid;
+                                $add_part3 = $request->c_upzid;
+                                $add_part4 = $request->c_uniid;
+                                $add_part5 = $request->c_wardid;
+                            }
                             $result = DB::table('seller_shop')->insert([
                                 'seller_id' => Cookie::get('user_id'),
                                 'name' => $request->name,
+                                'address_type' => $addressGroup,
+                                'add_part1' => $add_part1,
+                                'add_part2' => $add_part2,
+                                'add_part3' => $add_part3,
+                                'add_part4' => $add_part4,
+                                'add_part5' => $add_part5,
                                 'address' => $request->address,
                                 'logo' => $logo,
                                 'cat_id' => $request->category,
