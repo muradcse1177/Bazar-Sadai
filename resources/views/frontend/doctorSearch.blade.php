@@ -71,7 +71,7 @@
                                     <p style="margin-top: -15px;">বিভাগ / স্পেশালিষ্টঃ {{$doctorList->name}} </p>
                                     <p style="margin-top: -15px;">পদবীঃ  {{$doctorList->designation}} </p>
                                     <p style="margin-top: -15px;">শিক্ষাঃ {{$doctorList->education}} </p>
-                                    <p style="margin-top: -15px;">হাস্পাতালঃ {{$doctorList->hos_name}} </p>
+{{--                                    <p style="margin-top: -15px;">হাস্পাতালঃ {{$doctorList->hos_name}} </p>--}}
                                     <p style="margin-top: -15px;">ঠিকানাঃ  {{$doctorList->dr_address}} </p>
                                     <a style="margin-bottom: 15px;" href="{{URL::to('doctorProfileFront/'.$doctorList->u_id.'&'.$d_type)}}" class="btn btn-success">প্রোফাইল দেখুন</a>&nbsp; &nbsp;
                                 </div>

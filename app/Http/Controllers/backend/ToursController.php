@@ -40,7 +40,7 @@ class ToursController extends Controller
                             'status' =>  $request->status,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -67,7 +67,7 @@ class ToursController extends Controller
                             'status' =>  $request->status,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -88,7 +88,7 @@ class ToursController extends Controller
                 $result =DB::table('travel_slide')
                     ->where('id', $request->id)->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -132,7 +132,7 @@ class ToursController extends Controller
                             'name' =>  $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -149,7 +149,7 @@ class ToursController extends Controller
                             'name' => $request->name
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -180,7 +180,7 @@ class ToursController extends Controller
                 $result =DB::table('booking_main_address')
                     ->where('id', $request->id)->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -280,7 +280,7 @@ class ToursController extends Controller
                             'description' => $request->description,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -313,7 +313,7 @@ class ToursController extends Controller
                             'description' => $request->description,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -353,7 +353,7 @@ class ToursController extends Controller
                             'description' => $request->description,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -386,7 +386,7 @@ class ToursController extends Controller
                             'description' => $request->description,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -407,7 +407,7 @@ class ToursController extends Controller
                 $result =DB::table('toor_booking1')
                     ->where('id', $request->id)->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -493,7 +493,7 @@ class ToursController extends Controller
                             'description' => $request->description,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -518,7 +518,7 @@ class ToursController extends Controller
                         'description' => $request->description,
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -557,7 +557,7 @@ class ToursController extends Controller
                             'description' => $request->description,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -582,7 +582,7 @@ class ToursController extends Controller
                         'description' => $request->description,
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -620,7 +620,7 @@ class ToursController extends Controller
                 $result =DB::table('toor_booking2')
                     ->where('id', $request->id)->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -639,7 +639,7 @@ class ToursController extends Controller
                 $result =DB::table('toor_booking2')
                     ->where('id', $request->id)->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }

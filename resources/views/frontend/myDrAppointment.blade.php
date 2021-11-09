@@ -49,6 +49,7 @@
                                                 <th>জুম লিংক</th>
                                                 <th>পেশেন্ট নাম</th>
                                                 <th>পেশেন্ট ফোন</th>
+                                                <th>প্রেসক্রিপশন</th>
                                                 <th>পেশেন্ট বয়স</th>
                                                 <th>সময়</th>
                                                 <th>হোয়াটস এপ </th>
@@ -92,6 +93,9 @@
                                                     @endif
                                                     <td> {{$drReport->patient_name}} </td>
                                                     <td> {{$drReport->p_phone}} </td>
+                                                    <td class="td-actions">
+                                                        {!! $drReport->prescription !!}
+                                                    </td>
                                                     <td> {{$drReport->age}} </td>
                                                     <td> {{$drReport->serial}} </td>
                                                     <td> {{$drReport->w_number}} </td>
@@ -101,7 +105,7 @@
                                                 <?php $link = ""; ?>
                                             @endforeach
                                             <tr>
-                                                <td colspan="10" style="text-align: right"><b>মোটঃ</b></td>
+                                                <td colspan="12" style="text-align: right"><b>মোটঃ</b></td>
                                                 <td><b>{{$sum.'/-'}}</b></td>
                                             </tr>
                                         </table>

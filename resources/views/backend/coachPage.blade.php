@@ -61,7 +61,7 @@
                 <div class="box-body table-responsive">
                     <table class="table table-bordered">
                         <tr>
-                            <th>ট্রান্সপোর্ট </th>
+                            <th>ট্রান্শপোর্ট </th>
                             <th>নাম </th>
                             <th>টুল</th>
                         </tr>

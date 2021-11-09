@@ -142,7 +142,7 @@
                                 <label for="name" >ওজন</label>
                                 <input type="number" class="form-control weight" name="weight" placeholder="ওজন"  required>
                             </div>
-                            <h4> পন্যের ঠিকানাঃ</h4>
+                            <h4> পণ্যের ঠিকানাঃ</h4>
                             <div class="form-group">
                                 <label for="name" >জেলা / সিটি-করপোরেশন</label>
                                 <input type="text" class="form-control address1" name="address1" placeholder="জেলা/সিটি-করপোরেশন"  required>
@@ -628,7 +628,7 @@
                         </p>
                         <table class="table table-bordered">
                             <thead>
-                            <th>পন্য</th>
+                            <th>পণ্য</th>
                             <th>দাম</th>
                             <th>পরিমান</th>
                             <th>মোট</th>

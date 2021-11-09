@@ -155,7 +155,7 @@ class ReportController extends Controller
                         'status' =>  $id[0],
                     ]);
                 if ($result) {
-                    Session::flash('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    Session::flash('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     return response()->json(array('data'=>$result));
                 } else {
                     Session::flash('errorMessage', 'আবার চেষ্টা করুন।');
@@ -191,7 +191,7 @@ class ReportController extends Controller
                 }
 
                 if ($result) {
-                    Session::flash('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    Session::flash('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     return response()->json(array('data'=>$result));
                 } else {
                     Session::flash('errorMessage', 'আবার চেষ্টা করুন।');
@@ -406,7 +406,7 @@ class ReportController extends Controller
                             'name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -425,7 +425,7 @@ class ReportController extends Controller
                             'name' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -451,7 +451,7 @@ class ReportController extends Controller
                             'head' => $request->head,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -471,7 +471,7 @@ class ReportController extends Controller
                             'head' => $request->head,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -553,7 +553,7 @@ class ReportController extends Controller
                             'person' => $request->person,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -571,7 +571,7 @@ class ReportController extends Controller
                         'person' => $request->person,
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -1474,7 +1474,7 @@ class ReportController extends Controller
 
             $booking[$i]['id'] = $result->id;
             $booking[$i]['category'] = $cat->name;
-            $booking[$i]['sub_category'] = $sub_cat->name;
+            $booking[$i]['sub_category'] = @$sub_cat->name;
             $booking[$i]['name'] = $result->name;
             $booking[$i]['phone'] = $result->phone;
             $booking[$i]['add_part1'] = $add_part1->name;
@@ -1989,7 +1989,7 @@ class ReportController extends Controller
                         'seller_id' =>  Cookie::get('user_id'),
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }

@@ -64,22 +64,25 @@
                     <div class="card">
                         <div class="card-body cardBody">
                             <div class="col-sm-3">
-                                @if($doctorProfile->photo)
+                                @if(@$doctorProfile->photo)
                                     <img src="{{URL::to($doctorProfile->photo)}}" height="220px" width="220px">
                                 @else
                                     <img src="{{URL::to('public/asset/images/doctor.png')}}" height="220px" width="220px">
                                 @endif
                             </div>
                             <div class="col-sm-9">
-                                <h3 class="card-title">{{$doctorProfile->dr_name}}</h3>
+                                <h3 class="card-title">{{@$doctorProfile->dr_name}}</h3>
                                 <p >বর্তমান কর্মস্থলঃ {{$doctorProfile->current_institute}} </p>
                                 <p style="margin-top: -15px;">স্পেশালিষ্টঃ {{$doctorProfile->name}} </p>
                                 <p style="margin-top: -15px;">পদবীঃ  {{$doctorProfile->designation}} </p>
                                 <p style="margin-top: -15px;">শিক্ষাঃ {{$doctorProfile->education}} </p>
-                                <p style="margin-top: -15px;">হাস্পাতালঃ {{$doctorProfile->hos_name}} </p>
                                 <p style="margin-top: -15px;">ঠিকানাঃ  {{$doctorProfile->dr_address}} </p>
+                                @if($doctorProfile->m_status == 2)
                                 <p style="margin-top: -15px;">ফিসঃ  {{en2bn($doctorProfile->fees).' টাকা'}} </p>
-                                <p style="margin-top: -15px;">রোগী দেখার সময়ঃ  {{$doctorProfile->in_time.''.$doctorProfile->in_timezone.'-'.$doctorProfile->out_time.''.$doctorProfile->in_timezone}} </p>
+                                @endif
+                                @if($doctorProfile->m_status == 1)
+                                <p style="margin-top: -15px;">ফিসঃ  {{en2bn($doctorProfile->m_fees).' টাকা'}} </p>
+                                @endif
                                 <p style="margin-top: -15px;">রোগী দেখার দিন সমুহঃ
                                     <?php
                                      $days = json_decode($doctorProfile->days);
@@ -102,7 +105,7 @@
                                     <input type="text" class="form-control patient_name" name="patient_name" id="patient_name" placeholder="রোগীর নাম" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="tel" class="form-control w_number" name="w_number" id="w_number" placeholder="হোয়াটস এপ নম্বর " required>
+                                    <input type="tel" class="form-control w_number" name="w_number" id="w_number" placeholder="হোয়াটসঅ্যাপ  নম্বর " required>
                                 </div>
                                 <div class="form-group">
                                     <input type="number" class="form-control patient_name" name="age" id="age" placeholder="বয়স" required>

@@ -145,9 +145,9 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-4">
-                                    <label for="type" >হাসপাতাল</label>
+                                    <label for="type" >হাশপাতাল</label>
                                     <select id="doc_hospital" name ="doc_hospital" class="form-control select2 doc_hospital" style="width: 100%;">
-                                        <option value=""selected>হাসপাতাল  নির্বাচন করুন </option>
+                                        <option value=""selected>হাশপাতাল  নির্বাচন করুন </option>
                                     </select>
                                 </div>
                                 <div class="form-group col-sm-4">
@@ -179,31 +179,6 @@
                                     <input type="text" class="form-control pa_address" id="pa_address" value="{{@$df->address}}"  name="pa_address" placeholder="রোগী দেখার ঠিকানা" required>
                                     <input type="hidden" class="form-control" id="" value="13"  name="user_type">
                                 </div>
-                                <div class="form-group col-sm-4">
-                                    <label for="">ইন টাইম</label>
-                                    <input type="number" class="form-control intime" id="intime" value="{{@$df->in_time}}"  name="intime" min="0" placeholder="ইন টাইম" required>
-                                </div>
-                                <div class="form-group col-sm-4">
-                                    <label> ইন টাইম  </label>
-                                    <select class="form-control select2 intimezone" name="intimezone"  id="intimezone" style="width: 100%;" required>
-                                        <option  value="" selected> ইন টাইম নির্বাচন করুন</option>
-                                        <option  value="AM"  @if($df->in_timezone == 'AM') {{'Selected'}} @endif >AM</option>
-                                        <option  value="PM" @if($df->in_timezone == 'PM') {{'Selected'}} @endif>PM</option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-sm-4">
-                                    <label for="">আউট টাইম</label>
-                                    <input type="number" class="form-control outtime" id="outtime" value="{{@$df->out_time}}"  name="outtime" min="0" placeholder="আউট টাইম" required>
-                                </div>
-                                <div class="form-group col-sm-4">
-                                    <label> আউট টাইম  </label>
-                                    <select class="form-control select2 outtimezone" name="outtimezone" id="outtimezone" style="width: 100%;" required>
-                                        <option  value="" selected> আউট টাইম নির্বাচন করুন</option>
-                                        <option  value="AM"  @if($df->out_timezone == 'AM') {{'Selected'}} @endif >AM</option>
-                                        <option  value="PM" @if($df->out_timezone == 'PM') {{'Selected'}} @endif>PM</option>
-                                    </select>
-                                </div>
-
                                 <div class="form-group col-sm-4">
                                     <label for=""> বিএমডিসি নম্বর </label>
                                     <input type="text" class="form-control bmdc" id="bmdc" value="{{@$df->bmdc}}"  name="bmdc"  placeholder=" বিএমডিসি নম্বর" required>

@@ -60,7 +60,7 @@ class TransportController extends Controller
                             'coach_name' => $request->coach,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -78,7 +78,7 @@ class TransportController extends Controller
                             'coach_name' => $request->coach,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -104,7 +104,7 @@ class TransportController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -155,7 +155,7 @@ class TransportController extends Controller
                             'status' => $request->status,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -182,7 +182,7 @@ class TransportController extends Controller
                             'status' => $request->status,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -219,7 +219,7 @@ class TransportController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -255,7 +255,7 @@ class TransportController extends Controller
                             'km5' =>  $request->km5,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -277,7 +277,7 @@ class TransportController extends Controller
                             'km5' =>  $request->km5,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -310,7 +310,7 @@ class TransportController extends Controller
                     ->where('id', $request->id)
                     ->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -339,7 +339,7 @@ class TransportController extends Controller
                             'name' =>  $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -355,7 +355,7 @@ class TransportController extends Controller
                             'name' => $request->name
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -388,7 +388,7 @@ class TransportController extends Controller
                     ->where('id', $request->id)
                     ->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -449,7 +449,7 @@ class TransportController extends Controller
                             'cost' =>  $request->cost,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -467,7 +467,7 @@ class TransportController extends Controller
                         'cost' =>  $request->cost,
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -499,7 +499,7 @@ class TransportController extends Controller
                     ->where('id', $request->id)
                     ->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -547,7 +547,7 @@ class TransportController extends Controller
                     'add_part5' => json_encode($add_part5),
                 ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -575,7 +575,7 @@ class TransportController extends Controller
                     ->where('id', $request->id)
                     ->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }

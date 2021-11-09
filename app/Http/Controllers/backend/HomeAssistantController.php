@@ -47,7 +47,7 @@ class HomeAssistantController extends Controller
                             'gender' => $request->gender,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -73,7 +73,7 @@ class HomeAssistantController extends Controller
                             'gender' => $request->gender,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -98,7 +98,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -239,7 +239,7 @@ class HomeAssistantController extends Controller
                             'gender_type' => $gender_type,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -258,7 +258,7 @@ class HomeAssistantController extends Controller
                         'gender_type' => $gender_type,
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -296,7 +296,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -327,7 +327,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -344,7 +344,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -381,7 +381,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -412,7 +412,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -431,7 +431,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -468,7 +468,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -499,7 +499,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -518,7 +518,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -555,7 +555,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -586,7 +586,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -605,7 +605,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -642,7 +642,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -673,7 +673,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -692,7 +692,7 @@ class HomeAssistantController extends Controller
                             'price' => $request->price,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -729,7 +729,7 @@ class HomeAssistantController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -761,7 +761,7 @@ class HomeAssistantController extends Controller
                             'pricewa' => $request->pricewa,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -780,7 +780,7 @@ class HomeAssistantController extends Controller
                             'pricewa' => $request->pricewa,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -813,7 +813,7 @@ class HomeAssistantController extends Controller
                     ->where('id', $request->id)
                     ->delete();
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }

@@ -19,12 +19,11 @@ class MedicalServiceController extends Controller
         return view('frontend.localDoctor');
     }
     public function searchDoctorListFront(Request $request){
-        if($request->type =='Hospital') {
             $rows = DB::table('doctors')
-                ->select('*','users.name as dr_name','hospitals.name as hos_name',
+                ->select('*','users.name as dr_name',
                     'doctors.address as dr_address','users.id as u_id')
                 ->join('users', 'users.id', '=', 'doctors.doctor_id')
-                ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
+               // ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
                 ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
                 ->where('doctors.status', 1)
                 ->where('users.status', 1)
@@ -33,36 +32,20 @@ class MedicalServiceController extends Controller
             if(count($rows)<1){
                 return back()->with('errorMessage', 'ডাক্তার পাওয়া যায়নি।');
             }
-        }
-         if($request->type =='Chamber') {
-            $rows = DB::table('dr_chamber')
-                ->select('*','users.name as dr_name','dr_chamber.chamber_name as hos_name',
-                    'dr_chamber.chamber_address as dr_address','users.id as u_id')
-                ->join('users', 'users.id', '=', 'dr_chamber.dr_id')
-                ->join('doctors', 'doctors.doctor_id', '=', 'dr_chamber.dr_id')
-                ->join('med_departments', 'med_departments.id', '=', 'dr_chamber.dept_id')
-                ->where('dr_chamber.status', 1)
-                ->where('users.status', 1)
-                ->where('dr_chamber.dept_id', $request->department)
-                ->get();
-            if(count($rows)<1){
-                return back()->with('errorMessage', 'ডাক্তার পাওয়া যায়নি।');
-            }
-        }
+
         //dd($rows);
         return view('frontend.doctorSearch',['doctorLists' => $rows,'d_type'=>$request->type]);
     }
     public function searchFreeDoctorListFront(Request $request){
 
         $rows = DB::table('doctors')
-            ->select('*','users.name as dr_name','hospitals.name as hos_name',
+            ->select('*','users.name as dr_name',
                 'doctors.address as dr_address','users.id as u_id')
             ->join('users', 'users.id', '=', 'doctors.doctor_id')
-            ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
-            ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
-            ->where('doctors.fees','>=', 0)
-            ->where('doctors.fees','<=', 200)
+            //->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
+            //->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
             ->where('doctors.status', 1)
+            ->where('doctors.m_status', 1)
             ->where('users.status', 1)
             ->get();
         return view('frontend.doctorSearch',['doctorLists' => $rows,'d_type'=>'Free']);
@@ -72,10 +55,10 @@ class MedicalServiceController extends Controller
             ->where('id',  Cookie::get('user_id'))
             ->first();
         $rows = DB::table('doctors')
-            ->select('*','users.name as dr_name','hospitals.name as hos_name',
+            ->select('*','users.name as dr_name',
                 'doctors.address as dr_address','users.id as u_id')
             ->join('users', 'users.id', '=', 'doctors.doctor_id')
-            ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
+            //->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
             ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
             ->join('rider_service_area', 'rider_service_area.user_id', '=', 'doctors.doctor_id')
             ->where('doctors.status', 1)
@@ -101,10 +84,10 @@ class MedicalServiceController extends Controller
         $type = $req_item[1];
         if($type =='Hospital' || $type =='Free') {
             $rows = DB::table('doctors')
-                ->select('*','users.name as dr_name','hospitals.name as hos_name',
+                ->select('*','users.name as dr_name',
                     'doctors.address as dr_address','users.id as u_id')
                 ->join('users', 'users.id', '=', 'doctors.doctor_id')
-                ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
+//                ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
                 ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
                 ->where('doctors.status', 1)
                 ->where('users.status', 1)
@@ -134,8 +117,8 @@ class MedicalServiceController extends Controller
             ->select('*','users.name as dr_name','hospitals.name as hos_name',
                 'doctors.address as dr_address','users.id as u_id')
             ->join('users', 'users.id', '=', 'doctors.doctor_id')
-            ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
-            ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
+//            ->join('hospitals', 'hospitals.id', '=', 'doctors.hos_name_id')
+//            ->join('med_departments', 'med_departments.id', '=', 'doctors.dept_name_id')
             ->where('doctors.status', 1)
             ->where('users.status', 1)
             ->where('users.id', $id)

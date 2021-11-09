@@ -240,10 +240,18 @@
                                 if($status['status']==1)  $price = $product->edit_price;
                                 if($status['status']==0)  $price = $product->price;
                                 $Image ="";
-                                   if(!empty($product->photo))
-                                       $Image =url('/').'/'.$product->photo;
+                                if($product->cat_id == 3){
+                                    if(!empty($product->photo))
+                                        $Image =url('/').'/'.$product->photo;
+                                    else
+                                        $Image =url('/').'/'.'public/medicine_cover.jpg';
+                                }
+                                else{
+                                    if(!empty($product->photo))
+                                        $Image =url('/').'/'.$product->photo;
                                    else
                                        $Image =url('/')."/public/asset/no_image.jpg";
+                                }
                             @endphp
                                 <div class="product-wrap">
                                     <div class="product product-simple text-center">

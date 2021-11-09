@@ -39,7 +39,7 @@ class MedicalServiceController extends Controller
                             'name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -55,7 +55,7 @@ class MedicalServiceController extends Controller
                             'name' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -80,7 +80,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -124,7 +124,7 @@ class MedicalServiceController extends Controller
                             'dept' => $request->department,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -142,7 +142,7 @@ class MedicalServiceController extends Controller
                             'dept' => $request->department,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -179,7 +179,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -213,7 +213,7 @@ class MedicalServiceController extends Controller
                         'fees' =>  $request->price,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -280,7 +280,7 @@ class MedicalServiceController extends Controller
                             'days' => json_encode($request->days),
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -307,7 +307,7 @@ class MedicalServiceController extends Controller
                             'days' => json_encode($request->days),
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -347,7 +347,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -378,7 +378,7 @@ class MedicalServiceController extends Controller
                             'name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -394,7 +394,7 @@ class MedicalServiceController extends Controller
                             'name' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -430,7 +430,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -463,7 +463,7 @@ class MedicalServiceController extends Controller
                             'center_name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -481,7 +481,7 @@ class MedicalServiceController extends Controller
                             'center_name' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -528,7 +528,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -594,7 +594,7 @@ class MedicalServiceController extends Controller
                             'home' => $request->home,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -622,7 +622,7 @@ class MedicalServiceController extends Controller
                             'home' => $request->home,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -647,7 +647,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -679,7 +679,7 @@ class MedicalServiceController extends Controller
                             'name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -695,7 +695,7 @@ class MedicalServiceController extends Controller
                             'name' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -731,7 +731,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -777,7 +777,7 @@ class MedicalServiceController extends Controller
                             'center_name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -795,7 +795,7 @@ class MedicalServiceController extends Controller
                             'center_name' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -831,7 +831,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -885,7 +885,7 @@ class MedicalServiceController extends Controller
                             'days' => json_encode($request->days),
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -909,7 +909,7 @@ class MedicalServiceController extends Controller
                             'days' => json_encode($request->days),
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -945,7 +945,7 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -1095,7 +1095,7 @@ class MedicalServiceController extends Controller
                             'user' => Cookie::get('user_id'),
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -1140,7 +1140,7 @@ class MedicalServiceController extends Controller
                         'user' => Cookie::get('user_id'),
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -1174,7 +1174,62 @@ class MedicalServiceController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+
+    }
+    public function changeM_statusDoctor(Request $request){
+        try{
+            if($request->id) {
+                $rows = DB::table('doctors')
+                    ->where('id', $request->id)
+                    ->first();
+                if($rows->m_status == 1)
+                    $m_status = 2;
+                if($rows->m_status == 2)
+                    $m_status = 1;
+                $result =DB::table('doctors')
+                    ->where('id', $request->id)
+                    ->update([
+                        'm_status' =>  $m_status,
+                    ]);
+                if ($result) {
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
+                } else {
+                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+                }
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+
+    }
+    public function changeDoctorFees_m(Request $request){
+        try{
+            if($request->id) {
+                $result =DB::table('doctors')
+                    ->where('id', $request->id)
+                    ->update([
+                        'm_fees' =>  $request->price,
+                    ]);
+                if ($result) {
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }

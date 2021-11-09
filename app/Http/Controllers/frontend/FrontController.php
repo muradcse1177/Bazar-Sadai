@@ -2566,10 +2566,10 @@ class FrontController extends Controller
                         }
                         $salesEmail = 'sales@bazar-sadai.com';
                         $emails = [$userEmail];
-//                        Mail::send('frontend.salesEmailFormat',$data, function($message) use($emails,$salesEmail,$userName,$userPhone) {
-//                            $message->to($emails)->subject('Daily bazar order by '.$userName.' ('.$userPhone. ' )');
-//                            $message->from(''.$salesEmail.'','Bazar-sadai.com');
-//                        });
+                        Mail::send('frontend.salesEmailFormat',$data, function($message) use($emails,$salesEmail,$userName,$userPhone) {
+                            $message->to($emails)->subject('Daily bazar order by '.$userName.' ('.$userPhone. ' )');
+                            $message->from(''.$salesEmail.'','Bazar-sadai.com');
+                        });
                         $result =DB::table('v_assign')
                             ->where('id', $salesid)
                             ->update([
@@ -2759,7 +2759,7 @@ class FrontController extends Controller
                             'description' => $request->description,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -2834,7 +2834,7 @@ class FrontController extends Controller
                         'sale_status' => 0,
                     ]);
                 if ($upresult) {
-                    return redirect()->to('profile')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে। দ্রুত আপনার সাথে যোগাযোগ করা হবে।');
+                    return redirect()->to('profile')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে। দ্রুত আপনার সাথে যোগাযোগ করা হবে।');
                 }
                 else{
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -2902,7 +2902,7 @@ class FrontController extends Controller
                                 'amount' => $rows->amount-1,
                             ]);
                         if ($upresult) {
-                            return redirect()->to('myVariousProductOrderUser')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে। দ্রুত আপনার সাথে যোগাযোগ করা হবে।');
+                            return redirect()->to('myVariousProductOrderUser')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে। দ্রুত আপনার সাথে যোগাযোগ করা হবে।');
                         }
                         else{
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -3235,7 +3235,7 @@ class FrontController extends Controller
                 'delivery_address' => $request->delAdd,
             ]);
         if($upresult){
-            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
         }
         else{
             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -3663,12 +3663,11 @@ class FrontController extends Controller
                     ->where('products.status', 1)
                     ->where('product_assign.dealer_id', $dealer->id)
                     ->orderBy('products.id', 'ASC')->paginate(60);
-
                 if($dealer_product_1->count()>0){
                     $dealer_status_1['status'] = 1;
                 }
                 else{
-                    return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পন্য খুজে পাওয়া যাইনি।');
+                    return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পণ্য খুজে পাওয়া যাইনি।');
                 }
             }
             else{
@@ -3676,7 +3675,7 @@ class FrontController extends Controller
                     ->where('status', 1)
                     ->orderBy('id', 'ASC')->paginate(60);
                 $dealer_status_1['status'] = 0;
-                return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পন্য খুজে পাওয়া যাইনি।');
+                return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পণ্য খুজে পাওয়া যাইনি।');
             }
 
             return view('frontend.shop',

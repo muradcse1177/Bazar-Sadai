@@ -273,6 +273,11 @@
                             <i class="fa fa-medkit"></i> <span>আমার পেশেন্ট</span>
                         </a>
                     </li>
+                    <li class="@yield('patientHistory')">
+                        <a href ="{{ url('patientHistory') }}" >
+                            <i class="fa fa-medkit"></i> <span>পেশেন্ট হিস্ট্রি</span>
+                        </a>
+                    </li>
                 @endif
                 @if(Cookie::get('user_type') == 15)
                     <li class="@yield('myMedicineSelf')">
@@ -440,7 +445,7 @@
                 @if(in_array(4, $roles))
                     <li class="@yield('productUploadReport')">
                         <a href="{{ url('productur') }}">
-                            <i class="fa fa-upload"></i> <span>সেলার পন্য</span>
+                            <i class="fa fa-upload"></i> <span>সেলার পণ্য</span>
                         </a>
                     </li>
                 @endif
@@ -735,7 +740,7 @@
                                     </span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    <li class ="@yield('coachPage')"><a href="{{ url('coachPage') }}"><i class="fa fa-circle-o"></i> ট্রান্সপোর্ট</a></li>
+                                    <li class ="@yield('coachPage')"><a href="{{ url('coachPage') }}"><i class="fa fa-circle-o"></i> ট্রান্শপোর্ট</a></li>
                                     <li class ="@yield('ticketRoute')"><a href="{{ url('ticketRoute') }}"><i class="fa fa-circle-o"></i> টিকেট রুট</a></li>
                                 </ul>
                             </li>
@@ -772,7 +777,7 @@
                                 </a>
                                 <ul class="treeview-menu">
                                     <li class ="@yield('departmentList')"><a href="{{ url('departmentList') }}"><i class="fa fa-circle-o"></i> ডিপার্টমেন্ট </a></li>
-                                    <li class ="@yield('hospitalList')"><a href="{{ url('hospitalList') }}"><i class="fa fa-circle-o"></i> হাসপাতাল </a></li>
+                                    <li class ="@yield('hospitalList')"><a href="{{ url('hospitalList') }}"><i class="fa fa-circle-o"></i> হাশপাতাল </a></li>
                                     <li class ="@yield('doctorList')"><a href="{{ url('doctorList') }}"><i class="fa fa-circle-o"></i> ডাক্তার লিস্ট</a></li>
                                     <li class ="@yield('privateChamberList')"><a href="{{ url('privateChamberList') }}"><i class="fa fa-circle-o"></i> প্রাইভেট চেম্বার </a></li>
                                     <li class ="@yield('therapyServiceList')"><a href="{{ url('therapyServiceList') }}"><i class="fa fa-circle-o"></i> থেরাপি সার্ভিস </a></li>

@@ -1,5 +1,5 @@
 @extends('frontend.frontLayout')
-@section('title', 'পন্য')
+@section('title', 'পণ্য')
 @section('ExtCss')
 <style>
     .medicine_text{

@@ -58,7 +58,7 @@
                             <h5 style="text-align: center;"><b>আপনার পছন্দের পার্লার খুজে নিন।</b></h5>
                             <div class="col-sm-12">
                                 <div class="form-group">
-                                    <label for="div_name" >সার্ভিস লোকেশন(যে লোকেশনে সারভিস্টি গ্রহণ করতে চান)&nbsp;</label>
+                                    <label for="div_name" >সার্ভিস লোকেশন(যে লোকেশনে সার্ভিসটি  গ্রহণ করতে চান)&nbsp;</label>
                                     <label class="radio-inline">
                                         <input type="radio" name="addressGroup"  id="zillaGroup" value="1" required> &nbsp;জেলা
                                     </label>

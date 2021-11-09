@@ -34,7 +34,7 @@
                             <label> ধরন</label>
                             <select class="form-control select2 cat_type" name="cat_type" style="width: 100%;" required="requred">
                                 <option value="" selected> ধরন  নির্বাচন করুন</option>
-                                <option value="1">পন্য</option>
+                                <option value="1">পণ্য</option>
                                 <option value="2">সার্ভিস</option>
                                 <option value="3">ক্রয় বিক্রয়</option>
                             </select>
@@ -82,7 +82,7 @@
                                 <td> <img src="{{@$subcategory->image}}" height="60" width="60"> </td>
                                 <td> {{$subcategory-> name}} </td>
                                 <td> {{$subcategory->catName}} </td>
-                                <td>  @if ($subcategory->type ==1){{'পন্য' }} @elseif ($subcategory->type ==2){{'সার্ভিস' }}  @else{{'ক্রয় বিক্রয়'}} @endif </td>
+                                <td>  @if ($subcategory->type ==1){{'পণ্য' }} @elseif ($subcategory->type ==2){{'সার্ভিস' }}  @else{{'ক্রয় বিক্রয়'}} @endif </td>
                                 <td class="td-actions text-center">
                                     <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$subcategory->id}}">
                                         <i class="fa fa-edit"></i>

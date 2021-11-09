@@ -258,7 +258,7 @@
                                 <li class="header">
                                     {{ Form::open(array('url' => 'searchProduct',  'method' => 'get')) }}
                                     {{ csrf_field() }}
-                                          <input type="text" class="form-control" placeholder="পন্য খুজুন" name="key" required>
+                                          <input type="text" class="form-control" placeholder="পণ্য খুজুন" name="key" required>
                                     {{ Form::close() }}
                                 </li>
                             </ul>

@@ -55,7 +55,7 @@ class PharmacyController extends Controller
                             'name' => $request->name,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -76,7 +76,7 @@ class PharmacyController extends Controller
                             'user_id' =>Cookie::get('user_id')
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -102,7 +102,7 @@ class PharmacyController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -181,7 +181,7 @@ class PharmacyController extends Controller
                         'quantity' => $rows1->quantity+$request->quantity,
                     ]);
                 if ($result) {
-                    return response()->json(array('data' => 1, 'msg' => 'সফল্ভাবে সম্পন্ন্য হয়েছে।'));
+                    return response()->json(array('data' => 1, 'msg' => 'সফলভাবে  সম্পন্ন  হয়েছে।'));
                 } else {
                     return response()->json(array('data' => 0, 'msg' => 'আবার চেষ্টা করুন।'));
                 }
@@ -195,7 +195,7 @@ class PharmacyController extends Controller
                     'date' => date("Y-m-d"),
                 ]);
                 if ($result) {
-                    return response()->json(array('data' => 1, 'msg' => 'সফল্ভাবে সম্পন্ন্য হয়েছে।'));
+                    return response()->json(array('data' => 1, 'msg' => 'সফলভাবে  সম্পন্ন  হয়েছে।'));
                 } else {
                     return response()->json(array('data' => 0, 'msg' => 'আবার চেষ্টা করুন।'));
                 }
@@ -306,7 +306,7 @@ class PharmacyController extends Controller
                 'email' => $request->email,
             ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -395,7 +395,7 @@ class PharmacyController extends Controller
                         'quantity' => $rows->quantity-$request->quantity,
                     ]);
                 if($result){
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 }
                 else{
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -450,7 +450,7 @@ class PharmacyController extends Controller
                             'email' => $request->email,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -470,7 +470,7 @@ class PharmacyController extends Controller
                             'email' => $request->email,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -497,7 +497,7 @@ class PharmacyController extends Controller
             if($request->id) {
                 $result = DB::table('med_company_email')->delete($request->id);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }

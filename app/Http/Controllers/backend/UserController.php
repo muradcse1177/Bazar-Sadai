@@ -76,7 +76,7 @@ class UserController extends Controller
                         'type' => $request->type
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -241,7 +241,7 @@ class UserController extends Controller
                                     'device_token' => $request->device
                                 ]);
                             }
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -345,7 +345,7 @@ class UserController extends Controller
                                         'days' => json_encode($request->days),
                                     ]);
                                 }
-                                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                             } else {
                                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                             }
@@ -408,7 +408,7 @@ class UserController extends Controller
                         'status' =>  0,
                     ]);
                 if ($result) {
-                    return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -442,7 +442,7 @@ class UserController extends Controller
                             'about' => $request->name
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -456,7 +456,7 @@ class UserController extends Controller
                             'about' => $request->name,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -1105,9 +1105,7 @@ class UserController extends Controller
     }
     public function deliveryProfile(Request $request){
         try{
-            $stmt = DB::table('delivery_charges')
-                ->first();
-            $delivery_charge = $stmt->charge;
+
             $id = Cookie::get('user_id');
             $stmt= DB::table('v_assign')
                 ->select('*','v_assign.id AS salesid','v_assign.v_id AS v_id')
@@ -1148,6 +1146,11 @@ class UserController extends Controller
                     $subtotal = $details->edit_price * $quantity;
                     $total += $subtotal;
                 }
+                $rows = DB::table('delivery_charges')
+                    ->where('lower','<=', $total)
+                    ->where('higher','>=', $total)
+                    ->first();
+                $delivery_charge = $rows->charge;
                 $row1 = DB::table('users')
                     ->where('id', $row->v_id)
                     ->get();
@@ -1533,7 +1536,7 @@ class UserController extends Controller
                             'person' => $request->person,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -1565,7 +1568,7 @@ class UserController extends Controller
                             'person' => $request->person,
                         ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }

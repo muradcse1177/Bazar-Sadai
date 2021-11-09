@@ -83,7 +83,7 @@
                                                     </p>
                                                     <table class="table table-bordered">
                                                         <thead>
-                                                        <th>পন্য</th>
+                                                        <th>পণ্য</th>
                                                         <th>দাম</th>
                                                         <th>পরিমান</th>
                                                         <th>মোট</th>

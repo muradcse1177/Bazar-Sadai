@@ -1,6 +1,6 @@
 @extends('backend.layout')
-@section('title','পন্য')
-@section('page_header', ' ডিলার পন্য  ব্যবস্থাপনা')
+@section('title','পণ্য')
+@section('page_header', ' ডিলার পণ্য  ব্যবস্থাপনা')
 @section('dpmtLiAdd','active')
 @section('extracss')
     <link rel="stylesheet" href="public/asset/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
@@ -26,7 +26,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">পন্য  লিস্ট </h3>
+                    <h3 class="box-title">পণ্য  লিস্ট </h3>
                     {{ Form::open(array('url' => 'productSearchFromDealer',  'method' => 'get')) }}
                     {{ csrf_field() }}
                     <div class="pull-right">

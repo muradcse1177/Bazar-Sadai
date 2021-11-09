@@ -1,6 +1,6 @@
 @extends('backend.layout')
-@section('title','পন্য')
-@section('page_header', 'পন্য  ব্যবস্থাপনা')
+@section('title','পণ্য')
+@section('page_header', 'পণ্য  ব্যবস্থাপনা')
 @section('proLiAdd','active')
 @section('extracss')
     <link rel="stylesheet" href="public/asset/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
@@ -52,8 +52,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="">পন্য নাম</label>
-                                <input type="text" class="form-control name" id="name"  name="name" placeholder="পন্য নাম লিখুন" required>
+                                <label for="">পণ্য নাম</label>
+                                <input type="text" class="form-control name" id="name"  name="name" placeholder="পণ্য নাম লিখুন" required>
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -132,7 +132,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">পন্য  লিস্ট </h3>
+                    <h3 class="box-title">পণ্য  লিস্ট </h3>
                     {{ Form::open(array('url' => 'productSearchFromAdmin',  'method' => 'get')) }}
                     {{ csrf_field() }}
                     <div class="pull-right">

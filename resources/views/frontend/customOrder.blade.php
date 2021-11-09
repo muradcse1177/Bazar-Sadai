@@ -125,7 +125,7 @@
                                     <input type="text" class="form-control" name="address" placeholder="ঠিকানা"  required>
                                 </div>
                                 <div class="form-group">
-                                    <textarea type="text" class="form-control" name="details" placeholder="পন্যের / চাহিদার বিস্তারিত লিখুন" rows="8"  required></textarea>
+                                    <textarea type="text" class="form-control" name="details" placeholder="পণ্যের / চাহিদার বিস্তারিত লিখুন" rows="8"  required></textarea>
                                 </div>
                                 <div class="form-group">
                                     <input type="text" class="form-control date" name="date" placeholder="কবে ডেলিভারি চান"  required readonly>

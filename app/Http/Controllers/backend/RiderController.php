@@ -416,7 +416,7 @@ class RiderController extends Controller
                     'add_part4' => $add_part4,
                 ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -431,7 +431,7 @@ class RiderController extends Controller
                 'add_part4' => $add_part4,
             ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -468,7 +468,7 @@ class RiderController extends Controller
                 'rider_cost' => $cost,
             ]);
         if ($result) {
-            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
         } else {
             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
         }

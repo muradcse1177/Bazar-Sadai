@@ -53,7 +53,7 @@
                                 <div class="btn-group row cols-sm-2">
                                     <div class="btn-wrap ml-0">
                                         <a href="{{url('locationBaseSearchPage')}}" class="btn btn-block btn-primary btn-rounded btn-icon-right">
-                                            লোকেশন ভিত্তিক পন্য খুজুন<i class="w-icon-long-arrow-right"></i>
+                                            লোকেশন ভিত্তিক পণ্য খুজুন<i class="w-icon-long-arrow-right"></i>
                                         </a>
                                     </div>
                                 </div>

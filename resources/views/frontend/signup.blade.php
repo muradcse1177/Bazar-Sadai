@@ -142,7 +142,7 @@
                         </div>
                         <div class="form-group">
                             <select id="doc_hospital" name ="doc_hospital" class="form-control select2 doc_hospital" style="width: 100%;" required>
-                                <option value=""selected>হাসপাতাল  নির্বাচন করুন </option>
+                                <option value=""selected>হাশপাতাল  নির্বাচন করুন </option>
                             </select>
                         </div>
                         <div class="form-group">

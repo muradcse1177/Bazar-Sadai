@@ -297,6 +297,8 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::post('insertMedicalCamp', 'backend\MedicalServiceController@insertMedicalCamp');
     Route::post('getMedicalCampList', 'backend\MedicalServiceController@getMedicalCampList');
     Route::post('deleteMedicalCamp', 'backend\MedicalServiceController@deleteMedicalCamp');
+    Route::get('changeM_statusDoctor', 'backend\MedicalServiceController@changeM_statusDoctor');
+    Route::post('changeDoctorFees_m', 'backend\MedicalServiceController@changeDoctorFees_m');
 //Pharmacy
     Route::get('medicineCompanyEmail', 'backend\PharmacyController@medicineCompanyEmail');
     //Route::get('getAllMedicineCompany', 'backend\PharmacyController@getAllMedicineCompany');
@@ -466,6 +468,8 @@ Route::group(['middleware' => ['doctor']], function () {
     Route::post('updateZoomLink', 'backend\DoctorController@updateZoomLink');
     Route::post('updatePrescription', 'backend\DoctorController@updatePrescription');
     Route::post('getPrescriptionList', 'backend\DoctorController@getPrescriptionList');
+    Route::get('patientHistory', 'backend\DoctorController@patientHistory');
+    Route::get('searchPatientByID', 'backend\DoctorController@searchPatientByID');
 });
 
 Route::group(['middleware' => ['cooker']], function () {

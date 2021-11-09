@@ -1,6 +1,6 @@
 @extends('backend.layout')
-@section('title','পন্য')
-@section('page_header', 'পন্য  ব্যবস্থাপনা')
+@section('title','পণ্য')
+@section('page_header', 'পণ্য  ব্যবস্থাপনা')
 @section('proLiAdd','active')
 
 @section('content')
@@ -45,7 +45,7 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">পন্য  লিস্ট </h3>
+                    <h3 class="box-title">পণ্য  লিস্ট </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">

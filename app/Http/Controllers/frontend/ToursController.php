@@ -117,7 +117,7 @@ class ToursController extends Controller
                     'price' => $price,
                 ]);
                 if ($result) {
-                    return redirect()->to('myToursNTravels')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return redirect()->to('myToursNTravels')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                 }
@@ -151,7 +151,7 @@ class ToursController extends Controller
             'price' => $price,
         ]);
         if($result){
-            return redirect()->to('myToursNTravels')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            return redirect()->to('myToursNTravels')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
         }
         else{
             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -214,7 +214,7 @@ class ToursController extends Controller
             'price' => $sessRequest->price,
         ]);
         if ($result) {
-            return redirect()->to('myToursNTravels')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+            return redirect()->to('myToursNTravels')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
         } else {
             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
         }

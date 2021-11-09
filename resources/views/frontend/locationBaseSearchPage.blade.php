@@ -60,14 +60,14 @@
         </div>
 
         <section class="container" style="background-color: #95e074; margin-bottom: 20px;"><br>
-            <h2 class="title title-center mb-5">লোকেশন ভিত্তিক পন্য সার্চ</h2>
+            <h2 class="title title-center mb-5">লোকেশন ভিত্তিক পণ্য সার্চ</h2>
             {{ Form::open(array('url' => 'locationBaseProductSearch',  'method' => 'post')) }}
             {{ csrf_field() }}
             <div>
                 <center>
                     <div class="col-sm-12">
                         <div class="form-group">
-                            <label for="div_name" >পন্য লোকেশন&nbsp;</label>
+                            <label for="div_name" >পণ্য লোকেশন&nbsp;</label>
                             <label class="radio-inline">
                                 <input type="radio" name="addressGroup"  id="zillaGroup" value="1" required> &nbsp;জেলা
                             </label>

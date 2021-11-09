@@ -53,8 +53,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="">পন্য নাম</label>
-                                <input type="text" class="form-control name" id="name"  name="name" placeholder="পন্য নাম লিখুন" required>
+                                <label for="">পণ্য নাম</label>
+                                <input type="text" class="form-control name" id="name"  name="name" placeholder="পণ্য নাম লিখুন" required>
                             </div>
                         </div>
                         <div class="col-sm-4">

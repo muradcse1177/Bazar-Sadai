@@ -348,7 +348,7 @@ class AuthController extends Controller
                         Cookie::queue('user', $user, time()+31556926 ,'/');
                         Cookie::queue('role', $role, time()+31556926 ,'/');
                         return redirect()->to('login');
-                        //return redirect()->to('login')->with('errorMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে। লগ ইন করুন। ');
+                        //return redirect()->to('login')->with('errorMessage', 'সফলভাবে  সম্পন্ন  হয়েছে। লগ ইন করুন। ');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -373,7 +373,7 @@ class AuthController extends Controller
                     ->where('users.status', 1)
                     ->first();
                 $users['info'] = $user_info;
-                if(Cookie::get('user_type') ==3) {
+                if(Cookie::get('user_type') == 3) {
                     $buyer_sold_lst = DB::table('sale_products')
                         ->select('*','sale_products.id as salePID', 'sale_products.name as salName', 'sale_products.photo as salPPhoto')
                         ->join('animal_sales', 'sale_products.id', '=', 'animal_sales.product_id')
@@ -395,6 +395,7 @@ class AuthController extends Controller
     public function transaction(Request $request){
         try{
             $id= $request->id;
+
             $output = array('list'=>'');
             $order_details = DB::table('order_details')
                 ->where('tx_id',$id)
@@ -587,7 +588,7 @@ class AuthController extends Controller
                         'role' => json_encode($request->role),
                     ]);
                     if($result){
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     }
                     else{
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -623,7 +624,7 @@ class AuthController extends Controller
                         'role' => json_encode($request->role),
                     ]);
                 if($result){
-                    return redirect('roleAssign')->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    return redirect('roleAssign')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 }
                 else{
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');

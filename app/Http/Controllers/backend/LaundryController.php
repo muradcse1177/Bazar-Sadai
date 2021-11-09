@@ -81,7 +81,7 @@ class LaundryController extends Controller
                         'status' =>  $id[0],
                     ]);
                 if ($result) {
-                    Session::flash('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    Session::flash('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     return response()->json(array('data'=>$result));
                 } else {
                     Session::flash('errorMessage', 'আবার চেষ্টা করুন।');

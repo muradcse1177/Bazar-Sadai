@@ -60,8 +60,8 @@
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <select class="form-control select2 type" id="type" name="type" style="width: 100%;" required>
-                                        <option value="" selected> হসপিটাল/প্রাইভেট</option>
-                                        <option value="Hospital"> হসপিটাল </option>
+                                        <option value="" selected> হশপিটাল/প্রাইভেট</option>
+                                        <option value="Hospital"> হশপিটাল </option>
                                         <option value="Chamber"> প্রাইভেট চেম্বার</option>
                                     </select>
                                 </div>

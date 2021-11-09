@@ -261,7 +261,7 @@
                         if(data==1){
                             $.toast({
                                 heading: 'ধন্যবাদ',
-                                text: 'সফল্ভাবে সম্পন্ন্য হয়েছে।',
+                                text: 'সফলভাবে  সম্পন্ন  হয়েছে।',
                                 showHideTransition: 'slide',
                                 icon: 'success',
                                 position: {

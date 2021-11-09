@@ -16,6 +16,10 @@ class DoctorController extends Controller
         $dr_status = DB::table('dr_dtatus')
             ->where('dr_id',Cookie::get('user_id'))
             ->first();
+        if($dr_status)
+            $dr_status=  $dr_status->status;
+        else
+            $dr_status=0;
         if(empty($service_area)){
             return view('backend.doctorProfile');
         }
@@ -56,7 +60,7 @@ class DoctorController extends Controller
                 ->where('users.status', 1)
                 ->first();
             $users['info'] = $user_info;
-            return view('backend.doctorProfile',['name' => $rows,'users'=>$users,'dr_status'=> $dr_status->status]);
+            return view('backend.doctorProfile',['name' => $rows,'users'=>$users,'dr_status'=>$dr_status]);
         }
 
     }
@@ -87,7 +91,7 @@ class DoctorController extends Controller
                     'add_part4' => $add_part4,
                 ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -102,7 +106,7 @@ class DoctorController extends Controller
                 'add_part4' => $add_part4,
             ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -117,6 +121,33 @@ class DoctorController extends Controller
             ->orderBy('a_id','desc')
             ->paginate('20');
         return view('backend.myPatientList',['drReports' => $rows]);
+    }
+    public function patientHistory(){
+        $per=1;
+        return view('backend.patientHistory',['per' => $per]);
+    }
+    public function searchPatientByID(Request $request){
+        $rows = DB::table('dr_apportionment')
+            ->where('dr_id',Cookie::get('user_id'))
+            ->where('id',$request->p_id)
+            ->first();
+        if($rows) {
+            if ($rows->dr_id == Cookie::get('user_id')) {
+                $rows = DB::table('dr_apportionment')
+                    ->where('id', $request->p_id)
+                    ->get();
+                $per = 1;
+            }
+            else {
+                $rows = 0;
+                $per = 0;
+            }
+        }
+        else{
+            $rows = 0;
+            $per = 0;
+        }
+        return view('backend.patientHistory',['drReports' => $rows,'per' => $per]);
     }
     public function myPatientListByDate(Request $request){
         $rows = DB::table('dr_apportionment')
@@ -173,7 +204,7 @@ class DoctorController extends Controller
                     'zoom_link' => $request->link,
                 ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
@@ -190,7 +221,7 @@ class DoctorController extends Controller
                     'prescription' => $request->pre,
                 ]);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }

@@ -1,6 +1,6 @@
 @extends('backend.layout')
-@section('title','হাসপাতাল')
-@section('page_header', 'হাসপাতাল ব্যবস্থাপনা')
+@section('title','হাশপাতাল')
+@section('page_header', 'হাশপাতাল ব্যবস্থাপনা')
 @section('serviceMainLi','active menu-open')
 @section('medicalMainLi','active menu-open')
 @section('hospitalList','active')
@@ -33,7 +33,7 @@
                     {{ csrf_field() }}
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="">হাসপাতাল নাম </label>
+                            <label for="">হাশপাতাল নাম </label>
                             <input type="text" class="form-control name" id="name"  name="name" placeholder=" নাম লিখুন" required>
                         </div>
                         <div class="form-group">
@@ -54,7 +54,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">হাসপাতাল লিস্ট </h3>
+                    <h3 class="box-title">হাশপাতাল লিস্ট </h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">

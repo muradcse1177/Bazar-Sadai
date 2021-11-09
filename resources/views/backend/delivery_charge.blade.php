@@ -1,5 +1,5 @@
 @extends('backend.layout')
-@section('title', ' পন্য ডেলিভারি চার্জ')
+@section('title', ' পণ্য ডেলিভারি চার্জ')
 @section('page_header', 'ডেলিভারি চার্জ  ব্যবস্থাপনা')
 @section('deliveryLiAdd','active')
 @section('content')
@@ -41,8 +41,8 @@
                             <input type="number"  class="form-control higher" id="higher"   name="higher" placeholder="সরবোচ্চ টাকা চার্জ লিখুন" required>
                         </div>
                         <div class="form-group">
-                            <label for="">পন্য ডেলিভারি চার্জ</label>
-                            <input type="number"  class="form-control name" id="name"   name="name" placeholder="পন্য ডেলিভারি চার্জ লিখুন" required>
+                            <label for="">পণ্য ডেলিভারি চার্জ</label>
+                            <input type="number"  class="form-control name" id="name"   name="name" placeholder="পণ্য ডেলিভারি চার্জ লিখুন" required>
                         </div>
                     </div>
                     <div class="box-footer">
@@ -57,7 +57,7 @@
         <div class="col-md-12">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">পন্য ডেলিভারি চার্জ</h3>
+                    <h3 class="box-title">পণ্য ডেলিভারি চার্জ</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body table-responsive">

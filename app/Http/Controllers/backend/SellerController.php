@@ -84,7 +84,7 @@ class SellerController extends Controller
                             'status' => $request->status,
                         ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -142,7 +142,7 @@ class SellerController extends Controller
                         'status' => $request->status,
                     ]);
                     if ($result) {
-                        return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                        return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     } else {
                         return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                     }
@@ -175,7 +175,7 @@ class SellerController extends Controller
                         'Situation' =>  $id[0],
                     ]);
                 if ($result) {
-                    Session::flash('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                    Session::flash('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                     return response()->json(array('data'=>$result));
                 } else {
                     Session::flash('errorMessage', 'আবার চেষ্টা করুন।');
@@ -236,7 +236,7 @@ class SellerController extends Controller
                                 'subcat_id' => json_encode($request->subCat),
                             ]);
                         if ($result) {
-                            return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                         } else {
                             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                         }
@@ -266,7 +266,7 @@ class SellerController extends Controller
                                 'subcat_id' => json_encode($request->subCat),
                             ]);
                             if ($result) {
-                                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                             } else {
                                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
                             }
@@ -367,7 +367,7 @@ class SellerController extends Controller
             }
             $result = DB::table('products')->insert($data);
             if ($result) {
-                return back()->with('successMessage', 'সফল্ভাবে সম্পন্ন্য হয়েছে।');
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
             } else {
                 return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
             }
