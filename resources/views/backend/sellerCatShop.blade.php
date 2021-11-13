@@ -74,10 +74,10 @@
                                 <td> {{$c-> name}} </td>
                                 <td> {{$c->cat_name}} </td>
                                 <td class="td-actions text-center">
-                                    <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$c->id}}">
+                                    <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$c->s_id}}">
                                         <i class="fa fa-edit"></i>
                                     </button>
-                                    <button type="button" rel="tooltip"  class="btn btn-danger delete" data-id="{{$c->id}}">
+                                    <button type="button" rel="tooltip"  class="btn btn-danger delete" data-id="{{$c->s_id}}">
                                         <i class="fa fa-close"></i>
                                     </button>
                                 </td>

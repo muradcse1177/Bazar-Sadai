@@ -112,14 +112,27 @@
         .form-group > select > option{
             color: black !important;
         }
-        .centered {
-            height: 100px;
-            width: 100px;
+        #loading {
+            position: fixed;
+            display: block;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            text-align: center;
+            opacity: 0.7;
+            background-color: #fff;
+            z-index: 99;
+        }
+
+        #loading-image {
+            height: 60px;
+            width: 60px;
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            z-index: 9999;
+            z-index: 100;
         }
     </style>
 </head>
@@ -128,9 +141,9 @@
     $categories = DB::table('categories')->where('type','1')->where('status','1')->orWhere('type','3')->where('status','1')->take(12)->get();
 ?>
 <body class="home">
-{{--<div  id="loading" class="loading" style="">--}}
-{{--    <img src="{{url('public/loading.gif')}}" class="centered">--}}
-{{--</div>--}}
+<div id="loading">
+    <img id="loading-image" src="{{url('public/preloader.svg')}}" alt="Loading..." />
+</div>
 <div class="page-wrapper">
     <!-- Start of Header -->
     <header class="header">
@@ -905,6 +918,17 @@
             $('#mbSearchForm').fadeOut();
         });
     });
+
+</script>
+<script>
+    $(document).ajaxStart(function() {
+        $(".loading").show();
+    }).ajaxStop(function() {
+        $(".loading").hide();
+    });
+    $(window).on('load', function () {
+        $('#loading').hide();
+    })
 
 </script>
 @yield('js')

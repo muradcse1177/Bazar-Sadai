@@ -215,36 +215,6 @@
             </div>
         </div>
         <div class="container">
-{{--            <div class="row category-cosmetic-lifestyle appear-animate mb-5">--}}
-{{--                <div class="col-md-6 mb-4">--}}
-{{--                    <div class="banner banner-fixed category-banner-1 br-xs">--}}
-{{--                        <figure>--}}
-{{--                            <img src="public/asset/woolmart/images/demos/demo1/categories/3-1.jpg" alt="Category Banner"--}}
-{{--                                 width="610" height="200" style="background-color: #3B4B48;" />--}}
-{{--                        </figure>--}}
-{{--                        <div class="banner-content y-50 pt-1">--}}
-{{--                            <h5 class="banner-subtitle font-weight-bold text-uppercase">Natural Process</h5>--}}
-{{--                            <h3 class="banner-title font-weight-bolder text-capitalize text-white">Cosmetic--}}
-{{--                                Makeup<br>Professional</h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-6 mb-4">--}}
-{{--                    <div class="banner banner-fixed category-banner-2 br-xs">--}}
-{{--                        <figure>--}}
-{{--                            <img src="public/asset/woolmart/images/demos/demo1/categories/3-2.jpg" alt="Category Banner"--}}
-{{--                                 width="610" height="200" style="background-color: #E5E5E5;" />--}}
-{{--                        </figure>--}}
-{{--                        <div class="banner-content y-50 pt-1">--}}
-{{--                            <h5 class="banner-subtitle font-weight-bold text-uppercase">Trending Now</h5>--}}
-{{--                            <h3 class="banner-title font-weight-bolder text-capitalize">Women's--}}
-{{--                                Lifestyle<br>Collection</h3>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-            <!-- End of Category Cosmetic Lifestyle -->
-
             <div class="product-wrapper-1 appear-animate mb-5">
                 <div class="title-link-wrapper pb-1 mb-4">
                     <h2 class="title ls-normal mb-0">মাছ , মাংস ও কাচাবাজার</h2>
@@ -420,31 +390,7 @@
                     @endforeach
                 </div>
             </div>
-{{--            <div class="banner banner-fashion appear-animate br-sm mb-9" style="background-image: url(public/asset/woolmart/images/demos/demo1/banners/4.jpg);--}}
-{{--                    background-color: #383839;">--}}
-{{--                <div class="banner-content align-items-center">--}}
-{{--                    <div class="content-left d-flex align-items-center mb-3">--}}
-{{--                        <div class="banner-price-info font-weight-bolder text-secondary text-uppercase lh-1 ls-25">--}}
-{{--                            25--}}
-{{--                            <sup class="font-weight-bold">%</sup><sub class="font-weight-bold ls-25">Off</sub>--}}
-{{--                        </div>--}}
-{{--                        <hr class="banner-divider bg-white mt-0 mb-0 mr-8">--}}
-{{--                    </div>--}}
-{{--                    <div class="content-right d-flex align-items-center flex-1 flex-wrap">--}}
-{{--                        <div class="banner-info mb-0 mr-auto pr-4 mb-3">--}}
-{{--                            <h3 class="banner-title text-white font-weight-bolder text-uppercase ls-25">For Today's--}}
-{{--                                Fashion</h3>--}}
-{{--                            <p class="text-white mb-0">Use code--}}
-{{--                                <span--}}
-{{--                                    class="text-dark bg-white font-weight-bold ls-50 pl-1 pr-1 d-inline-block">Black--}}
-{{--                                        <strong>12345</strong></span> to get best offer.</p>--}}
-{{--                        </div>--}}
-{{--                        <a href="shop-banner-sidebar.html"--}}
-{{--                           class="btn btn-white btn-outline btn-rounded btn-icon-right mb-3">Shop Now<i--}}
-{{--                                class="w-icon-long-arrow-right"></i></a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+
         </div>
     </main>
 @endsection

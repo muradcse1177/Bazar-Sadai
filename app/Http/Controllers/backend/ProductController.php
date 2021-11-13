@@ -711,7 +711,7 @@ class ProductController extends Controller
         try{
 
             $rows = DB::table('seller_shop_category')
-                ->select('*','seller_shop_category.image as im')
+                ->select('*','seller_shop_category.image as im','seller_shop_category.id as s_id')
                 ->join('categories','categories.id','seller_shop_category.cat_id')
                 ->orderBy('seller_shop_category.id','desc')->paginate(20);
             return view('backend.sellerCatShop', ['cat' => $rows]);
@@ -829,9 +829,8 @@ class ProductController extends Controller
     }
     public function deleteSellerShopCategory(Request $request){
         try{
-
             if($request->id) {
-                $result =DB::table('coupon')
+                $result =DB::table('seller_shop_category')
                     ->where('id', $request->id)
                     ->delete();
                 if ($result) {

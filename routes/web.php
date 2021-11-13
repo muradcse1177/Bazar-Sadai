@@ -152,6 +152,7 @@ Route::group(['middleware' => ['adminUser']], function () {
     Route::get('sellerCatShop', 'backend\ProductController@sellerCatShop');
     Route::post('insertSellerShopCategory', 'backend\ProductController@insertSellerShopCategory');
     Route::post('getSellerShopCategoryList', 'backend\ProductController@getSellerShopCategoryList');
+    Route::post('deleteSellerShopCategory', 'backend\ProductController@deleteSellerShopCategory');
     Route::post('getSubCategoryList', 'backend\ProductController@getSubCategoryList');
     Route::post('deleteSubCategory', 'backend\ProductController@deleteSubCategory');
     Route::get('product', 'backend\ProductController@selectProduct');
