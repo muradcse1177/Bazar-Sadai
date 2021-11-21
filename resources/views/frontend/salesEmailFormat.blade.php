@@ -15,7 +15,7 @@
 <p>
     Greetings from <a href="bazar-sadai.com">Bazar-sadai.com.</a> Hope you are well!!
 </p>
-@if($dev_name)
+@if(@$dev_name)
 <h4> Your delivery person name: {{$dev_name}}</h4>
 <h4> Your delivery person phone: {{$dev_phone}}</h4>
 @endif

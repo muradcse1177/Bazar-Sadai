@@ -116,6 +116,7 @@ class ToursController extends Controller
                     'date' => Date('Y-m-d'),
                     'price' => $price,
                 ]);
+                app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
                 if ($result) {
                     return redirect()->to('myToursNTravels')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
@@ -151,6 +152,7 @@ class ToursController extends Controller
             'price' => $price,
         ]);
         if($result){
+            app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
             return redirect()->to('myToursNTravels')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
         }
         else{
@@ -214,6 +216,7 @@ class ToursController extends Controller
             'price' => $sessRequest->price,
         ]);
         if ($result) {
+            app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
             return redirect()->to('myToursNTravels')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
         } else {
             return back()->with('errorMessage', 'আবার চেষ্টা করুন।');

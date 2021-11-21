@@ -634,4 +634,80 @@ class AuthController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function sendSMSAll($tx_id){
+        $user = DB::table('users') ->where('id',Cookie::get('user_id'))->first();
+        $url = "http://66.45.237.70/api.php";
+        $number = $user->phone;
+        $name = $user->name;
+        $text="Dear, Your order is placed on Bazar-Sadai.Com.Your TX-ID:".@$tx_id.".You will get it as soon as possible.Thanks.";
+        $data= array(
+            'username'=>"01929877307",
+            'password'=>"murad1107053",
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        if($sendstatus){
+            $result = DB::table('smslog')->insert([
+                'number' => $number,
+                'msg' => $text,
+            ]);
+        }
+        $data = array(
+            'userName'=> $user->name,
+            'tx_id' => $tx_id,
+        );
+        $salesEmail = 'sales@bazar-sadai.com';
+        $emails = [$user->email];
+        Mail::send('frontend.serviceEmailFormat',$data, function($message) use($emails,$salesEmail,$name,$number) {
+            $message->to($emails)->subject('Service order by '.$name.' ('.$number. ' )');
+            $message->from(''.$salesEmail.'','Bazar-Sadai.Com');
+        });
+    }
+    public function sendSMSServiceHolder($tx_id,$id){
+        $user = DB::table('users') ->where('id',$id)->first();
+        $number = $user->phone;
+        $name = $user->email;
+        $url = "http://66.45.237.70/api.php";
+        if($tx_id)
+            $text="Dear, Customer is placed order on Bazar-Sadai.Com.TX-ID:".@$tx_id.".Please check app/website.Thanks.";
+        else
+            $text="Dear, Customer is placed order on Bazar-Sadai.Com.Please check app/website.Thanks.";
+        $data= array(
+            'username'=>"01929877307",
+            'password'=>"murad1107053",
+            'number'=>"$number",
+            'message'=>"$text"
+        );
+        $ch = curl_init(); // Initialize cURL
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $smsresult = curl_exec($ch);
+        $p = explode("|",$smsresult);
+        $sendstatus = $p[0];
+        if($sendstatus){
+            $result = DB::table('smslog')->insert([
+                'number' => $number,
+                'msg' => $text,
+            ]);
+        }
+        $data = array(
+            'userName'=> $name,
+            'tx_id' => @$tx_id,
+        );
+        $salesEmail = 'sales@bazar-sadai.com';
+        $emails = [$user->email];
+        Mail::send('frontend.serviceEmailFormat',$data, function($message) use($emails,$salesEmail) {
+            $message->to($emails)->subject('Service Order From Bazar-Sadai.com');
+            $message->from(''.$salesEmail.'','Bazar-Sadai.Com');
+        });
+    }
 }

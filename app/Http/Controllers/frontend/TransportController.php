@@ -183,6 +183,7 @@ class TransportController extends Controller
                     'price' => $ticket_price,
                 ]);
                 if ($result) {
+                    app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
                     return redirect()->to('myTicketOrder')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
                 } else {
                     return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
@@ -395,6 +396,8 @@ class TransportController extends Controller
                         'working_status' => 2,
                     ]);
                 if($upresult){
+                    $tx_id = null;
+                    app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$rider->id);
                     return back()->with('successMessage', 'আপনার রাইডারঃ '.$rider->name." ফোনঃ ".$rider->phone);
                 }
                 else {
@@ -546,6 +549,8 @@ class TransportController extends Controller
                         'working_status' => 2,
                     ]);
                 if($upresult){
+                    $tx_id= null;
+                    app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$rider->id);
                     return back()->with('successMessage', 'আপনার রাইডারঃ '.$rider->name." ফোনঃ ".$rider->phone);
                 }
                 else {

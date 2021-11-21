@@ -374,7 +374,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if($count > 0)
+                                    @if($count_c > 0)
                                     <div class="form-group place-order pt-6">
                                         <button type="submit" class="btn btn-dark btn-block btn-rounded">Place Order</button>
                                     </div>

@@ -48,7 +48,8 @@ class FrontController extends Controller
 //            $response = curl_exec($ch);
 //
 //            dd($response);
-
+//            $tx_id="100";
+//            app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,49);
             $slide= DB::table('slide')
                 ->orderBy('id', 'DESC')
                 ->take(10)->get();
@@ -943,7 +944,7 @@ class FrontController extends Controller
         Session::forget('w_check');
         Session::forget('n_check');
         Session::save();
-        return view('frontend.checkout',['output'=>$output,'total' => $total_arr,'user'=>$user,'address'=>$address,'count'=>$c_count]);
+        return view('frontend.checkout',['output'=>$output,'total' => $total_arr,'user'=>$user,'address'=>$address,'count_c'=>$c_count]);
     }
     public function getDonatePrice(Request $request){
 
@@ -2505,7 +2506,7 @@ class FrontController extends Controller
                         $emails = [$userEmail, $dealerEmail,$deliveryEmail];
                         Mail::send('frontend.salesEmailFormat',$data, function($message) use($emails,$salesEmail,$userName,$userPhone) {
                             $message->to($emails)->subject('Daily bazar order by '.$userName.' ('.$userPhone. ' )');
-                            $message->from(''.$salesEmail.'','Bazar-sadai.com');
+                            $message->from(''.$salesEmail.'','Bazar-Sadai.Com');
                         });
                         $result =DB::table('users')
                             ->where('id', $delivery_man[0]->id)
@@ -2604,6 +2605,33 @@ class FrontController extends Controller
                             ],
                         ];
                         DB::table('order_details')->insert($data);
+                        //SMS
+                        $url = "http://66.45.237.70/api.php";
+                        $number = $userPhone.',';
+                        $text="Dear, Your Order is placed on Bazar-Sadai.Com. Your TX-ID:".$tx_id.".You will get it as soon as possible.Thanks.";
+                        $data= array(
+                            'username'=>"01929877307",
+                            'password'=>"murad1107053",
+                            'number'=>".$number.",
+                            'message'=>".$text."
+                        );
+
+                        $ch = curl_init(); // Initialize cURL
+                        curl_setopt($ch, CURLOPT_URL,$url);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        $smsresult = curl_exec($ch);
+                        $p = explode("|",$smsresult);
+                        $sendstatus = $p[0];
+                        if($sendstatus){
+                            $phones = explode(',',$number);
+                            foreach ($phones as $phone){
+                                $result = DB::table('smslog')->insert([
+                                    'number' => $phone,
+                                    'msg' => $text,
+                                ]);
+                            }
+                        }
                         Session::forget('discount');
                         Session::save();
                         if($result){
@@ -2622,7 +2650,6 @@ class FrontController extends Controller
                         'sales_date' => $date
                     ]);
                     $salesid = DB::getPdo()->lastInsertId();
-
                     $total = 0;
                     foreach (Session::get('cart_item') as $row) {
                         $product = DB::table('products')
@@ -2668,6 +2695,33 @@ class FrontController extends Controller
                     ];
                     $result = DB::table('order_details')->insert($data);
                     if($result){
+                        //SMS
+                        $url = "http://66.45.237.70/api.php";
+                        $number = $phone.',';
+                        $text="Dear, Your Order is placed on Bazar-sadai.com. Your TX-ID:".$tx_id.".You will get it as soon as possible.Thanks.";
+                        $data= array(
+                            'username'=>"01929877307",
+                            'password'=>"murad1107053",
+                            'number'=>"$number",
+                            'message'=>"$text"
+                        );
+
+                        $ch = curl_init(); // Initialize cURL
+                        curl_setopt($ch, CURLOPT_URL,$url);
+                        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+                        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                        $smsresult = curl_exec($ch);
+                        $p = explode("|",$smsresult);
+                        $sendstatus = $p[0];
+                        if($sendstatus){
+                            $phones = explode(',',$number);
+                            foreach ($phones as $phone){
+                                $result = DB::table('smslog')->insert([
+                                    'number' => $phone,
+                                    'msg' => $text,
+                                ]);
+                            }
+                        }
                         Session::forget('cart_item');
                         Session::save();
                         return view('frontend.orderComplete');
@@ -2733,193 +2787,6 @@ class FrontController extends Controller
         }
     }
 
-    public function insertSaleProduct(Request $request){
-        try{
-            if($request) {
-                    if(Cookie::get('user_id')) {
-                        $PhotoPath="";
-                        if ($request->hasFile('photo')) {
-                            $targetFolder = 'public/asset/images/';
-                            $file = $request->file('photo');
-                            $pname = time() . '.' . $file->getClientOriginalName();
-                            $image['filePath'] = $pname;
-                            $file->move($targetFolder, $pname);
-                            $PhotoPath = $targetFolder . $pname;
-                        }
-                        $address = $request->address1.','.$request->address2.','.$request->address3;
-                        $result = DB::table('sale_products')->insert([
-                            'seller_id' => Cookie::get('user_id'),
-                            'name' => $request->name,
-                            'price' => $request->price,
-                            'jat' => $request->jat,
-                            'color' => $request->color,
-                            'weight' => $request->weight,
-                            'address' => $address,
-                            'photo' => $PhotoPath,
-                            'description' => $request->description,
-                        ]);
-                        if ($result) {
-                            return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
-                        } else {
-                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                        }
-                    }
-                    else{
-                        return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
-                    }
-                }
-            else{
-                return back()->with('errorMessage', 'ফর্ম পুরন করুন।');
-            }
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function getSaleProductsDetails(Request $request){
-        try{
-            $rows = DB::table('seller_product')
-                ->where('id', $request->id)
-                ->first();
-            return response()->json(array('data'=>$rows));
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function animalSaleView($id){
-        try{
-
-            $rows = DB::table('sale_products')
-                ->where('id', $id)
-                ->first();
-            return view('frontend.animalSaleView', ['products' => $rows, 'id' =>$id]);
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function productSaleView($id){
-        try{
-
-            $rows = DB::table('seller_product')
-                ->where('id', $id)
-                ->first();
-            return view('frontend.productSaleView', ['products' => $rows, 'id' =>$id]);
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function animalSales($id){
-        try{
-
-            $rows = DB::table('sale_products')
-                ->where('id', $id)
-                ->first();
-            $set='123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $code=substr(str_shuffle($set), 0, 12);
-            $result = DB::table('animal_sales')->insert([
-                'seller_id' => $rows->seller_id,
-                'buyer_id' =>  Cookie::get('user_id'),
-                'product_id' => $rows->id,
-                'date' =>date("Y-m-d"),
-                'pay_id' => $code,
-            ]);
-
-            if ($result) {
-                $upresult =DB::table('sale_products')
-                    ->where('id', $rows->id)
-                    ->update([
-                        'sale_status' => 0,
-                    ]);
-                if ($upresult) {
-                    return redirect()->to('profile')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে। দ্রুত আপনার সাথে যোগাযোগ করা হবে।');
-                }
-                else{
-                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                }
-
-            } else {
-                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-            }
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
-    public function productSales(Request $request){
-        try{
-            $sessRequest = json_encode(Session::get('variousMarket'));
-            $sessRequest = json_decode($sessRequest);
-            $ref = $sessRequest->ref;
-            $id = $sessRequest->id;
-            $rows = DB::table('seller_product')
-                ->where('id', $id)
-                ->first();
-            $price  = $rows->price;
-            $type = 'various kinds of product sales';
-            $msg = $request->msg;
-            $tx_id = $request->tx_id;
-            $status = $request->status;
-            $bank_tx_id = $request->bank_tx_id;
-            $amount = $request->amount;
-            $bank_status = $request->bank_status;
-            $sp_code = $request->sp_code;
-            $sp_code_des = $request->sp_code_des;
-            $sp_payment_option = $request->sp_payment_option;
-            $date = date('Y-m-d');
-            if($status == 'Failed'){
-                return redirect('homepage')->with('errorMessage', 'আবার চেষ্টা করুন।');
-            }
-            else{
-                $result = DB::table('payment_info')->insert([
-                    'user_id' => Cookie::get('user_id'),
-                    'status' => $status,
-                    'type' => $type,
-                    'msg' => $msg,
-                    'tx_id' => $tx_id,
-                    'bank_tx_id' => $bank_tx_id,
-                    'amount' => $amount,
-                    'bank_status' => $bank_status,
-                    'sp_code' => $sp_code,
-                    'sp_code_des' => $sp_code_des,
-                    'sp_payment_option' => $sp_payment_option,
-                ]);
-                if($result){
-                    $result = DB::table('product_sales')->insert([
-                        'seller_id' => $rows->seller_id,
-                        'buyer_id' =>  Cookie::get('user_id'),
-                        'product_id' => $rows->id,
-                        'date' =>date("Y-m-d"),
-                        'pay_id' => $tx_id,
-                        'ref' => $ref,
-                    ]);
-                    if ($result) {
-                        $upresult =DB::table('seller_product')
-                            ->where('id', $rows->id)
-                            ->update([
-                                'amount' => $rows->amount-1,
-                            ]);
-                        if ($upresult) {
-                            return redirect()->to('myVariousProductOrderUser')->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে। দ্রুত আপনার সাথে যোগাযোগ করা হবে।');
-                        }
-                        else{
-                            return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                        }
-
-                    }
-                }
-                else {
-                    return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
-                }
-            }
-
-        }
-        catch(\Illuminate\Database\QueryException $ex){
-            return back()->with('errorMessage', $ex->getMessage());
-        }
-    }
     public function searchProduct(Request $request){
         try{
             if($request->search)

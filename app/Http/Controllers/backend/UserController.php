@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\View;
 
 class UserController extends Controller
 {
     public function dashboard(){
-
         $users = DB::table('users')
             ->where('status', 1)
             ->distinct()->get()->count();

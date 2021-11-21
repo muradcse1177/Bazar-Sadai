@@ -19,6 +19,10 @@ class ReportController extends Controller
     }
     public function salesReport (Request $request){
         try {
+            if($request->salesView ==1){
+                $result =DB::table('order_details')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $order_details = DB::table('order_details')->orderBy('id','desc')->get();
             //dd($order_details);
             $i=0;
@@ -347,8 +351,12 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function ticketSalesReport (){
+    public function ticketSalesReport (Request $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('ticket_booking')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $ticket_Sale = DB::table('ticket_booking')
                 ->join('users', 'ticket_booking.user_id', '=', 'users.id')
                 ->orderBy('ticket_booking.id','desc')
@@ -607,7 +615,11 @@ class ReportController extends Controller
             return response()->json(array('data'=>$ex->getMessage()));
         }
     }
-    public function doctorAppointmentReport(){
+    public function doctorAppointmentReport(Request $request){
+        if($request->salesView ==1){
+            $result =DB::table('dr_apportionment')
+                ->update(['view' =>  $request->salesView]);
+        }
         $rows = DB::table('dr_apportionment')
             ->select('*','dr_apportionment.id as a_id','a.phone as dr_phone','b.phone as p_phone','a.name as dr_name')
             ->join('users as a','a.id','=','dr_apportionment.dr_id')
@@ -625,7 +637,11 @@ class ReportController extends Controller
         //dd($rows);
         return view('backend.doctorAppointmentReport',['drReports' => $rows,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
-    public function therapyAppointmentReport(){
+    public function therapyAppointmentReport(Request $request){
+        if($request->salesView ==1){
+            $result =DB::table('therapy_appointment')
+                ->update(['view' =>  $request->salesView]);
+        }
         $rows = DB::table('therapy_appointment')
             ->select('*')
             ->join('users','users.id','=','therapy_appointment.user_id')
@@ -648,7 +664,11 @@ class ReportController extends Controller
         //dd($rows);
         return view('backend.therapyAppointmentReport',['therapyReports' => $rows,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
-    public function diagnosticAppointmentReport(){
+    public function diagnosticAppointmentReport(Request $request){
+        if($request->salesView ==1){
+            $result =DB::table('diagonostic_appointment')
+                ->update(['view' =>  $request->salesView]);
+        }
         $rows = DB::table('diagonostic_appointment')
             ->select('*')
             ->join('users','users.id','=','diagonostic_appointment.user_id')
@@ -672,7 +692,11 @@ class ReportController extends Controller
         return view('backend.diagnosticAppointmentReport',['diagnosticReports' => $rows,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
 
-    public function donationReportBackend(){
+    public function donationReportBackend(Request $request){
+        if($request->salesView ==1){
+            $result =DB::table('donation_details')
+                ->update(['view' =>  $request->salesView]);
+        }
         $rows = DB::table('donation_details')
             ->select('*','products.name as p_name')
             ->join('products','products.id','=','donation_details.product_id')
@@ -694,6 +718,10 @@ class ReportController extends Controller
         return view('backend.donationReportBackend',['products' => $rows],['diagnosticReports' => $rows,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
     public function transportReportAdmin(Request $request){
+        if($request->salesView ==1){
+            $result =DB::table('ride_booking')
+                ->update(['view' =>  $request->salesView]);
+        }
         $rows = DB::table('ride_booking')
             ->get();
         $booking =array();
@@ -1020,6 +1048,10 @@ class ReportController extends Controller
         return view('backend.transportReportAdmin',['bookings' => $paginatedItems,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
     public function courierReport(Request $request){
+        if($request->salesView ==1){
+            $result =DB::table('courier_booking')
+                ->update(['view' =>  $request->salesView]);
+        }
         $rows = DB::table('courier_booking')
             ->select('*','naming1s.name as n_name','courier_type.name as c_name','courier_status.status as c_status','courier_status.id as c_id','courier_status.c_id as cc_id')
             ->join('courier_type','courier_type.id','=','courier_booking.type')
@@ -1399,7 +1431,10 @@ class ReportController extends Controller
         return view('backend.courierReport',['bookings' => $paginatedItems,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
     public function customOrderReport(Request $request){
-
+        if($request->salesView ==1){
+            $result =DB::table('custom_order_booking')
+                ->update(['view' =>  $request->salesView]);
+        }
         $results = DB::table('custom_order_booking')
             ->select('*','custom_order_seller.phone as s_phone','custom_order_seller.date as s_date','custom_order_seller.price as s_price')
             ->leftJoin('custom_order_seller','custom_order_seller.buyer_request_id','=','custom_order_booking.id')
@@ -1612,9 +1647,12 @@ class ReportController extends Controller
         $paginatedItems->setPath($request->url());
         return view('backend.customOrderReport',['bookings' => $paginatedItems,'from_date'=>$request->from_date,'to_date'=>$request->to_date]);
     }
-    public function cookingReport (){
+    public function cookingReport (Request $request){
         try{
-
+            if($request->salesView ==1){
+                $result =DB::table('cooking_booking')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $cooking = DB::table('cooking_booking')
                 ->select('*','a.name as u_name','a.phone as  u_phone')
                 ->join('users as a', 'a.id', '=', 'cooking_booking.user_id')
@@ -1647,7 +1685,10 @@ class ReportController extends Controller
     }
     public function clothWashingReport (Request  $request){
         try{
-
+            if($request->salesView ==1){
+                $result =DB::table('cloth_washing_order')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('cloth_washing_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','cloth_washing_order.id as c_id')
                 ->join('users as a', 'a.id', '=', 'cloth_washing_order.user_id')
@@ -1708,6 +1749,10 @@ class ReportController extends Controller
     }
     public function roomCleaningReport (Request  $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('cleaning_order')
+                ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('cleaning_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','cleaning_order.id as c_id')
                 ->join('users as a', 'a.id', '=', 'cleaning_order.user_id')
@@ -1741,6 +1786,10 @@ class ReportController extends Controller
     }
     public function helpingHandReport (Request  $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('helping_hand_order')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('helping_hand_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','helping_hand_order.id as c_id')
                 ->join('users as a', 'a.id', '=', 'helping_hand_order.user_id')
@@ -1774,6 +1823,10 @@ class ReportController extends Controller
     }
     public function guardReport (Request  $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('guard_order')
+                ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('guard_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','guard_order.id as c_id')
                 ->join('users as a', 'a.id', '=', 'guard_order.user_id')
@@ -1807,7 +1860,10 @@ class ReportController extends Controller
     }
     public function variousServicingReport (Request  $request){
         try{
-
+            if($request->salesView ==1){
+                $result =DB::table('various_servicing_order')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('various_servicing_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','various_servicing_order.name as v_name')
                 ->join('users as a', 'a.id', '=', 'various_servicing_order.user_id')
@@ -1824,6 +1880,10 @@ class ReportController extends Controller
     }
     public function laundryReport (Request  $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('laundry_order')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('laundry_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','a.address as  u_address','laundry_order.id as c_id','laundry_order.status as situation')
                 ->join('users as a', 'a.id', '=', 'laundry_order.user_id')
@@ -1893,6 +1953,10 @@ class ReportController extends Controller
     }
     public function parlorReport  (Request  $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('parlor_order')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $washing = DB::table('parlor_order')
                 ->select('*','a.name as u_name','a.phone as  u_phone','parlor_order.name as v_name')
                 ->join('users as a', 'a.id', '=', 'parlor_order.user_id')
@@ -1924,8 +1988,12 @@ class ReportController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
-    public function toursNTravelsReport(){
+    public function toursNTravelsReport(Request $request){
         try{
+            if($request->salesView ==1){
+                $result =DB::table('bookingtnt')
+                    ->update(['view' =>  $request->salesView]);
+            }
             $results = DB::table('bookingtnt')
                 ->select('*','bookingtnt.price as f_price')
                 ->join('toor_booking2','toor_booking2.id','=','bookingtnt.pack_id')

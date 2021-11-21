@@ -198,6 +198,7 @@ class HomeAssistantController extends Controller
                 if(!empty($delivery_man)){
                     Session::put('d_name', $delivery_man->name);
                     Session::put('d_phone', $delivery_man->phone);
+                    Session::put('d_id', $delivery_man->id);
                     $shurjopay_service = new ShurjopayService();
                     $tx_id = $shurjopay_service->generateTxId();
                     $result =DB::table('users')
@@ -235,6 +236,7 @@ class HomeAssistantController extends Controller
     public function insertCookingPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $id =Session::get('d_id');
         $status = $request->status;
         $type = 'Cooking';
         $msg = $request->msg;
@@ -259,8 +261,11 @@ class HomeAssistantController extends Controller
             'sp_code_des' => $sp_code_des,
             'sp_payment_option' => $sp_payment_option,
         ]);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
         session()->forget('d_name');
         session()->forget('d_phone');
+        session()->forget('d_id');
         return redirect()->to('myCookingOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
     }
     public function clothWashingPage(){
@@ -425,6 +430,7 @@ class HomeAssistantController extends Controller
                     if(!empty($delivery_man)){
                         Session::put('d_name', $delivery_man->name);
                         Session::put('d_phone', $delivery_man->phone);
+                        Session::put('d_id', $delivery_man->id);
                         $shurjopay_service = new ShurjopayService();
                         $tx_id = $shurjopay_service->generateTxId();
                         $result =DB::table('users')
@@ -463,6 +469,7 @@ class HomeAssistantController extends Controller
     public function insertClothWashingPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $id = Session::get('d_id');
         $status = $request->status;
         $type = 'Cloth Washing';
         $msg = $request->msg;
@@ -487,8 +494,11 @@ class HomeAssistantController extends Controller
             'sp_code_des' => $sp_code_des,
             'sp_payment_option' => $sp_payment_option,
         ]);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
         session()->forget('d_name');
         session()->forget('d_phone');
+        session()->forget('d_id');
         return redirect()->to('myClothWashingOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
     }
     public function getClothPriceByIdFront(Request $request){
@@ -651,6 +661,7 @@ class HomeAssistantController extends Controller
                 if(!empty($delivery_man)){
                     Session::put('d_name', $delivery_man->name);
                     Session::put('d_phone', $delivery_man->phone);
+                    Session::put('d_id', $delivery_man->id);
                     $shurjopay_service = new ShurjopayService();
                     $tx_id = $shurjopay_service->generateTxId();
                     $result =DB::table('users')
@@ -686,6 +697,7 @@ class HomeAssistantController extends Controller
     public function insertRoomCleaningPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $id =Session::get('d_id');
         $status = $request->status;
         $type = 'Room/Washroom/Tank Cleaning';
         $msg = $request->msg;
@@ -710,8 +722,11 @@ class HomeAssistantController extends Controller
             'sp_code_des' => $sp_code_des,
             'sp_payment_option' => $sp_payment_option,
         ]);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
         session()->forget('d_name');
         session()->forget('d_phone');
+        session()->forget('d_id');
         return redirect()->to('myRoomCleaningOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
     }
     public function getAllHelpingHandTypeFront(Request $request){
@@ -872,6 +887,7 @@ class HomeAssistantController extends Controller
                 if(!empty($delivery_man)){
                     Session::put('d_name', $delivery_man->name);
                     Session::put('d_phone', $delivery_man->phone);
+                    Session::put('d_id', $delivery_man->id);
                     $shurjopay_service = new ShurjopayService();
                     $tx_id = $shurjopay_service->generateTxId();
                     $result =DB::table('users')
@@ -907,6 +923,7 @@ class HomeAssistantController extends Controller
     public function insertHelpingHandPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $id =Session::get('d_id');
         $status = $request->status;
         $type = 'Helping Hand';
         $msg = $request->msg;
@@ -931,8 +948,11 @@ class HomeAssistantController extends Controller
             'sp_code_des' => $sp_code_des,
             'sp_payment_option' => $sp_payment_option,
         ]);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
         session()->forget('d_name');
         session()->forget('d_phone');
+        session()->forget('d_id');
         return redirect()->to('myHelpingHandOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
     }
     public function guardPage(){
@@ -1094,6 +1114,7 @@ class HomeAssistantController extends Controller
                 if(!empty($delivery_man)){
                     Session::put('d_name', $delivery_man->name);
                     Session::put('d_phone', $delivery_man->phone);
+                    Session::put('d_id', $delivery_man->id);
                     $shurjopay_service = new ShurjopayService();
                     $tx_id = $shurjopay_service->generateTxId();
                     $result =DB::table('users')
@@ -1129,6 +1150,7 @@ class HomeAssistantController extends Controller
     public function insertGuardPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $id =Session::get('d_id');
         $status = $request->status;
         $type = 'Guard';
         $msg = $request->msg;
@@ -1153,8 +1175,11 @@ class HomeAssistantController extends Controller
             'sp_code_des' => $sp_code_des,
             'sp_payment_option' => $sp_payment_option,
         ]);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
         session()->forget('d_name');
         session()->forget('d_phone');
+        session()->forget('d_id');
         return redirect()->to('myGuardOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
     }
     public function productServicingPage(){
@@ -1314,6 +1339,7 @@ class HomeAssistantController extends Controller
                 if(!empty($delivery_man)){
                     Session::put('d_name', $delivery_man->name);
                     Session::put('d_phone', $delivery_man->phone);
+                    Session::put('d_id', $delivery_man->id);
                     $shurjopay_service = new ShurjopayService();
                     $tx_id = $shurjopay_service->generateTxId();
                     $result =DB::table('users')
@@ -1348,6 +1374,7 @@ class HomeAssistantController extends Controller
     public function insertProductServicingPaymentInfo(Request $request){
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
+        $id =Session::get('d_id');
         $status = $request->status;
         $type = 'Various Servicing';
         $msg = $request->msg;
@@ -1372,8 +1399,11 @@ class HomeAssistantController extends Controller
             'sp_code_des' => $sp_code_des,
             'sp_payment_option' => $sp_payment_option,
         ]);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
         session()->forget('d_name');
         session()->forget('d_phone');
+        session()->forget('d_id');
         return redirect()->to('myProductServicingOrder')->with('successMessage', 'সফল্ভাবে অর্ডার সম্পন্ন্য হয়েছে। '.$name.' আপনার অর্ডার এর দায়িত্বে আছে। প্রয়োজনে '.$phone.' কল করুন।'  );
     }
     public function parlorServicingPage(){
@@ -1614,6 +1644,7 @@ class HomeAssistantController extends Controller
         $name = Session::get('d_name');
         $phone =Session::get('d_phone');
         $delivery_man =Session::get('d_id');
+        $id =Session::get('d_id');
         $re_Arr = Session::get('d_array');
         $status = $request->status;
         $type = 'Parlour';
@@ -1661,6 +1692,8 @@ class HomeAssistantController extends Controller
                 'price' => $re_Arr[11],
                 'order_date' => date("Y-m-d"),
             ]);
+            app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+            app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
             session()->forget('d_name');
             session()->forget('d_phone');
             session()->forget('d_id');
@@ -1883,6 +1916,7 @@ class HomeAssistantController extends Controller
         $name = Session::get('d_name');
         $phone = Session::get('d_phone');
         $d_id = Session::get('d_id');
+        $id = Session::get('d_id');
         $d_price = Session::get('d_price');
         $cloth_id = Session::get('cloth_id');
         $cloth_idwa = Session::get('cloth_idwa');
@@ -1932,6 +1966,8 @@ class HomeAssistantController extends Controller
                 'pickup_date' => $pickup_date,
                 'delivery_date' => $delivery_date,
             ]);
+            app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+            app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$id);
             session()->forget('d_name');
             session()->forget('d_phone');
             session()->forget('d-id');

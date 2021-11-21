@@ -83,90 +83,69 @@
             </a>
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
-                    <!-- Messages: style can be found in dropdown.less-->
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-envelope-o"></i>
-                            <span class="label label-success">4</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 1 messages</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li><!-- start message -->
-                                        <a href="#">
-                                            <div class="pull-left">
-                                                <img src="{{url('public/asset/dist/img/user2-160x160.jpg')}}" class="img-circle" alt="User Image">
-                                            </div>
-                                            <h4>
-                                                Support Team
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                                            </h4>
-                                            <p>Why not buy a new awesome theme?</p>
-                                        </a>
-                                    </li>
-                                    <!-- end message -->
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
-                        </ul>
-                    </li>
-                    <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-bell-o"></i>
-                            <span class="label label-warning">10</span>
+                            <span class="label label-warning">{{$noti_count}}</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                        </a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="header">You have {{$noti_count}} notifications</li>
+                            @if($product_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($product_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$product_order_count}} New Product Order</a></li></ul></li>
+                            @endif
+                            @if($custom_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($custom_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$custom_order_count}} New Custom Order</a></li></ul></li>
+                            @endif
+                            @if($ticket_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($ticket_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$ticket_order_count}} New Ticket Order</a></li></ul></li>
+                            @endif
+                            @if($dr_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($dr_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$dr_order_count}} New Dr Appointment</a></li></ul></li>
+                            @endif
+                            @if($therapy_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($therapy_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$therapy_order_count}} New Therapy Appointment</a></li></ul></li>
+                            @endif
+                            @if($diagnostic_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($diagnostic_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$diagnostic_order_count}} New Diagnostic Appointment</a></li></ul></li>
+                            @endif
+                            @if($medicine_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($medicine_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$medicine_order_count}} New Medicine Order</a></li></ul></li>
+                            @endif
+                            @if($ride_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($ride_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$ride_order_count}} New Ride Booking</a></li></ul></li>
+                            @endif
+                            @if($courier_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($courier_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$courier_order_count}} New Courier Order Booking</a></li></ul></li>
+                            @endif
+                            @if($cooking_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($cooking_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$cooking_order_count}} New Cooking Order Booking</a></li></ul></li>
+                            @endif
+                            @if($cleaning_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($cleaning_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$cleaning_order_count}} New Cloth Cleaning Order </a></li></ul></li>
+                            @endif
+                            @if($room_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($room_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$room_order_count}} New Room/Washroom/Tank Order </a></li></ul></li>
+                            @endif
+                            @if($laundry_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($laundry_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$laundry_order_count}} New Laundry Order </a></li></ul></li>
+                            @endif
+                            @if($helpingHand_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($helpingHand_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$helpingHand_order_count}} New Helping Hand Order </a></li></ul></li>
+                            @endif
+                            @if($gard_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($gard_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$gard_order_count}} New Gard Order </a></li></ul></li>
+                            @endif
+                            @if($various_servicing_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($various_servicing_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$various_servicing_order_count}} New various service Order </a></li></ul></li>
+                            @endif
+                            @if($parlor_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($parlor_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$parlor_order_count}} New Parlor Order </a></li></ul></li>
+                            @endif
+                            @if($tour_order_count>0)
+                            <li><ul class="menu"><li><a href="{{url($tour_order_url)}}"><i class="fa fa-shopping-cart text-aqua"></i>{{$tour_order_count}} New Tours & Travels Order </a></li></ul></li>
+                            @endif
                         </ul>
                     </li>
-                    <!-- Tasks: style can be found in dropdown.less -->
-                    <li class="dropdown tasks-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-flag-o"></i>
-                            <span class="label label-danger">9</span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 9 tasks</li>
-                            <li>
-                                <!-- inner menu: contains the actual data -->
-                                <ul class="menu">
-                                    <li><!-- Task item -->
-                                        <a href="#">
-                                            <h3>
-                                                Design some buttons
-                                                <small class="pull-right">20%</small>
-                                            </h3>
-                                            <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
-                                                     aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                    <span class="sr-only">20% Complete</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="footer">
-                                <a href="#">View all tasks</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- User Account: style can be found in dropdown.less -->
                     @php
                         $Image =url("public/asset/images/noImage.jpg");
                         if(Cookie::get('user_photo'))
@@ -195,10 +174,6 @@
                                 </div>
                             </li>
                         </ul>
-                    </li>
-                    <!-- Control Sidebar Toggle Button -->
-                    <li>
-                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
                     </li>
                 </ul>
             </div>

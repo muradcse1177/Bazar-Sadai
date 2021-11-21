@@ -126,8 +126,8 @@
         }
 
         #loading-image {
-            height: 60px;
-            width: 60px;
+            height: 200px;
+            width: 200px;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -142,7 +142,7 @@
 ?>
 <body class="home">
 <div id="loading">
-    <img id="loading-image" src="{{url('public/preloader.svg')}}" alt="Loading..." />
+    <img id="loading-image" src="{{url('public/loading.gif')}}" alt="Loading..." />
 </div>
 <div class="page-wrapper">
     <!-- Start of Header -->
@@ -150,7 +150,7 @@
         <div class="header-top">
             <div class="container">
                 <div class="header-left">
-                    <p class="welcome-msg">Welcome to Bazar-Sadai.com</p>
+                    <p class="welcome-msg"><h3 style="margin-top: 10px;">Welcome to <span style="color: #e12d2d;"> Bazar-Sadai.com</span></h3></p>
                 </div>
                 <div class="header-right">
                     <a href="{{url('contact')}}" class="d-lg-show">যোগাযোগ করুন</a>
@@ -167,13 +167,6 @@
                 </div>
             </div>
         </div>
-        <!-- End of Header Top -->
-        <div class="container">
-            <div class='aaaaaaaa'>
-                <img  src="{{url('public/c-banner.png')}}" style="width: 1200px; height:80px;" />
-            </div>
-        </div>
-
         <div class="header-middle">
             <div class="container onSticky">
                 <div class="header-left mr-md-4">
@@ -184,7 +177,7 @@
                     {{ Form::close() }}
                     <a href="{{url('homepage')}}" class="logo ml-lg-0">
                         <div class='aaaaaaaa'>
-                            <img  src="{{url('public/bs.png')}}" alt="logo" width="60" height="45" style="background-color:white; border: 2px solid darkgreen;"/>
+                            <img  src="{{url('public/logo1.jpg')}}" alt="logo" style="background-color:white; border: 2px solid darkgreen; width: 350px; height: 100px;"/>
                         </div>
                     </a>
                     {{ Form::open(array('url' => 'searchProduct',  'method' => 'get','class' => 'header-search hs-expanded hs-round d-none d-md-flex input-wrapper ms-sear')) }}
@@ -470,10 +463,17 @@
         </div>
         <!-- End of Dropdown Box -->
     </div>
-    <a href="{{'myProductOrder'}}" class="sticky-link">
-        <i class="w-icon-account"></i>
-        <p>Account</p>
-    </a>
+    @if(Cookie::get('user_type') == 3)
+        <a href="{{'myProductOrder'}}" class="sticky-link">
+            <i class="w-icon-account"></i>
+            <p>Account</p>
+        </a>
+    @else
+        <a href="{{'login'}}" class="sticky-link">
+            <i class="w-icon-account"></i>
+            <p>Account</p>
+        </a>
+    @endif
 
 </div>
 <!-- End of Sticky Footer -->

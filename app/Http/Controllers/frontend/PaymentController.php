@@ -90,17 +90,6 @@ class PaymentController extends Controller
        $success_route = url('sales');
        $shurjopay_service->sendPayment($Total, $success_route);
    }
-   public function paymentFromVariousMarket(Request $request){
-       $rows = DB::table('seller_product')
-           ->where('id', $request->id)
-           ->first();
-       Session::put('variousMarket', $request->all());
-       $price  = $rows->price;
-       $shurjopay_service = new ShurjopayService();
-       $tx_id = $shurjopay_service->generateTxId();
-       $success_route = url('productSales');
-       $shurjopay_service->sendPayment($price, $success_route);
-   }
    public function insertTicketPayment(Request $request){
        Session::put('ticketRequest', $request->all());
        $rows = DB::table('transport_tickets')

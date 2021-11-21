@@ -192,6 +192,8 @@ class MedicalServiceController extends Controller
                         ->join('users', 'users.id', '=', 'doctors.doctor_id')
                         ->where('users.id', $sessRequest->dr_id)
                         ->first();
+                        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+                        app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$sessRequest->dr_id);
                         return redirect()->to('myDrAppointment')->with('successMessage', 'ডাক্তার এর ফোন নাম্বারঃ '.$rows->phone.' ভিডিও কল করতে পারেন অথবা কল করতে পারেন। আপনার ভিসিট টাইম আনুমানিক: '.$sessRequest->serial);
                     }
                 else{
@@ -254,6 +256,8 @@ class MedicalServiceController extends Controller
                         ->join('users', 'users.id', '=', 'doctors.doctor_id')
                         ->where('users.id', $sessRequest->dr_id)
                         ->first();
+                    app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
+                    app('App\Http\Controllers\frontend\AuthController')->sendSMSServiceHolder($tx_id,$sessRequest->dr_id);
                     return redirect()->to('myDrAppointment')->with('successMessage', 'ডাক্তার এর ফোন নাম্বারঃ '.$rows->phone.' ভিডিও কল করতে পারেন অথবা কল করতে পারেন। আপনার ভিসিট টাইম আনুমানিক: '.$sessRequest->serial);
                 }
                 else{
@@ -358,6 +362,7 @@ class MedicalServiceController extends Controller
                             'serial' =>  $currSerial,
                         ]);
                     if($result){
+                        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
                         return redirect()->to('myTherapyAppointment')->with('successMessage', 'আপনার সিরিয়াল নম্বর: = '. $currSerial. '। প্রতিটি  সিরিয়াল টাইম = '.$sessRequest->time.' মিনিট।');
                     }
                     else{
@@ -464,6 +469,7 @@ class MedicalServiceController extends Controller
                             'serial' =>  $currSerial,
                         ]);
                     if($result){
+                        app('App\Http\Controllers\frontend\AuthController')->sendSMSAll($tx_id);
                         return redirect()->to('myDiagnosticAppointment')->with('successMessage', 'আপনার সিরিয়াল নম্বর: = '. $currSerial. '। প্রতিটি  সিরিয়াল টাইম = '.$sessRequest->time.' মিনিট।');
                     }
                     else{
