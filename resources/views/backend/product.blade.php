@@ -82,11 +82,17 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
+                                <label for="">ছাড়ে দাম</label>
+                                <input type="number" class="form-control discount_price" id="discount_price"  name="disount_price" min="1" placeholder="ছাড়ে দাম" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
                                 <label for="">ইউনিট</label>
                                 <input type="text" class="form-control unit" id="unit"  name="unit" placeholder="ইউনিট" required>
                             </div>
                         </div>
-                        <div class="col-sm-4">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <label for="">নুন্যতম পরিমান</label>
                                 <input type="number" class="form-control minqty" id="minqty"  min="1" name="minqty" placeholder="নুন্যতম পরিমান" required>

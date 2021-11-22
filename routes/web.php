@@ -823,7 +823,7 @@ Route::group(['middleware' => ['tnt']], function () {
     Route::get('roleAssignEditPage', 'frontend\AuthController@roleAssignEditPage');
     Route::post('updateUserRole', 'frontend\AuthController@updateUserRole');
     Route::get('locationBaseSearchPage', 'frontend\FrontController@locationBaseSearchPage');
-    Route::post('locationBaseProductSearch', 'frontend\FrontController@locationBaseProductSearch');
+    Route::get('locationBaseProductSearch', 'frontend\FrontController@locationBaseProductSearch');
     Route::get('customOrder', 'frontend\FrontController@customOrder');
     Route::get('getSubcategoryByCat', 'frontend\FrontController@getSubcategoryByCat');
     Route::post('insertCustomOrder', 'frontend\FrontController@insertCustomOrder');

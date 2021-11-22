@@ -61,7 +61,7 @@
 
         <section class="container" style="background-color: #95e074; margin-bottom: 20px;"><br>
             <h2 class="title title-center mb-5">লোকেশন ভিত্তিক পণ্য সার্চ</h2>
-            {{ Form::open(array('url' => 'locationBaseProductSearch',  'method' => 'post')) }}
+            {{ Form::open(array('url' => 'locationBaseProductSearch',  'method' => 'get')) }}
             {{ csrf_field() }}
             <div>
                 <center>

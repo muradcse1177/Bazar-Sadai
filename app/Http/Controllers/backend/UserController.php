@@ -29,9 +29,6 @@ class UserController extends Controller
         $p_order = DB::table('v_assign')
             ->where('sales_date', date('y-m-d'))
             ->distinct()->get()->count();
-        $a_order = DB::table('animal_sales')
-            ->where('date', date('y-m-d'))
-            ->distinct()->get()->count();
         $t_order = DB::table('ticket_booking')
             ->where('date', date('y-m-d'))
             ->distinct()->get()->count();
@@ -53,7 +50,6 @@ class UserController extends Controller
                 'cashOut' => $cashOut,
                 'cashIn' => $cashIn,
                 'p_order' => $p_order,
-                'a_order' => $a_order,
                 't_order' => $t_order,
                 'd_order' => $d_order,
                 'th_order' => $th_order,

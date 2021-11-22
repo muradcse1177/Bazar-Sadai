@@ -85,7 +85,7 @@
                         <button class="btn btn-rounded btn-login" type="submit" value="login"  name="login">Login</button>
                     {{ Form::close() }}
                 @endif
-                @if($count > 0)
+                @if($count_c > 0)
                 {{ Form::open(array('url' => 'couponCheck',  'method' => 'post'))}}
                 {{ csrf_field() }}
                     <div class="coupon-toggle">

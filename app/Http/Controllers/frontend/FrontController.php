@@ -3514,27 +3514,18 @@ class FrontController extends Controller
                 ->where('type', 1)
                 ->where('status', 1)
                 ->orderBy('id', 'ASC')->get();
-            $dealer = DB::table('users')
-                ->where('add_part1',$request->add_part1)
-                ->where('add_part2',$request->add_part2)
-                ->where('add_part3',$request->add_part3)
+            $dealer_product_1 = DB::table('seller_shop')
+                ->select('*', 'seller_shop.id as p_a_id', 'products.id as id')
+                ->rightJoin('products', 'products.upload_by', '=', 'seller_shop.seller_id')
+                ->where('products.status', 1)
+                ->where('seller_shop.add_part1',$request->add_part1)
+                ->where('seller_shop.add_part2',$request->add_part2)
+                ->where('seller_shop.add_part3',$request->add_part3)
+                ->where('seller_shop.add_part4',$request->add_part4)
                 ->where('address_type',$request->address_type)
-                ->where('user_type',7)
-                ->orWhere('user_type',4)
-                ->first();
-            if(!empty($dealer)) {
-                $dealer_product_1 = DB::table('products')
-                    ->select('*', 'product_assign.id as p_a_id', 'products.id as id')
-                    ->join('product_assign', 'product_assign.product_id', '=', 'products.id')
-                    ->where('products.status', 1)
-                    ->where('product_assign.dealer_id', $dealer->id)
-                    ->orderBy('products.id', 'ASC')->paginate(60);
-                if($dealer_product_1->count()>0){
-                    $dealer_status_1['status'] = 1;
-                }
-                else{
-                    return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পণ্য খুজে পাওয়া যাইনি।');
-                }
+                ->orderBy('products.id', 'ASC')->paginate(60);
+            if($dealer_product_1->count()>0){
+                $dealer_status_1['status'] = 0;
             }
             else{
                 $dealer_product_1 = DB::table('products')
@@ -3543,7 +3534,6 @@ class FrontController extends Controller
                 $dealer_status_1['status'] = 0;
                 return back()->with('errorMessage', 'আপনার কাংখিত লোকেশনে পণ্য খুজে পাওয়া যাইনি।');
             }
-
             return view('frontend.shop',
                 [
                     'pro_categories' => $product_cat,

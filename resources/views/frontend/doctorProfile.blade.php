@@ -77,11 +77,10 @@
                                 <p style="margin-top: -15px;">পদবীঃ  {{$doctorProfile->designation}} </p>
                                 <p style="margin-top: -15px;">শিক্ষাঃ {{$doctorProfile->education}} </p>
                                 <p style="margin-top: -15px;">ঠিকানাঃ  {{$doctorProfile->dr_address}} </p>
-                                @if($doctorProfile->m_status == 2)
-                                <p style="margin-top: -15px;">ফিসঃ  {{en2bn($doctorProfile->fees).' টাকা'}} </p>
-                                @endif
-                                @if($doctorProfile->m_status == 1)
+                                @if($type== 'Free' && $doctorProfile->m_status ==1)
                                 <p style="margin-top: -15px;">ফিসঃ  {{en2bn($doctorProfile->m_fees).' টাকা'}} </p>
+                                @else
+                                <p style="margin-top: -15px;">ফিসঃ  {{en2bn($doctorProfile->fees).' টাকা'}} </p>
                                 @endif
                                 <p style="margin-top: -15px;">রোগী দেখার দিন সমুহঃ
                                     <?php
@@ -111,7 +110,7 @@
                                     <input type="number" class="form-control patient_name" name="age" id="age" placeholder="বয়স" required>
                                     <input type="hidden" class="form-control" name="type" value="{{$type}}" required>
                                     <input type="hidden" class="form-control" name="dr_id" value="{{$doctorProfile->u_id}}" required>
-                                    <input type="hidden" class="form-control" name="fees" value="@if($doctorProfile->m_status == 2){{$doctorProfile->fees}} @else {{$doctorProfile->m_fees}} @endif" required>
+                                    <input type="hidden" class="form-control" name="fees" value="@if($type== 'Free' && $doctorProfile->m_status ==1){{$doctorProfile->m_fees}} @else {{$doctorProfile->fees}} @endif" required>
                                 </div>
                                 <div class="form-group">
                                     <select class="form-control  serial" name="serial" style="width: 100%;" required>
