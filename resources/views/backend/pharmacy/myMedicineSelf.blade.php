@@ -59,6 +59,8 @@
                         <th>কোম্পানি নাম </th>
                         <th>ইউনিট</th>
                         <th>টাইপ</th>
+                        <th>এক্সপাইরি ডেট </th>
+                        <th>টুলস </th>
                     </tr>
                     @foreach($medicineLists as $medicineList)
                         <tr class="">
@@ -69,10 +71,42 @@
                             <td> {{$medicineList->company}} </td>
                             <td> {{$medicineList->unit}} </td>
                             <td> {{$medicineList->type}} </td>
+                            <td> {{$medicineList->expiry_date}}  </td>
+                            <td class="td-actions text-center">
+                                <button type="button" rel="tooltip" class="btn btn-success edit" data-id="{{$medicineList->m_id}}">
+                                    Set Expiry Date
+                                </button>
+                            </td>
                         </tr>
                     @endforeach
                 </table>
                 {{ $medicineLists->links() }}
+            </div>
+            <div class="modal fade"  tabindex="-1"   id="statusModal"  role="dialog">
+                <div class="modal-dialog modal-medium">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">এক্সপাইরি ডেট </h4>
+                        </div>
+                        {{ Form::open(array('url' => 'setExpiryDate',  'method' => 'post')) }}
+                        {{ csrf_field() }}
+                        <div class="modal-body">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label>এক্সপাইরি ডেট </label>
+                                    <input type="text" name="date" id="date" class="form-control date" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="hidden" name="id" id="id" class="id">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success btn-flat contact"><i class="fa fa-check-square-o"></i> Save</button>
+                        </div>
+                        {{ Form::close() }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -80,6 +114,19 @@
 @endsection
 @section('js')
     <script>
+        $( function() {
+            $('#date').datepicker({
+                autoclose: true,
+                dateFormat: "yy-m-dd",
+            })
+        } );
+        $(document).on('click', '.edit', function(e){
+            e.preventDefault();
+            $('#statusModal').modal('show');
+            var id = $(this).data('id');
+            $('.id').val(id);
+        });
+
         $.ajax({
             url: 'getAllMedicineSelf',
             type: "GET",
@@ -123,6 +170,7 @@
                                     '</td><td>' + data[i].company +
                                     '</td><td>' + data[i].unit +
                                     '</td><td>' + data[i].type +
+                                    '</td><td>' + data[i].expiry_date +
                                     '</td></tr>';
                             }
                             $('.medicineList').append(trHTML);

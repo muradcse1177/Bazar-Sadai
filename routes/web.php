@@ -39,6 +39,7 @@ Route::group(['middleware' => ['pharmacyAuth']], function () {
     Route::get('getAllMedicineBySelf', 'backend\PharmacyController@getAllMedicineBySelf');
     Route::get('myMedicineSalesReport', 'backend\PharmacyController@myMedicineSalesReport');
     Route::post('getSaleReportByDate', 'backend\PharmacyController@getSaleReportByDate');
+    Route::post('setExpiryDate', 'backend\PharmacyController@setExpiryDate');
 });
 Route::get('getAllMedicineCompany', 'backend\PharmacyController@getAllMedicineCompany');
 Route::get('selectMedicineByCompany', 'backend\PharmacyController@selectMedicineByCompany');

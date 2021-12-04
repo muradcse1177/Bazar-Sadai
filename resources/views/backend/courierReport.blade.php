@@ -98,7 +98,8 @@
                         @endforeach
                     </table>
                     {{ $bookings->links() }}
-                </div><div class="modal fade"  tabindex="-1"   id="statusModal"  role="dialog">
+                </div>
+                <div class="modal fade"  tabindex="-1"   id="statusModal"  role="dialog">
                     <div class="modal-dialog modal-medium">
                         <div class="modal-content">
                             <div class="modal-header">

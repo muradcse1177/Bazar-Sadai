@@ -123,12 +123,12 @@
                                 '</td>' +
                                 '<td>' +
                                 '<div class="form-check">' +
-                                '<input type="text" class="form-check-input quantity" name="quantity[]" size="4" id="q'+data[i].id+'" ' +
+                                '<input type="number" class="quantity" name="quantity[]" size="3" id="q'+data[i].id+'" ' +
                                 '</div>' +
                                 '</td>' +
                                 '<td>' +
                                 '<div class="form-check">' +
-                                '<input type="text" class="form-check-input price" name="price[]" size="4" id="q'+data[i].id+'" ' +
+                                '<input type="number" class="price" name="price[]" size="3" id="q'+data[i].id+'" ' +
                                 '</div>' +
                                 '</td>' +
                                 '<td>' + data[i].name +
@@ -157,5 +157,13 @@
                 })
             }
         });
+        $( function() {
+            $('.date').datepicker({
+                autoclose: true,
+                minDate:0,
+                dateFormat: "yy-m-dd",
+            })
+
+        } );
     </script>
 @endsection

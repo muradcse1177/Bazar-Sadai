@@ -205,6 +205,25 @@ class PharmacyController extends Controller
             return back()->with('errorMessage', $ex->getMessage());
         }
     }
+    public function setExpiryDate(Request $request){
+        try{
+            $result = DB::table('medicine_self')
+                ->where('id', $request->id)
+                ->where('user_id', Cookie::get('user_id'))
+                ->update([
+                    'expiry_date' => $request->date,
+                ]);
+            if($result){
+                return back()->with('successMessage', 'সফলভাবে  সম্পন্ন  হয়েছে।');
+            }
+            else{
+                return back()->with('errorMessage', 'আবার চেষ্টা করুন।');
+            }
+        }
+        catch(\Illuminate\Database\QueryException $ex){
+            return back()->with('errorMessage', $ex->getMessage());
+        }
+    }
     public function searchMedicineByLetterBackend($letter){
         $medicine = DB::table('products')
             ->where('name', 'LIKE', $letter . '%')
@@ -215,7 +234,7 @@ class PharmacyController extends Controller
     }
     public function myMedicineSelf(){
         $medicine = DB::table('medicine_self')
-            ->select('*','medicine_self_name.name as self_name')
+            ->select('*','medicine_self_name.name as self_name','medicine_self.id as m_id')
             ->join('medicine_self_name','medicine_self_name.id','=','medicine_self.self_id')
             ->join('products','products.id','=','medicine_self.medicine_id')
             ->where('medicine_self.user_id',  Cookie::get('user_id'))
